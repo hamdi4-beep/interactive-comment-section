@@ -5,6 +5,12 @@ import { useAppSelector } from '../hooks'
 import { type UserReply } from '../features/replies/RepliesSlice'
 import type { UserComment } from '../features/comments/CommentsSlice'
 
+enum VoteDif {
+    UpVoted = 1,
+    DownVoted = -1,
+    InitialScore = 0
+}
+
 const CurrentUserActions = (props: {
     handleEditToggle: React.MouseEventHandler
     handleDeleteToggle: React.MouseEventHandler
@@ -36,7 +42,7 @@ const Card = React.memo(function Card(props: {
     handleScoreUpdateDispatch: (score: number) => void
     children: React.ReactNode
 }) {
-    const voteDiffRef = React.useRef(0)
+    const voteDiffRef = React.useRef<VoteDif>(0)
     const users = useAppSelector(state => state.users)
 
     const [isReplying, setIsReplying] = React.useState(false)
@@ -52,7 +58,7 @@ const Card = React.memo(function Card(props: {
             <div className='card'>
                 <div className="score-component">
                     <button onClick={() => {
-                        voteDiffRef.current = voteDiffRef.current <= 0 ? 1 : 0
+                        voteDiffRef.current = voteDiffRef.current <= 0 ? VoteDif.UpVoted : VoteDif.InitialScore
                         props.handleScoreUpdateDispatch(voteDiffRef.current)
                     }}>
                         <div className="icon-img">
@@ -63,7 +69,7 @@ const Card = React.memo(function Card(props: {
                     <span>{props.item.score}</span>
 
                     <button onClick={() => {
-                        voteDiffRef.current = voteDiffRef.current >= 0 ? -1 : 0
+                        voteDiffRef.current = voteDiffRef.current >= 0 ? VoteDif.DownVoted : VoteDif.InitialScore
                         props.handleScoreUpdateDispatch(voteDiffRef.current)
                     }}>
                         <div className="icon-img">
