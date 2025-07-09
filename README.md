@@ -16,6 +16,14 @@ Here's a list of the essential features included:
 - Upvote a comment/reply
 - Downvote a comment/reply
 
+## Next Steps
+
+As it currently stands, the data doesn't persist when the user refreshes the page. This isn't a bug. I haven't implemented a database yet so this will be one of the next steps moving forward.
+
+I plan to allow users to post anonymously or by signing into their account on GitHub or Google so their information is displayed on the page like their name or profile picture.
+
+So that leaves me with authentication and account creation. For those who don't wish to create an account, it's possible to post anonymously.
+
 ## Local Development
 
 1. Install dependencies
