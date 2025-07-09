@@ -43,7 +43,7 @@ const Card = React.memo(function Card(props: {
     children: React.ReactNode
 }) {
     const voteDiffRef = React.useRef<VoteDif>(0)
-    const users = useAppSelector(state => state.users)
+    const user = useAppSelector(state => state.users.byUsername[props.item.user])
 
     const [isReplying, setIsReplying] = React.useState(false)
     const [isEditting, setIsEditting] = React.useState(false)
@@ -51,7 +51,7 @@ const Card = React.memo(function Card(props: {
 
     if (!props.item) return
 
-    const isCurrentUser = data.currentUser == props.item.user
+    const isCurrentUser = data.currentUser == user.username
 
     return (
         <div className="container">
@@ -82,10 +82,10 @@ const Card = React.memo(function Card(props: {
                     <div className="profile-header">
                         <div className="user">
                             <div className="user-img">
-                                <img src={'/interactive-comment-section' + users.byUsername[props.item.user].image.png} alt="" />
+                                <img src={'/interactive-comment-section' + user.image.png} alt="" />
                             </div>
 
-                            <h3 className={isCurrentUser ? 'current-user' : ''}>{props.item.user}</h3>
+                            <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
 
                             <span className="comment-date">{props.item.createdAt}</span>
                         </div>
