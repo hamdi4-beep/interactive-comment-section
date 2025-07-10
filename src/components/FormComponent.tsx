@@ -9,7 +9,7 @@ function FormComponent(props: {
     placeholderValue: string
     dispatchHandler: Function
 }) {
-    const users = useAppSelector(state => state.users)
+    const user = useAppSelector(state => state.users.byUsername[data.currentUser])
     
     const handleSubmit: React.FormEventHandler = e => {
         e.preventDefault()
@@ -33,7 +33,7 @@ function FormComponent(props: {
         <div className="form-component">
             <div className="current-user">
                 <div className="user-img">
-                    <img src={'/interactive-comment-section' + users.byUsername[data.currentUser].image.png} alt="" />
+                    <img src={'/interactive-comment-section' + user.image.png} alt="" />
                 </div>
             </div>
 
