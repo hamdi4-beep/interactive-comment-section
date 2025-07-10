@@ -5,6 +5,8 @@ import { useAppSelector } from '../hooks'
 import { type UserReply } from '../features/replies/RepliesSlice'
 import type { UserComment } from '../features/comments/CommentsSlice'
 
+// @ts-ignore
+
 enum VoteDif {
     UpVoted = 1,
     DownVoted = -1,
@@ -33,6 +35,9 @@ const CurrentUserActions = (props: {
         </button>
     </div>
 )
+
+// A component that's only responsible for visual appearance and structure. It shouldn't define logic or be responsible for how comments and replies behave.
+// It couples the markup structure of a comment and reply element so you only have to modify them consistently from a single location.
 
 const Card = React.memo(function Card(props: {
     item: UserComment | UserReply,
@@ -86,7 +91,6 @@ const Card = React.memo(function Card(props: {
                             </div>
 
                             <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
-
                             <span className="comment-date">{props.item.createdAt}</span>
                         </div>
 
@@ -116,10 +120,8 @@ const Card = React.memo(function Card(props: {
                 <FormComponent
                     placeholderValue='Add a reply...'
                     dispatchHandler={(content: string) => {
-                        if (content) {
-                            props.handleReplyDispatch(content)
-                            setIsReplying(false)
-                        }
+                        props.handleReplyDispatch(content)
+                        setIsReplying(false)
                     }}
                 />
             )}
@@ -129,10 +131,8 @@ const Card = React.memo(function Card(props: {
                     placeholderValue='Edit a comment...'
                     value={props.item.content}
                     dispatchHandler={(content: string) => {
-                        if (content) {
-                            props.handleEditDispatch(content)
-                            setIsEditting(false)
-                        }
+                        props.handleEditDispatch(content)
+                        setIsEditting(false)
                     }}
                 />
             )}

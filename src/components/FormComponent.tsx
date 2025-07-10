@@ -17,7 +17,9 @@ function FormComponent(props: {
         const formElement = e.target as HTMLFormElement
         const formData = new FormData(formElement)
 
-        props.dispatchHandler(formData.get('comment') as string)
+        const content = formData.get('comment') as string
+
+        if (content) props.dispatchHandler(content)
 
         formElement.reset()
     }
