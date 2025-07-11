@@ -13,7 +13,7 @@ This application renders an interactive comment thread from structured JSON data
 - Edit their own comments/replies
 - Delete their own comments/replies
 
-All interactions are handled through a single reducer, powered by React’s `useReducer`, and structured for maintainability and scalability.
+All interactions are handled through Redux, and structured for maintainability and scalability.
 
 > ⚠️ **Important**: The system currently runs entirely on mock data. Persistence and backend integration are planned but not yet implemented.
 
