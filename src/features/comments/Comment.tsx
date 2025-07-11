@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks'
 import { commentDeleted, commentEdited, commentScoreUpdated, type UserComment } from './CommentsSlice'
 import { replyCreated } from '../replies/RepliesSlice'
 
+
 const Comment = React.memo(function Comment(props: {
     id: UserComment['id']
 }) {
