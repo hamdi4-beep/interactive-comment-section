@@ -1,5 +1,5 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
-import type { UserComment } from "../comments/CommentsSlice";
+import { type UserComment } from "../comments/CommentsSlice";
 import data from '../../data.json'
 
 export type UserReply = Omit<UserComment, 'replies'> & {
@@ -8,24 +8,24 @@ export type UserReply = Omit<UserComment, 'replies'> & {
 
 type ReplyID = UserReply['id']
 
-type CreateReplyPayload = {
+interface CreateReplyPayload {
     replyId: ReplyID
     content: string
     user: string
     parentCommentId: UserComment['id']
 }
 
-type EditReplyPayload = {
+interface EditReplyPayload {
     replyId: ReplyID
     content: string
 }
 
-type DeleteReplyPayload = {
+interface DeleteReplyPayload {
     replyId: ReplyID
     parentCommentId: UserComment['id']
 }
 
-type UpdateReplyScorePayload = {
+interface UpdateReplyScorePayload {
     replyId: ReplyID
     score: number
 }

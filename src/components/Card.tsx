@@ -54,6 +54,8 @@ const Card = React.memo(function Card(props: {
     const [isEditting, setIsEditting] = React.useState(false)
     const [isHidden, setIsHidden] = React.useState(true)
 
+    const [currentVote, setCurrentVote] = React.useState(0)
+
     if (!props.item) return
 
     const isCurrentUser = data.currentUser == user.username
@@ -61,9 +63,10 @@ const Card = React.memo(function Card(props: {
     return (
         <div className="container">
             <div className='card'>
-                <div className="score-component">
+                <div className="score-component" style={{background: currentVote === 1 ? 'hsl(265, 60%, 70%)' : currentVote === -1 ? 'hsl(20, 70%, 55%)' : ''}}>
                     <button onClick={() => {
                         voteDiffRef.current = voteDiffRef.current <= 0 ? VoteDif.UpVoted : VoteDif.InitialScore
+                        setCurrentVote(voteDiffRef.current)
                         props.handleScoreUpdateDispatch(voteDiffRef.current)
                     }}>
                         <div className="icon-img">
@@ -75,6 +78,7 @@ const Card = React.memo(function Card(props: {
 
                     <button onClick={() => {
                         voteDiffRef.current = voteDiffRef.current >= 0 ? VoteDif.DownVoted : VoteDif.InitialScore
+                        setCurrentVote(voteDiffRef.current)
                         props.handleScoreUpdateDispatch(voteDiffRef.current)
                     }}>
                         <div className="icon-img">
