@@ -1,5 +1,4 @@
 import * as React from 'react'
-import data from '../data.json'
 import FormComponent from "./FormComponent"
 import { useAppSelector } from '../hooks'
 import { type UserReply } from '../features/replies/RepliesSlice'
@@ -58,7 +57,7 @@ const Card = React.memo(function Card(props: {
 
     if (!props.item) return
 
-    const isCurrentUser = data.currentUser == user.username
+    const isCurrentUser = user.role === 'currentUser'
 
     return (
         <div className="container">

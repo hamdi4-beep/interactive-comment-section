@@ -9,6 +9,7 @@ interface User {
                 webp: string
             }
             username: string
+            role: string
         }
     }
     allUsername: string[]

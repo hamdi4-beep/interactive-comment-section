@@ -1,5 +1,4 @@
 import * as React from 'react'
-import data from '../data.json'
 import { useAppSelector } from '../hooks'
 
 const textAreaRef = React.createRef<HTMLTextAreaElement>()
@@ -9,7 +8,12 @@ function FormComponent(props: {
     placeholderValue: string
     dispatchHandler: Function
 }) {
-    const user = useAppSelector(state => state.users.byUsername[data.currentUser])
+    const user = useAppSelector(state => {
+        const username = state.users.allUsername.find(username => state.users.byUsername[username].role === 'currentUser')
+        if (username) return state.users.byUsername[username]
+    })
+
+    if (!user) return
     
     const handleSubmit: React.FormEventHandler = e => {
         e.preventDefault()
