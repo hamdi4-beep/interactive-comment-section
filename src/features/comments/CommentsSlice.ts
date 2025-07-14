@@ -1,6 +1,7 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import data from '../../data.json'
 import { replyCreated, replyDeleted } from "../replies/RepliesSlice";
+import type { User } from "../users/UsersSlice";
 
 export type UserComment = {
     id: string
@@ -21,6 +22,7 @@ export interface CommentState {
 interface CreateCommentPayload {
     commentId: CommentID
     content: UserComment['content']
+    createdAt: string
 }
 
 interface EditCommentPayload extends CreateCommentPayload {}
@@ -39,6 +41,8 @@ const initialState: CommentState = data.comments
 const findCommentId = (state: CommentState, targetId: CommentID) =>
     state.allId.find(id => targetId === id)
 
+const currentUser = data.users.byUsername['juliusomo']
+
 const CommentsSlice = createSlice({
     name: 'comments',
     initialState,
@@ -47,11 +51,11 @@ const CommentsSlice = createSlice({
             reducer: (state, action: PayloadAction<CreateCommentPayload>) => {
                 state.byId[action.payload.commentId] = {
                     id: action.payload.commentId,
-                    createdAt: 'now',
+                    createdAt: action.payload.createdAt,
                     score: 0,
                     content: action.payload.content,
                     // this works just fine when the information about the current user is stored in a local file, but needs to be updated if it's retrieved from a remote resource.
-                    user: data.currentUser,
+                    user: currentUser.username,
                     replies: []
                 }
 
@@ -61,7 +65,8 @@ const CommentsSlice = createSlice({
                 return {
                     payload: {
                         content,
-                        commentId: nanoid()
+                        commentId: nanoid(),
+                        createdAt: (new Date()).toISOString()
                     }
                 }
             }

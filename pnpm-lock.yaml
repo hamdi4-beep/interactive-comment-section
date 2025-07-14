@@ -23,6 +23,12 @@ importers:
       react-redux:
         specifier: ^9.2.0
         version: 9.2.0(@types/react@19.1.6)(react@19.1.0)(redux@5.0.1)
+      timeago:
+        specifier: ^1.6.7
+        version: 1.6.7
+      timeago-react:
+        specifier: ^3.0.7
+        version: 3.0.7(react@19.1.0)
     devDependencies:
       '@eslint/js':
         specifier: ^9.25.0
@@ -33,6 +39,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.1.2
         version: 19.1.3(@types/react@19.1.6)
+      '@types/timeago':
+        specifier: ^1.6.3
+        version: 1.6.3
       '@vitejs/plugin-react':
         specifier: ^4.4.1
         version: 4.4.1(vite@6.3.5(@types/node@24.0.10))
@@ -812,6 +821,9 @@ packages:
   '@types/istanbul-reports@3.0.4':
     resolution: {integrity: sha512-pk2B1NWalF9toCRu6gjBzR69syFjP4Od8WRAX+0mmf9lAjCRicLOWc+ZrxZHx/0XRjotgkF9t6iaMJ+aXcOdZQ==}
 
+  '@types/jquery@3.5.32':
+    resolution: {integrity: sha512-b9Xbf4CkMqS02YH8zACqN1xzdxc3cO735Qe5AbSUFmyOiaWAbcpqh9Wna+Uk0vgACvoQHpWDg2rGdHkYPLmCiQ==}
+
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
@@ -826,8 +838,14 @@ packages:
   '@types/react@19.1.6':
     resolution: {integrity: sha512-JeG0rEWak0N6Itr6QUx+X60uQmN+5t3j9r/OVDtWzFXKaj6kD1BwJzOksD0FF6iWxZlbE1kB0q9vtnU2ekqa1Q==}
 
+  '@types/sizzle@2.3.9':
+    resolution: {integrity: sha512-xzLEyKB50yqCUPUJkIsrVvoWNfFUbIZI+RspLWt8u+tIW/BetMBZtgV2LY/2o+tYH8dRvQ+eoPf3NdhQCcLE2w==}
+
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
+
+  '@types/timeago@1.6.3':
+    resolution: {integrity: sha512-SVNyo6sNP3Q+uqs/5Emqjz0e59G+i8iNPlxVw7vftotJj70EFjIeX2L2iZ0IV1J8L/bQP7G76/68NPW3kNEW3g==}
 
   '@types/use-sync-external-store@0.0.6':
     resolution: {integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==}
@@ -1803,6 +1821,9 @@ packages:
       node-notifier:
         optional: true
 
+  jquery@3.7.1:
+    resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -2322,6 +2343,17 @@ packages:
   test-exclude@6.0.0:
     resolution: {integrity: sha512-cAGWPIyOHU6zlmg88jwm7VRyXnMN7iV68OGAbYDk/Mh/xC/pzVPlQtY6ngoIH/5/tciuhGfvESU8GrHrcxD56w==}
     engines: {node: '>=8'}
+
+  timeago-react@3.0.7:
+    resolution: {integrity: sha512-5LSQuq+mzfEpMHkJQgMWnOs27dGh25aUQhffQpAW6q431vVVmHP194KYsM4bhzli0XfohUgN8+r3Pq6GVprN4A==}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  timeago.js@4.0.2:
+    resolution: {integrity: sha512-a7wPxPdVlQL7lqvitHGGRsofhdwtkoSXPGATFuSOA2i1ZNQEPLrGnj68vOp2sOJTCFAQVXPeNMX/GctBaO9L2w==}
+
+  timeago@1.6.7:
+    resolution: {integrity: sha512-FikcjN98+ij0siKH4VO4dZ358PR3oDDq4Vdl1+sN9gWz1/+JXGr3uZbUShYH/hL7bMhcTpPbplJU5Tej4b4jbQ==}
 
   tinyglobby@0.2.13:
     resolution: {integrity: sha512-mEwzpUgrLySlveBwEVDMKk5B57bhLPYovRfPAXD5gA/98Opn0rCDj3GtLwFvCvH5RK9uPCExUROW5NjDwvqkxw==}
@@ -3335,6 +3367,10 @@ snapshots:
     dependencies:
       '@types/istanbul-lib-report': 3.0.3
 
+  '@types/jquery@3.5.32':
+    dependencies:
+      '@types/sizzle': 2.3.9
+
   '@types/json-schema@7.0.15': {}
 
   '@types/node@24.0.10':
@@ -3349,7 +3385,13 @@ snapshots:
     dependencies:
       csstype: 3.1.3
 
+  '@types/sizzle@2.3.9': {}
+
   '@types/stack-utils@2.0.3': {}
+
+  '@types/timeago@1.6.3':
+    dependencies:
+      '@types/jquery': 3.5.32
 
   '@types/use-sync-external-store@0.0.6': {}
 
@@ -4565,6 +4607,8 @@ snapshots:
       - supports-color
       - ts-node
 
+  jquery@3.7.1: {}
+
   js-tokens@4.0.0: {}
 
   js-yaml@3.14.1:
@@ -5046,6 +5090,17 @@ snapshots:
       '@istanbuljs/schema': 0.1.3
       glob: 7.2.3
       minimatch: 3.1.2
+
+  timeago-react@3.0.7(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      timeago.js: 4.0.2
+
+  timeago.js@4.0.2: {}
+
+  timeago@1.6.7:
+    dependencies:
+      jquery: 3.7.1
 
   tinyglobby@0.2.13:
     dependencies:

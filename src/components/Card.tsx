@@ -3,6 +3,7 @@ import FormComponent from "./FormComponent"
 import { useAppSelector } from '../hooks'
 import { type UserReply } from '../features/replies/RepliesSlice'
 import type { UserComment } from '../features/comments/CommentsSlice'
+import TimeAgo from 'timeago-react'
 
 // @ts-ignore
 
@@ -94,7 +95,7 @@ const Card = React.memo(function Card(props: {
                             </div>
 
                             <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
-                            <span className="comment-date">{props.item.createdAt}</span>
+                            <TimeAgo datetime={props.item.createdAt} live={false} />
                         </div>
 
                         <div className="actions">

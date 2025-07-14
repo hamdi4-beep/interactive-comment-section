@@ -12,7 +12,8 @@ interface CreateReplyPayload {
     replyId: ReplyID
     content: string
     user: string
-    parentCommentId: UserComment['id']
+    parentCommentId: UserComment['id'],
+    createdAt: string
 }
 
 interface EditReplyPayload {
@@ -45,8 +46,8 @@ const RepliesSlice = createSlice({
             reducer(state, action: PayloadAction<CreateReplyPayload>) {
                 state.byId[action.payload.replyId] = {
                     id: action.payload.replyId,
-                    createdAt: 'now',
-                    user: data.currentUser,
+                    createdAt: action.payload.createdAt,
+                    user: data.users.byUsername['juliusomo'].username,
                     score: 0,
                     content: action.payload.content,
                     replyingTo: action.payload.user
@@ -60,7 +61,8 @@ const RepliesSlice = createSlice({
                         content,
                         replyId: nanoid(),
                         user,
-                        parentCommentId
+                        parentCommentId,
+                        createdAt: (new Date()).toISOString()
                     }
                 }
             }

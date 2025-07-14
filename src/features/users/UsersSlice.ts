@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import data from '../../data.json'
 
-interface User {
+export interface User {
     byUsername: {
         [x: string]: {
             image: {
