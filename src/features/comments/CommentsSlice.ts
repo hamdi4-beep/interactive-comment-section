@@ -1,7 +1,6 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import data from '../../data.json'
 import { replyCreated, replyDeleted } from "../replies/RepliesSlice";
-import type { User } from "../users/UsersSlice";
 
 export type UserComment = {
     id: string
@@ -25,7 +24,7 @@ interface CreateCommentPayload {
     createdAt: string
 }
 
-interface EditCommentPayload extends CreateCommentPayload {}
+interface EditCommentPayload extends Omit<CreateCommentPayload, 'createdAt'> {}
 
 interface DeleteCommentPayload {
     commentId: CommentID

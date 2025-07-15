@@ -95,7 +95,7 @@ const Card = React.memo(function Card(props: {
                             </div>
 
                             <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
-                            <TimeAgo datetime={props.item.createdAt} live={false} />
+                            <span className='comment-date'><TimeAgo datetime={props.item.createdAt} live={false} /></span>
                         </div>
 
                         <div className="actions">
