@@ -3,7 +3,8 @@ import { type UserComment } from "../comments/CommentsSlice";
 import data from '../../data.json'
 
 export type UserReply = Omit<UserComment, 'replies'> & {
-    replyingTo: string
+    replyingTo: string,
+    parentId: UserComment['id']
 }
 
 type ReplyID = UserReply['id']
@@ -12,7 +13,7 @@ interface CreateReplyPayload {
     replyId: ReplyID
     content: string
     user: string
-    parentCommentId: UserComment['id'],
+    parentId: UserComment['id'],
     createdAt: string
 }
 
@@ -23,7 +24,7 @@ interface EditReplyPayload {
 
 interface DeleteReplyPayload {
     replyId: ReplyID
-    parentCommentId: UserComment['id']
+    parentId: UserComment['id']
 }
 
 interface UpdateReplyScorePayload {
@@ -46,6 +47,7 @@ const RepliesSlice = createSlice({
             reducer(state, action: PayloadAction<CreateReplyPayload>) {
                 state.byId[action.payload.replyId] = {
                     id: action.payload.replyId,
+                    parentId: action.payload.parentId,
                     createdAt: action.payload.createdAt,
                     user: data.users.byUsername['juliusomo'].username,
                     score: 0,
@@ -55,13 +57,13 @@ const RepliesSlice = createSlice({
 
                 state.allId.push(action.payload.replyId)
             },
-            prepare(content: string, user: string, parentCommentId: string) {
+            prepare(content: string, user: string, parentId: string) {
                 return {
                     payload: {
                         content,
                         replyId: nanoid(),
                         user,
-                        parentCommentId,
+                        parentId,
                         createdAt: (new Date()).toISOString()
                     }
                 }

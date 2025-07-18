@@ -70,7 +70,7 @@ const Comment = React.memo(function Comment(props: {
                             return (
                                 <Reply
                                     id={id}
-                                    parentCommentId={comment.id}
+                                    parentId={comment.id}
                                     key={id}
                                 />
                             )

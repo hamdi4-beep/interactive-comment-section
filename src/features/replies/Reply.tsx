@@ -6,17 +6,17 @@ import * as React from 'react'
 
 const Reply = React.memo(function Reply({
     id,
-    parentCommentId
+    parentId
 }: {
     id: UserReply['id']
-    parentCommentId: UserComment['id']
+    parentId: UserComment['id']
 }) {
     const dispatch = useAppDispatch()
     const reply = useAppSelector(state => state.replies.byId[id])
 
     const replyToReplyHandler = React.useCallback(
         (content: string) =>
-            dispatch(replyCreated(content, reply.user, parentCommentId)),
+            dispatch(replyCreated(content, reply.user, parentId)),
         []
     )
 
@@ -33,7 +33,7 @@ const Reply = React.memo(function Reply({
         () =>
             dispatch(replyDeleted({
                 replyId: id,
-                parentCommentId
+                parentId
             })),
         []
     )
@@ -57,8 +57,8 @@ const Reply = React.memo(function Reply({
                 handleScoreUpdateDispatch={updateReplyScoreHandler}
             >
                 <p>
-                    <span className="replying-to">@{reply?.replyingTo} </span>
-                    {reply?.content}
+                    <span className="replying-to">@{reply.replyingTo} </span>
+                    {reply.content}
                 </p>
             </Card>
         </div>
