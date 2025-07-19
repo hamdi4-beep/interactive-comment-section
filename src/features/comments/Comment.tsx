@@ -15,8 +15,6 @@ const Comment = React.memo(function Comment(props: {
     const comment = useAppSelector(state => state.comments.byId[props.id])
     const allReplyIds = useAppSelector(state => state.replies.allId)
 
-    console.log(comment)
-
     const replyToCommentHandler = React.useCallback(
         (content: string) =>
             dispatch(replyCreated(content, comment.user, comment.id)),

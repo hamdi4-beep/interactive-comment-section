@@ -1,6 +1,7 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import data from '../../data.json'
 import { replyCreated, replyDeleted } from "../replies/RepliesSlice";
+import { currentUser } from "../users/UsersSlice";
 
 export type UserComment = {
     id: string
@@ -39,8 +40,6 @@ const initialState: CommentState = data.comments
 
 const findCommentId = (state: CommentState, targetId: CommentID) =>
     state.allId.find(id => targetId === id)
-
-const currentUser = data.users.byUsername['juliusomo']
 
 const CommentsSlice = createSlice({
     name: 'comments',

@@ -1,6 +1,7 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { type UserComment } from "../comments/CommentsSlice";
 import data from '../../data.json'
+import { currentUser } from "../users/UsersSlice";
 
 export type UserReply = Omit<UserComment, 'replies'> & {
     replyingTo: string,
@@ -49,7 +50,7 @@ const RepliesSlice = createSlice({
                     id: action.payload.replyId,
                     parentId: action.payload.parentId,
                     createdAt: action.payload.createdAt,
-                    user: data.users.byUsername['juliusomo'].username,
+                    user: currentUser.username,
                     score: 0,
                     content: action.payload.content,
                     replyingTo: action.payload.user
