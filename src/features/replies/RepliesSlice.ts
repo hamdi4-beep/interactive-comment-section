@@ -13,7 +13,7 @@ type ReplyID = UserReply['id']
 interface CreateReplyPayload {
     replyId: ReplyID
     content: string
-    user: string
+    username: string
     parentId: UserComment['id'],
     createdAt: string
 }
@@ -50,20 +50,20 @@ const RepliesSlice = createSlice({
                     id: action.payload.replyId,
                     parentId: action.payload.parentId,
                     createdAt: action.payload.createdAt,
-                    user: currentUser.username,
+                    username: currentUser.username,
                     score: 0,
                     content: action.payload.content,
-                    replyingTo: action.payload.user
+                    replyingTo: action.payload.username
                 }
 
                 state.allId.push(action.payload.replyId)
             },
-            prepare(content: string, user: string, parentId: string) {
+            prepare(content: string, username: string, parentId: string) {
                 return {
                     payload: {
                         content,
                         replyId: nanoid(),
-                        user,
+                        username,
                         parentId,
                         createdAt: (new Date()).toISOString()
                     }

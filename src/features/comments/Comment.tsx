@@ -17,7 +17,7 @@ const Comment = React.memo(function Comment(props: {
 
     const replyToCommentHandler = React.useCallback(
         (content: string) =>
-            dispatch(replyCreated(content, comment.user, comment.id)),
+            dispatch(replyCreated(content, comment.username, comment.id)),
         []
     )
 

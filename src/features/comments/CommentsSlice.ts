@@ -8,7 +8,7 @@ export type UserComment = {
     createdAt: string
     score: number
     content: string
-    user: string
+    username: string
     replies: UserComment['id'][]
 }
 
@@ -53,7 +53,7 @@ const CommentsSlice = createSlice({
                     score: 0,
                     content: action.payload.content,
                     // this works just fine when the information about the current user is stored in a local file, but needs to be updated if it's retrieved from a remote resource.
-                    user: currentUser.username,
+                    username: currentUser.username,
                     replies: []
                 }
 

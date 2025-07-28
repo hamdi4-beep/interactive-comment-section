@@ -16,7 +16,7 @@ const Reply = React.memo(function Reply({
 
     const replyToReplyHandler = React.useCallback(
         (content: string) =>
-            dispatch(replyCreated(content, reply.user, parentId)),
+            dispatch(replyCreated(content, reply.username, parentId)),
         []
     )
 

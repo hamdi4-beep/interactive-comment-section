@@ -36,6 +36,9 @@ const CurrentUserActions = (props: {
     </div>
 )
 
+const upVoteColor = 'hsl(265, 60%, 70%)'
+const downVoteColor = 'hsl(20, 70%, 55%)'
+
 // A component that's only responsible for visual appearance and structure. It shouldn't define logic or be responsible for how comments and replies behave.
 // It couples the markup structure of a comment and reply element so you only have to modify them consistently from a single location.
 
@@ -48,7 +51,7 @@ const Card = React.memo(function Card(props: {
     children: React.ReactNode
 }) {
     const voteDiffRef = React.useRef<VoteDif>(0)
-    const user = useAppSelector(state => state.users.byUsername[props.item.user])
+    const user = useAppSelector(state => state.users.byUsername[props.item.username])
 
     const [isReplying, setIsReplying] = React.useState(false)
     const [isEditting, setIsEditting] = React.useState(false)
@@ -63,7 +66,7 @@ const Card = React.memo(function Card(props: {
     return (
         <div className="container">
             <div className='card'>
-                <div className="score-component" style={{background: currentVote === 1 ? 'hsl(265, 60%, 70%)' : currentVote === -1 ? 'hsl(20, 70%, 55%)' : ''}}>
+                <div className="score-component" style={{background: currentVote === 1 ? upVoteColor : currentVote === -1 ? downVoteColor : ''}}>
                     <button onClick={() => {
                         voteDiffRef.current = voteDiffRef.current <= 0 ? VoteDif.UpVoted : VoteDif.InitialScore
                         setCurrentVote(voteDiffRef.current)
