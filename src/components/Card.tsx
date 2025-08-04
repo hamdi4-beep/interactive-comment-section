@@ -36,9 +36,6 @@ const CurrentUserActions = (props: {
     </div>
 )
 
-const upVoteColor = 'hsl(265, 60%, 70%)'
-const downVoteColor = 'hsl(20, 70%, 55%)'
-
 // A component that's only responsible for visual appearance and structure. It shouldn't define logic or be responsible for how comments and replies behave.
 // It couples the markup structure of a comment and reply element so you only have to modify them consistently from a single location.
 
@@ -50,14 +47,13 @@ const Card = React.memo(function Card(props: {
     handleScoreUpdateDispatch: (score: number) => void
     children: React.ReactNode
 }) {
-    const voteDiffRef = React.useRef<VoteDif>(0)
     const user = useAppSelector(state => state.users.byUsername[props.item.username])
 
     const [isReplying, setIsReplying] = React.useState(false)
     const [isEditting, setIsEditting] = React.useState(false)
     const [isHidden, setIsHidden] = React.useState(true)
 
-    const [currentVote, setCurrentVote] = React.useState(0)
+    const voteDiffRef = React.useRef(0)
 
     if (!props.item) return
 
@@ -66,10 +62,9 @@ const Card = React.memo(function Card(props: {
     return (
         <div className="container">
             <div className='card'>
-                <div className="score-component" style={{background: currentVote === 1 ? upVoteColor : currentVote === -1 ? downVoteColor : ''}}>
+                <div className="score-component">
                     <button onClick={() => {
-                        voteDiffRef.current = voteDiffRef.current <= 0 ? VoteDif.UpVoted : VoteDif.InitialScore
-                        setCurrentVote(voteDiffRef.current)
+                        voteDiffRef.current = voteDiffRef.current <= 0 ? 1 : 0
                         props.handleScoreUpdateDispatch(voteDiffRef.current)
                     }}>
                         <div className="icon-img">
@@ -80,8 +75,7 @@ const Card = React.memo(function Card(props: {
                     <span>{props.item.score}</span>
 
                     <button onClick={() => {
-                        voteDiffRef.current = voteDiffRef.current >= 0 ? VoteDif.DownVoted : VoteDif.InitialScore
-                        setCurrentVote(voteDiffRef.current)
+                        voteDiffRef.current = voteDiffRef.current >= 0 ? -1 : 0 
                         props.handleScoreUpdateDispatch(voteDiffRef.current)
                     }}>
                         <div className="icon-img">

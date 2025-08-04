@@ -41,7 +41,7 @@ const Comment = React.memo(function Comment(props: {
     const updateCommentScoreHandler = React.useCallback(
         (voteDiff: number) =>
             dispatch(commentScoreUpdated({
-                commentId: props.id,
+                commentId: comment.id,
                 score: comment.score + voteDiff
             })),
         []

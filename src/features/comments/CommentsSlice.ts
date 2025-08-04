@@ -33,7 +33,7 @@ interface DeleteCommentPayload {
 
 interface UpdateCommentScorePayload {
     commentId: CommentID
-    score: UserComment['score']
+    score: number
 }
 
 const initialState: CommentState = data.comments
