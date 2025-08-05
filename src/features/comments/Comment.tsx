@@ -13,7 +13,6 @@ const Comment = React.memo(function Comment(props: {
 
     const [isRepliesHidden, setIsRepliesHidden] = React.useState(true)
     const comment = useAppSelector(state => state.comments.byId[props.id])
-    const allReplyIds = useAppSelector(state => state.replies.allId)
 
     const replyToCommentHandler = React.useCallback(
         (content: string) =>
@@ -63,16 +62,13 @@ const Comment = React.memo(function Comment(props: {
 
             {!isRepliesHidden && (
                 <div className="replies-list">
-                    {comment.replies.map(id => {
-                        if (allReplyIds.find(replyId => replyId === id))
-                            return (
-                                <Reply
-                                    id={id}
-                                    parentId={comment.id}
-                                    key={id}
-                                />
-                            )
-                    })}
+                    {comment.replies.map(id => (
+                        <Reply
+                            id={id}
+                            parentId={comment.id}
+                            key={id}
+                        />
+                    ))}
                 </div>
             )}
         </div>
