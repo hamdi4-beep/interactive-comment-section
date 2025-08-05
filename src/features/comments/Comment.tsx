@@ -24,7 +24,7 @@ const Comment = React.memo(function Comment(props: {
     const editCommentHandler = React.useCallback(
         (content: string) =>
             dispatch(commentEdited({
-                commentId: props.id,
+                commentId: comment.id,
                 content
             })),
         []
@@ -33,7 +33,7 @@ const Comment = React.memo(function Comment(props: {
     const deleteCommentHandler = React.useCallback(
         () =>
             dispatch(commentDeleted({
-                commentId: props.id
+                commentId: comment.id
             })),
         []
     )
