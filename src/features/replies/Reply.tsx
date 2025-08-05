@@ -14,6 +14,8 @@ const Reply = React.memo(function Reply({
     const dispatch = useAppDispatch()
     const reply = useAppSelector(state => state.replies.byId[id])
 
+    if (!reply) return
+
     const replyToReplyHandler = React.useCallback(
         (content: string) =>
             dispatch(replyCreated(content, reply.username, parentId)),

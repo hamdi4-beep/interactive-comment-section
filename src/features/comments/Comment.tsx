@@ -14,6 +14,8 @@ const Comment = React.memo(function Comment(props: {
     const [isRepliesHidden, setIsRepliesHidden] = React.useState(true)
     const comment = useAppSelector(state => state.comments.byId[props.id])
 
+    if (!comment) return
+
     const replyToCommentHandler = React.useCallback(
         (content: string) =>
             dispatch(replyCreated(content, comment.username, comment.id)),
