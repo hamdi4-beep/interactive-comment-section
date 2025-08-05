@@ -14,11 +14,11 @@ enum VoteDif {
 }
 
 const CurrentUserActions = (props: {
-    handleEditToggle: React.MouseEventHandler
-    handleDeleteToggle: React.MouseEventHandler
+    editToggleHandler: React.MouseEventHandler
+    deleteToggleHandler: React.MouseEventHandler
 }) => (
     <div className="user-actions">
-        <button onClick={props.handleEditToggle}>
+        <button onClick={props.editToggleHandler}>
             <div className="icon-img">
                 <img src='/interactive-comment-section/images/icon-edit.svg' alt="" />
             </div>
@@ -26,7 +26,7 @@ const CurrentUserActions = (props: {
             Edit
         </button>
 
-        <button onClick={props.handleDeleteToggle}>
+        <button onClick={props.deleteToggleHandler}>
             <div className="icon-img">
                 <img src='/interactive-comment-section/images/icon-delete.svg' alt="" />
             </div>
@@ -41,10 +41,10 @@ const CurrentUserActions = (props: {
 
 const Card = React.memo(function Card(props: {
     item: UserComment | UserReply,
-    handleReplyDispatch: (content: string) => void,
-    handleEditDispatch: (content: string) => void,
-    handleDeleteDispatch: () => void,
-    handleScoreUpdateDispatch: (score: number) => void
+    replyDispatchHandler: (content: string) => void,
+    editDispatchHandler: (content: string) => void,
+    deleteDispatchHandler: () => void,
+    scoreUpdateDispatchHandler: (score: number) => void
     children: React.ReactNode
 }) {
     const user = useAppSelector(state => state.users.byUsername[props.item.username])
@@ -65,7 +65,7 @@ const Card = React.memo(function Card(props: {
                 <div className="score-component">
                     <button onClick={() => {
                         voteDiffRef.current = voteDiffRef.current <= 0 ? 1 : 0
-                        props.handleScoreUpdateDispatch(voteDiffRef.current)
+                        props.scoreUpdateDispatchHandler(voteDiffRef.current)
                     }}>
                         <div className="icon-img">
                             <img src="/interactive-comment-section/images/icon-plus.svg" alt="" />
@@ -76,7 +76,7 @@ const Card = React.memo(function Card(props: {
 
                     <button onClick={() => {
                         voteDiffRef.current = voteDiffRef.current >= 0 ? -1 : 0 
-                        props.handleScoreUpdateDispatch(voteDiffRef.current)
+                        props.scoreUpdateDispatchHandler(voteDiffRef.current)
                     }}>
                         <div className="icon-img">
                             <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
@@ -92,14 +92,17 @@ const Card = React.memo(function Card(props: {
                             </div>
 
                             <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
-                            <span className='comment-date'><TimeAgo datetime={props.item.createdAt} live={false} /></span>
+
+                            <span className='comment-date'>
+                                <TimeAgo datetime={props.item.createdAt} live={false} />
+                            </span>
                         </div>
 
                         <div className="actions">
                             {isCurrentUser ? (
                                 <CurrentUserActions
-                                    handleEditToggle={() => setIsEditting(prev => !prev)}
-                                    handleDeleteToggle={() => setIsHidden(false)}
+                                    editToggleHandler={() => setIsEditting(prev => !prev)}
+                                    deleteToggleHandler={() => setIsHidden(false)}
                                 />
                             ) : (
                                 <button onClick={() => setIsReplying(prev => !prev)}>
@@ -121,7 +124,7 @@ const Card = React.memo(function Card(props: {
                 <FormComponent
                     placeholderValue='Add a reply...'
                     dispatchHandler={(content: string) => {
-                        props.handleReplyDispatch(content)
+                        props.replyDispatchHandler(content)
                         setIsReplying(false)
                     }}
                 />
@@ -132,7 +135,7 @@ const Card = React.memo(function Card(props: {
                     placeholderValue='Edit a comment...'
                     value={props.item.content}
                     dispatchHandler={(content: string) => {
-                        props.handleEditDispatch(content)
+                        props.editDispatchHandler(content)
                         setIsEditting(false)
                     }}
                 />
@@ -145,7 +148,7 @@ const Card = React.memo(function Card(props: {
                     
                     <div className="buttons">
                         <button className="cancel" onClick={() => setIsHidden(true)}>No, Cancel</button>
-                        <button className="confirm" onClick={() => props.handleDeleteDispatch()}>Yes, Confirm</button>
+                        <button className="confirm" onClick={() => props.deleteDispatchHandler()}>Yes, Confirm</button>
                     </div>
                 </div>
             )}

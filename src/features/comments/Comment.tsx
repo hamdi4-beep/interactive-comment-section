@@ -51,10 +51,10 @@ const Comment = React.memo(function Comment(props: {
         <div className="comment-wrapper">
             <Card
                 item={comment}
-                handleReplyDispatch={replyToCommentHandler}
-                handleEditDispatch={editCommentHandler}
-                handleDeleteDispatch={deleteCommentHandler}
-                handleScoreUpdateDispatch={updateCommentScoreHandler}
+                replyDispatchHandler={replyToCommentHandler}
+                editDispatchHandler={editCommentHandler}
+                deleteDispatchHandler={deleteCommentHandler}
+                scoreUpdateDispatchHandler={updateCommentScoreHandler}
             >
                 <p>{comment.content}</p>
             </Card>
