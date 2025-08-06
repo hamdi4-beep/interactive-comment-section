@@ -53,10 +53,10 @@ const Reply = React.memo(function Reply({
         <div className="reply-wrapper">
             <Card
                 item={reply}
-                replyDispatchHandler={replyToReplyHandler}
-                editDispatchHandler={editReplyHandler}
-                deleteDispatchHandler={deleteReplyHandler}
-                scoreUpdateDispatchHandler={updateReplyScoreHandler}
+                handleReplyDispatch={replyToReplyHandler}
+                handleEditDispatch={editReplyHandler}
+                handleDeleteDispatch={deleteReplyHandler}
+                handleScoreUpdateDispatch={updateReplyScoreHandler}
             >
                 <p>
                     <span className="replying-to">@{reply.replyingTo} </span>

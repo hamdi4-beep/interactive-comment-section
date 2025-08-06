@@ -19,7 +19,7 @@ const Comment = React.memo(function Comment(props: {
     const replyToCommentHandler = React.useCallback(
         (content: string) =>
             dispatch(replyCreated(content, comment.username, comment.id)),
-        []
+        [comment.username, comment.id]
     )
 
     const editCommentHandler = React.useCallback(
@@ -28,7 +28,7 @@ const Comment = React.memo(function Comment(props: {
                 commentId: comment.id,
                 content
             })),
-        []
+        [comment.id]
     )
 
     const deleteCommentHandler = React.useCallback(
@@ -36,7 +36,7 @@ const Comment = React.memo(function Comment(props: {
             dispatch(commentDeleted({
                 commentId: comment.id
             })),
-        []
+        [comment.id]
     )
 
     const updateCommentScoreHandler = React.useCallback(
@@ -45,17 +45,17 @@ const Comment = React.memo(function Comment(props: {
                 commentId: comment.id,
                 score: comment.score + voteDiff
             })),
-        []
+        [comment.id]
     )
 
     return (
         <div className="comment-wrapper">
             <Card
                 item={comment}
-                replyDispatchHandler={replyToCommentHandler}
-                editDispatchHandler={editCommentHandler}
-                deleteDispatchHandler={deleteCommentHandler}
-                scoreUpdateDispatchHandler={updateCommentScoreHandler}
+                handleReplyDispatch={replyToCommentHandler}
+                handleEditDispatch={editCommentHandler}
+                handleDeleteDispatch={deleteCommentHandler}
+                handleScoreUpdateDispatch={updateCommentScoreHandler}
             >
                 <p>{comment.content}</p>
             </Card>
