@@ -19,7 +19,7 @@ const Reply = React.memo(function Reply({
     const replyToReplyHandler = React.useCallback(
         (content: string) =>
             dispatch(replyCreated(content, reply.username, parentId)),
-        []
+        [reply.username, parentId]
     )
 
     const editReplyHandler = React.useCallback(
@@ -28,7 +28,7 @@ const Reply = React.memo(function Reply({
                 replyId: id,
                 content
             })),
-        []
+        [id]
     )
 
     const deleteReplyHandler = React.useCallback(
@@ -37,7 +37,7 @@ const Reply = React.memo(function Reply({
                 replyId: id,
                 parentId
             })),
-        []
+        [id]
     )
 
     const updateReplyScoreHandler = React.useCallback(
@@ -46,7 +46,7 @@ const Reply = React.memo(function Reply({
                 replyId: id,
                 score: reply.score + voteDiff
             })),
-        []
+        [id]
     )
 
     return (
