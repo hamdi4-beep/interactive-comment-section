@@ -6,20 +6,20 @@ import * as React from 'react'
 
 const Reply = React.memo(function Reply({
     id,
-    parentId
+    parentCommentId
 }: {
     id: UserReply['id']
-    parentId: UserComment['id']
+    parentCommentId: UserComment['id']
 }) {
     const dispatch = useAppDispatch()
     const reply = useAppSelector(state => state.replies.byId[id])
 
-    if (!reply) return
+    if (!reply) throw new Error(`Reply with id ${id} not found`)
 
     const replyToReplyHandler = React.useCallback(
         (content: string) =>
-            dispatch(replyCreated(content, reply.username, parentId)),
-        [reply.username, parentId]
+            dispatch(replyCreated(content, reply.username, parentCommentId)),
+        [reply.username, parentCommentId]
     )
 
     const editReplyHandler = React.useCallback(
@@ -35,7 +35,7 @@ const Reply = React.memo(function Reply({
         () =>
             dispatch(replyDeleted({
                 replyId: id,
-                parentId
+                parentCommentId
             })),
         [id]
     )
