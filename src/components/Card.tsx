@@ -49,9 +49,9 @@ const Card = React.memo(function Card(props: {
 }) {
     const user = useAppSelector(state => state.users.byUsername[props.item.username])
 
+    const [currentVote, setCurrentVote] = React.useState('neutral')
     const [isReplying, setIsReplying] = React.useState(false)
     const [isEditting, setIsEditting] = React.useState(false)
-    const [currentVote, setCurrentVote] = React.useState('neutral')
     const [isHidden, setIsHidden] = React.useState(true)
 
     const voteDiffRef = React.useRef(0)
@@ -59,8 +59,6 @@ const Card = React.memo(function Card(props: {
     if (!props.item) return
 
     const isCurrentUser = user.role === 'currentUser'
-
-    console.log(currentVote)
 
     return (
         <div className="container">
