@@ -12,7 +12,7 @@ dist
 dist-ssr
 *.local
 
-progress.txt
+notes.txt
 
 # Editor directories and files
 .vscode/*

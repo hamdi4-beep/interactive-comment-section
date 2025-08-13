@@ -50,7 +50,7 @@ const Card = React.memo(function Card(props: {
     const user = useAppSelector(state => state.users.byUsername[props.item.username])
 
     const [voteStatus, setVoteStatus] = React.useState(VoteDif.InitialScore)
-    const [isReplying, setIsReplying] = React.useState(false)
+    const [isReplying, setIsReplying] = React.useState(true)
     const [isEditting, setIsEditting] = React.useState(false)
     const [isHidden, setIsHidden] = React.useState(true)
 
@@ -126,6 +126,7 @@ const Card = React.memo(function Card(props: {
                     placeholderValue='Add a reply...'
                     dispatchHandler={(content: string) => {
                         props.handleReplyDispatch(content)
+                        setIsReplying(false)
                     }}
                 />
             )}

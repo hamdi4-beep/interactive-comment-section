@@ -5,7 +5,7 @@ import { currentUser } from "../users/UsersSlice";
 
 export type UserReply = Omit<UserComment, 'replies'> & {
     replyingTo: string,
-    parentId: UserComment['id']
+    parentCommentId: UserComment['id']
 }
 
 type ReplyID = UserReply['id']
@@ -14,7 +14,7 @@ interface CreateReplyPayload {
     replyId: ReplyID
     content: string
     username: string
-    parentId: UserComment['id'],
+    parentCommentId: UserComment['id'],
     createdAt: string
 }
 
@@ -25,7 +25,7 @@ interface EditReplyPayload {
 
 interface DeleteReplyPayload {
     replyId: ReplyID
-    parentId: UserComment['id']
+    parentCommentId: UserComment['id']
 }
 
 interface UpdateReplyScorePayload {
@@ -48,7 +48,7 @@ const RepliesSlice = createSlice({
             reducer(state, action: PayloadAction<CreateReplyPayload>) {
                 state.byId[action.payload.replyId] = {
                     id: action.payload.replyId,
-                    parentId: action.payload.parentId,
+                    parentCommentId: action.payload.parentCommentId,
                     createdAt: action.payload.createdAt,
                     username: currentUser.username,
                     score: 0,
@@ -58,13 +58,13 @@ const RepliesSlice = createSlice({
 
                 state.allId.push(action.payload.replyId)
             },
-            prepare(content: string, username: string, parentId: string) {
+            prepare(content: string, username: string, parentCommentId: string) {
                 return {
                     payload: {
                         content,
                         replyId: nanoid(),
                         username,
-                        parentId,
+                        parentCommentId,
                         createdAt: (new Date()).toISOString()
                     }
                 }
