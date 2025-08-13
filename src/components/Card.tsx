@@ -49,24 +49,22 @@ const Card = React.memo(function Card(props: {
 }) {
     const user = useAppSelector(state => state.users.byUsername[props.item.username])
 
-    const [currentVote, setCurrentVote] = React.useState('neutral')
+    const [voteStatus, setVoteStatus] = React.useState(VoteDif.InitialScore)
     const [isReplying, setIsReplying] = React.useState(false)
     const [isEditting, setIsEditting] = React.useState(false)
     const [isHidden, setIsHidden] = React.useState(true)
 
     const voteDiffRef = React.useRef(0)
 
-    if (!props.item) return
-
     const isCurrentUser = user.role === 'currentUser'
 
     return (
         <div className="container">
             <div className='card'>
-                <div className="score-component" style={{backgroundColor: currentVote === 'upvoted' ? '#6EE7B7' : currentVote === 'downvoted' ? '#9CA3AF' : ''}}>
+                <div className="score-component" style={{backgroundColor: voteStatus === VoteDif.UpVoted ? '#6EE7B7' : voteStatus === VoteDif.DownVoted ? '#9CA3AF' : ''}}>
                     <button onClick={() => {
                         voteDiffRef.current = voteDiffRef.current <= 0 ? 1 : 0
-                        setCurrentVote(voteDiffRef.current ? 'upvoted' : 'neutral')
+                        setVoteStatus(voteDiffRef.current ? VoteDif.UpVoted : VoteDif.InitialScore)
                         props.handleScoreUpdateDispatch(voteDiffRef.current)
                     }}>
                         <div className="icon-img">
@@ -78,7 +76,7 @@ const Card = React.memo(function Card(props: {
 
                     <button onClick={() => {
                         voteDiffRef.current = voteDiffRef.current >= 0 ? -1 : 0
-                        setCurrentVote(voteDiffRef.current ? 'downvoted' : 'neutral')
+                        setVoteStatus(voteDiffRef.current ? VoteDif.DownVoted : VoteDif.InitialScore)
                         props.handleScoreUpdateDispatch(voteDiffRef.current)
                     }}>
                         <div className="icon-img">
@@ -128,7 +126,6 @@ const Card = React.memo(function Card(props: {
                     placeholderValue='Add a reply...'
                     dispatchHandler={(content: string) => {
                         props.handleReplyDispatch(content)
-                        setIsReplying(false)
                     }}
                 />
             )}

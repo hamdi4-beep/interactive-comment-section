@@ -14,7 +14,7 @@ const Comment = React.memo(function Comment(props: {
     const [isRepliesHidden, setIsRepliesHidden] = React.useState(true)
     const comment = useAppSelector(state => state.comments.byId[props.id])
 
-    if (!comment) return
+    if (!comment) throw new Error(`Comment with id ${props.id} not found`)
 
     const replyToCommentHandler = React.useCallback(
         (content: string) =>
