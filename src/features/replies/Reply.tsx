@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../hooks"
 import Card from "../../components/Card"
-import { replyCreated, replyDeleted, replyEdited, replyScoreUpdated, type UserReply } from "./RepliesSlice"
+import { replyCreated, replyDeleted, replyEdited, replyScoreUpdated, selectReplyById, type UserReply } from "./RepliesSlice"
 import type { UserComment } from "../comments/CommentsSlice"
 import * as React from 'react'
 
@@ -12,7 +12,7 @@ const Reply = React.memo(function Reply({
     parentCommentId: UserComment['id']
 }) {
     const dispatch = useAppDispatch()
-    const reply = useAppSelector(state => state.replies.byId[id])
+    const reply = useAppSelector(selectReplyById(id))
 
     if (!reply) throw new Error(`Reply with id ${id} not found`)
 

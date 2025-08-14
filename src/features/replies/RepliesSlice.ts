@@ -2,6 +2,7 @@ import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { type UserComment } from "../comments/CommentsSlice";
 import data from '../../data.json'
 import { currentUser } from "../users/UsersSlice";
+import type { RootState } from "../../store";
 
 export type UserReply = Omit<UserComment, 'replies'> & {
     replyingTo: string,
@@ -86,5 +87,8 @@ const RepliesSlice = createSlice({
 })
 
 export const { replyCreated, replyEdited, replyDeleted, replyScoreUpdated } = RepliesSlice.actions
+
+export const selectAllReplies = (state: RootState) => state.replies.allId
+export const selectReplyById = (id: ReplyID) => (state: RootState) => state.replies.byId[id]
 
 export default RepliesSlice.reducer

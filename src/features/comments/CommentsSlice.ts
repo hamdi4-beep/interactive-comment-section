@@ -1,4 +1,4 @@
-import { createSelector, createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import data from '../../data.json'
 import { replyCreated, replyDeleted } from "../replies/RepliesSlice";
 import { currentUser } from "../users/UsersSlice";
