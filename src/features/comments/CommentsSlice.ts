@@ -1,7 +1,8 @@
-import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import data from '../../data.json'
 import { replyCreated, replyDeleted } from "../replies/RepliesSlice";
 import { currentUser } from "../users/UsersSlice";
+import type { RootState } from "../../store";
 
 export type UserComment = {
     id: string
@@ -99,5 +100,8 @@ const CommentsSlice = createSlice({
 })
 
 export const {commentCreated, commentEdited, commentDeleted, commentScoreUpdated} = CommentsSlice.actions
+
+export const selectAllComments = (state: RootState) => state.comments.allId
+export const selectCommentById = (id: CommentID) => (state: RootState) => state.comments.byId[id]
 
 export default CommentsSlice.reducer

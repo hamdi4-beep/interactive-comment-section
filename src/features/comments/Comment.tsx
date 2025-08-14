@@ -2,7 +2,7 @@ import * as React from 'react'
 import Card from '../../components/Card'
 import Reply from '../replies/Reply'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { commentDeleted, commentEdited, commentScoreUpdated, type UserComment } from './CommentsSlice'
+import { commentDeleted, commentEdited, commentScoreUpdated, selectCommentById, type UserComment } from './CommentsSlice'
 import { replyCreated } from '../replies/RepliesSlice'
 
 
@@ -12,7 +12,7 @@ const Comment = React.memo(function Comment(props: {
     const dispatch = useAppDispatch()
 
     const [isRepliesHidden, setIsRepliesHidden] = React.useState(true)
-    const comment = useAppSelector(state => state.comments.byId[props.id])
+    const comment = useAppSelector(selectCommentById(props.id))
 
     if (!comment) throw new Error(`Comment with id ${props.id} not found`)
 
