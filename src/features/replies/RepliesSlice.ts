@@ -1,6 +1,6 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { type UserComment } from "../comments/CommentsSlice";
-import data from '../../data.json'
+import data from '../../data/replies.json'
 import { currentUser } from "../users/UsersSlice";
 import type { RootState } from "../../store";
 
