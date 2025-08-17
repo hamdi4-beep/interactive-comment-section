@@ -1,39 +1,37 @@
 {
-    "users": {
-    "byUsername": {
-      "amyrobson": {
-        "image": { 
-          "png": "/images/avatars/image-amyrobson.png",
-          "webp": "/images/avatars/image-amyrobson.webp"
-        },
-        "username": "amyrobson",
-        "role": "user"
+  "byUsername": {
+    "amyrobson": {
+      "image": { 
+        "png": "/images/avatars/image-amyrobson.png",
+        "webp": "/images/avatars/image-amyrobson.webp"
       },
-      "maxblagun": {
-        "image": { 
-          "png": "/images/avatars/image-maxblagun.png",
-          "webp": "/images/avatars/image-maxblagun.webp"
-        },
-        "username": "maxblagun",
-        "role": "user"
-      },
-      "ramsesmiron": {
-        "image": { 
-          "png": "/images/avatars/image-ramsesmiron.png",
-          "webp": "/images/avatars/image-ramsesmiron.webp"
-        },
-        "username": "ramsesmiron",
-        "role": "user"
-      },
-      "juliusomo": {
-        "image": { 
-          "png": "/images/avatars/image-juliusomo.png",
-          "webp": "/images/avatars/image-juliusomo.webp"
-        },
-        "username": "juliusomo",
-        "role": "currentUser"
-      }
+      "username": "amyrobson",
+      "role": "user"
     },
-    "allUsername": ["amyrobson", "maxblagun", "ramsesmiron", "juliusomo"]
-  }
+    "maxblagun": {
+      "image": { 
+        "png": "/images/avatars/image-maxblagun.png",
+        "webp": "/images/avatars/image-maxblagun.webp"
+      },
+      "username": "maxblagun",
+      "role": "user"
+    },
+    "ramsesmiron": {
+      "image": { 
+        "png": "/images/avatars/image-ramsesmiron.png",
+        "webp": "/images/avatars/image-ramsesmiron.webp"
+      },
+      "username": "ramsesmiron",
+      "role": "user"
+    },
+    "juliusomo": {
+      "image": { 
+        "png": "/images/avatars/image-juliusomo.png",
+        "webp": "/images/avatars/image-juliusomo.webp"
+      },
+      "username": "juliusomo",
+      "role": "currentUser"
+    }
+  },
+  "allUsername": ["amyrobson", "maxblagun", "ramsesmiron", "juliusomo"]
 }

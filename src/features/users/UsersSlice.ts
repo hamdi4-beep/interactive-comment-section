@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import data from '../../data/users.json'
+import users from '../../data/users.json'
 
 type User = {
     image: {
@@ -17,7 +17,7 @@ export interface UserState {
     allUsername: string[]
 }
 
-const initialState: UserState = data.users
+const initialState: UserState = users
 
 const UsersSlice = createSlice({
     name: 'users',

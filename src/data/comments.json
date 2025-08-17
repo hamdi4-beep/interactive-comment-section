@@ -1,6 +1,5 @@
 {
-    "comments": {
-        "byId": {
+    "byId": {
         "Q_YD8vpbAvPVTn4SDteti": {
             "id": "Q_YD8vpbAvPVTn4SDteti",
             "content": "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.",
@@ -17,7 +16,6 @@
             "username": "maxblagun",
             "replies": ["VYKP1OoDYOcKbwifEyx5O", "O3LGiJHvTX_n9b2XZIsoj"]
         }
-        },
-        "allId": ["Q_YD8vpbAvPVTn4SDteti", "GwjFZlHPFN0_M41QvW1Dt"]
-  }
+    },
+    "allId": ["Q_YD8vpbAvPVTn4SDteti", "GwjFZlHPFN0_M41QvW1Dt"]
 }

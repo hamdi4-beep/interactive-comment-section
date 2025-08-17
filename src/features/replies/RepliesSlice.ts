@@ -1,6 +1,6 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { type UserComment } from "../comments/CommentsSlice";
-import data from '../../data/replies.json'
+import replies from '../../data/replies.json'
 import { currentUser } from "../users/UsersSlice";
 import type { RootState } from "../../store";
 
@@ -39,7 +39,7 @@ export interface ReplyState {
     allId: ReplyID[]
 }
 
-export const initialState: ReplyState = data.replies
+export const initialState: ReplyState = replies
 
 const RepliesSlice = createSlice({
     name: 'replies',

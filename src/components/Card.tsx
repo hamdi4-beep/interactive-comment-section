@@ -121,7 +121,7 @@ const Card = React.memo(function Card(props: {
                 </div>
             </div>
 
-            {isReplying && (
+            {isReplying && !isCurrentUser && (
                 <FormComponent
                     placeholderValue='Add a reply...'
                     dispatchHandler={(content: string) => {
