@@ -121,6 +121,7 @@ const Card = React.memo(function Card(props: {
                 </div>
             </div>
 
+            {/* This keeps the current user from replying to their comment/reply which goes against the specified specs */}
             {isReplying && !isCurrentUser && (
                 <FormComponent
                     placeholderValue='Add a reply...'
