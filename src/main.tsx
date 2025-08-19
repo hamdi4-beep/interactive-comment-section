@@ -2,9 +2,17 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './css/index.css'
+import { ErrorBoundary } from 'react-error-boundary'
+import FallbackRender from './components/ErrorComponent.tsx'
+import { Provider } from 'react-redux'
+import { store } from './store.ts'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ErrorBoundary fallbackRender={FallbackRender}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ErrorBoundary>
   </StrictMode>,
 )
