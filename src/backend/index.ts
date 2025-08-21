@@ -1,7 +1,5 @@
-import { error } from 'console'
-import express, { response } from 'express'
+import express from 'express'
 import { createReadStream } from 'fs'
-import { pipeline } from 'stream'
 
 const fs = createReadStream('../data/comments.json')
 
@@ -10,14 +8,15 @@ app.listen(3000, () => console.log('Listening for requests on', 3000))
 
 app.get('/comments', (request, response) => {
     response.writeHead(200, {
-        'content-type': 'application/json'
+        'access-control-allow-origin': '*',
+        'transfer-encoding': 'chunked'
     })
     
     fs
         .pipe(response)
         .on('error', err => {
             response
-                .writeHead(500, {'content-type': 'text/plain'})
+                .status(500)
                 .end('Something went wrong!')
         })
 })

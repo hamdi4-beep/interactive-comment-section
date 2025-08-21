@@ -1,9 +1,24 @@
+import { useEffect } from 'react'
 import Comment from '../features/comments/Comment'
 import { selectAllComments } from '../features/comments/CommentsSlice'
 import { useAppSelector } from '../hooks'
 
 function CommentsList() {
     const allCommentIds = useAppSelector(selectAllComments)
+
+    // Mocking a pretty basic fetch request to ensure data is retreived without issues
+    useEffect(() => {
+        const fetchComments = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/comments')
+                console.log(await response.json())
+            } catch (err) {
+                console.error(err)
+            }
+        }
+
+        fetchComments()
+    }, [])
 
     return (
         <div className="comments-list">
