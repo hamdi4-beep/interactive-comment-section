@@ -1,13 +1,23 @@
-import { createServer } from "http";
+import { error } from 'console'
+import express, { response } from 'express'
+import { createReadStream } from 'fs'
+import { pipeline } from 'stream'
 
-const server = createServer((request, response) => {
-    console.log('Recieved a request with the URL:', request.url)
+const fs = createReadStream('../data/comments.json')
 
-    response
-        .writeHead(200, {
-            'content-type': 'text/plain'
+const app = express()
+app.listen(3000, () => console.log('Listening for requests on', 3000))
+
+app.get('/comments', (request, response) => {
+    response.writeHead(200, {
+        'content-type': 'application/json'
+    })
+    
+    fs
+        .pipe(response)
+        .on('error', err => {
+            response
+                .writeHead(500, {'content-type': 'text/plain'})
+                .end('Something went wrong!')
         })
-        .end('OK')
 })
-
-server.listen(3000, () => console.log('Listening to requests on port:', 3000))
