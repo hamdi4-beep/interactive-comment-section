@@ -19,16 +19,14 @@ function CommentsList() {
 
         const fetchCommentById = async (id: string) => {
             try {
-                const response = await fetch('http://localhost:3000/comments/' + id)
-                console.log(await response.json())
+                const comments = await fetchAllComments()
+                console.log(comments.byId[id])
             } catch (err) {
                 console.error(err)
             }
         }
 
-        fetchAllComments().then(data => {
-            data.allId.map((id: string) => fetchCommentById(id))
-        })
+        fetchCommentById("Q_YD8vpbAvPVTn4SDteti")
     }, [])
 
     return (
