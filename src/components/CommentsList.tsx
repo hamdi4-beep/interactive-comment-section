@@ -8,16 +8,27 @@ function CommentsList() {
 
     // Mocking a pretty basic fetch request to ensure data is retreived without issues
     useEffect(() => {
-        const fetchComments = async () => {
+        const fetchAllComments = async () => {
             try {
                 const response = await fetch('http://localhost:3000/comments')
+                return await response.json()
+            } catch (err) {
+                console.error(err)
+            }
+        }
+
+        const fetchCommentById = async (id: string) => {
+            try {
+                const response = await fetch('http://localhost:3000/comments/' + id)
                 console.log(await response.json())
             } catch (err) {
                 console.error(err)
             }
         }
 
-        fetchComments()
+        fetchAllComments().then(data => {
+            data.allId.map((id: string) => fetchCommentById(id))
+        })
     }, [])
 
     return (

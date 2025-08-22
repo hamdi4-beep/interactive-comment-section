@@ -14,6 +14,11 @@ app.get('/comments', (request, response) => {
 
         return
     }
+
+    response
+        .writeHead(200, {
+            'access-control-allow-origin': '*'
+        })
     
     createReadStream(path)
         .pipe(response)
@@ -51,6 +56,7 @@ app.get('/comments/:id', (request, response) => {
 
             response
                 .status(200)
+                .setHeader('access-control-allow-origin', '*')
                 .json(data['byId'][id])
                 .end()
         })
