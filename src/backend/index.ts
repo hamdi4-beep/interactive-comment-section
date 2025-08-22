@@ -4,6 +4,11 @@ import { createReadStream, existsSync } from 'fs'
 const app = express()
 app.listen(3000, () => console.log('Listening for requests on', 3000))
 
+app.use((request, response, next) => {
+    response.setHeader('access-control-allow-origin', '*')
+    next()
+})
+
 app.get('/comments', (request, response) => {
     const path = '../data/comments.json'
 
@@ -15,10 +20,7 @@ app.get('/comments', (request, response) => {
         return
     }
 
-    response
-        .writeHead(200, {
-            'access-control-allow-origin': '*'
-        })
+    response.status(200)
     
     createReadStream(path)
         .pipe(response)
@@ -35,13 +37,7 @@ app.get('/comments/:id', (request, response) => {
     readStream
         .on('data', chunk => body += chunk)
         .on('end', () => {
-            body = JSON.parse(body)
-
-            const data = (body as unknown as {
-                'byId': {
-                    [key: string]: Object
-                }
-            })
+            const data = JSON.parse(body)
 
             if (!data.byId[id]) {
                 response
@@ -56,7 +52,6 @@ app.get('/comments/:id', (request, response) => {
 
             response
                 .status(200)
-                .setHeader('access-control-allow-origin', '*')
                 .json(data['byId'][id])
                 .end()
         })

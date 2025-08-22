@@ -17,16 +17,7 @@ function CommentsList() {
             }
         }
 
-        const fetchCommentById = async (id: string) => {
-            try {
-                const comments = await fetchAllComments()
-                console.log(comments.byId[id])
-            } catch (err) {
-                console.error(err)
-            }
-        }
-
-        fetchCommentById("Q_YD8vpbAvPVTn4SDteti")
+        fetchAllComments().then(console.log)
     }, [])
 
     return (
