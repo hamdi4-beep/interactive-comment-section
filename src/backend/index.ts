@@ -23,9 +23,8 @@ app.get('/comments', (request, response) => {
     response.status(200)
     
     createReadStream(path)
-        .pipe(response)
         .on('error', console.error)
-        .on('finish', () => console.log('Finished streaming the file'))
+        .pipe(response)
 })
 
 app.get('/comments/:id', (request, response) => {
@@ -55,4 +54,22 @@ app.get('/comments/:id', (request, response) => {
                 .json(data['byId'][id])
                 .end()
         })
+})
+
+app.get('/replies', (request, response) => {
+    const path = '../data/replies.json'
+
+    if (!existsSync(path)) {
+        response
+            .status(500)
+            .end('Something went wrong!\n')
+
+        return
+    }
+
+    response.status(200)
+
+    createReadStream(path)
+        .on('error', console.error)
+        .pipe(response)
 })
