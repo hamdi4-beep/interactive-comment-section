@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Card from '../../components/Card'
+import Card, { ScoreComponent } from '../../components/Card'
 import Reply from '../replies/Reply'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { commentDeleted, commentEdited, commentScoreUpdated, selectCommentById, type UserComment } from './CommentsSlice'
@@ -52,12 +52,12 @@ const Comment = React.memo(function Comment(props: {
         <div className="comment-wrapper">
             <Card
                 item={comment}
+                content={<p>{comment.content}</p>}
                 handleReplyDispatch={replyToCommentHandler}
                 handleEditDispatch={editCommentHandler}
                 handleDeleteDispatch={deleteCommentHandler}
-                handleScoreUpdateDispatch={updateCommentScoreHandler}
             >
-                <p>{comment.content}</p>
+                <ScoreComponent score={comment.score} onUpdate={updateCommentScoreHandler} />
             </Card>
 
             {comment.replies.length > 0 && <button className='view-replies-btn' onClick={() => setIsRepliesHidden(prev => !prev)}>{comment.replies.length} replies</button>}

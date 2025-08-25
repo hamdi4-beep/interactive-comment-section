@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../hooks"
-import Card from "../../components/Card"
+import Card, { ScoreComponent } from "../../components/Card"
 import { replyCreated, replyDeleted, replyEdited, replyScoreUpdated, selectReplyById, type UserReply } from "./RepliesSlice"
 import type { UserComment } from "../comments/CommentsSlice"
 import * as React from 'react'
@@ -53,15 +53,12 @@ const Reply = React.memo(function Reply({
         <div className="reply-wrapper">
             <Card
                 item={reply}
+                content={<p><span className="replying-to">@{reply.replyingTo} </span>{reply.content}</p>}
                 handleReplyDispatch={replyToReplyHandler}
                 handleEditDispatch={editReplyHandler}
                 handleDeleteDispatch={deleteReplyHandler}
-                handleScoreUpdateDispatch={updateReplyScoreHandler}
             >
-                <p>
-                    <span className="replying-to">@{reply.replyingTo} </span>
-                    {reply.content}
-                </p>
+                <ScoreComponent score={reply.score} onUpdate={updateReplyScoreHandler} />
             </Card>
         </div>
     )

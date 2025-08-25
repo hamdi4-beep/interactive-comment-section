@@ -36,54 +36,66 @@ const CurrentUserActions = (props: {
     </div>
 )
 
+export const ScoreComponent = ({
+    score,
+    onUpdate
+}: {
+    score: number
+    onUpdate: (score: number) => void
+}) => {
+    const [currentVoteStatus, setCurrentVoteStatus] = React.useState<'initial' | 'upvoted' | 'downvoted'>('initial')
+    const voteDiffRef = React.useRef(0)
+
+    return (
+        <div className="score-component" style={{backgroundColor: currentVoteStatus === 'upvoted' ? '#6EE7B7' : currentVoteStatus === 'downvoted' ? '#9CA3AF' : ''}}>
+            <button onClick={() => {
+                voteDiffRef.current = voteDiffRef.current <= 0 ? 1 : 0
+                setCurrentVoteStatus(voteDiffRef.current ? 'upvoted' : 'initial')
+                onUpdate(voteDiffRef.current)
+            }}>
+                <div className="icon-img">
+                    <img src="/interactive-comment-section/images/icon-plus.svg" alt="" />
+                </div>
+            </button>
+
+            <span>{score}</span>
+
+            <button onClick={() => {
+                voteDiffRef.current = voteDiffRef.current >= 0 ? -1 : 0
+                setCurrentVoteStatus(voteDiffRef.current ? 'downvoted' : 'initial')
+                onUpdate(voteDiffRef.current)
+            }}>
+                <div className="icon-img">
+                    <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
+                </div>
+            </button>
+        </div>
+    )
+}
+
 // A component that's only responsible for visual appearance and structure. It shouldn't define logic or be responsible for how comments and replies behave.
 // It couples the markup structure of a comment and reply element so you only have to modify them consistently from a single location.
 
 const Card = React.memo(function Card(props: {
     item: UserComment | UserReply,
+    content: React.ReactNode
     handleReplyDispatch: (content: string) => void,
     handleEditDispatch: (content: string) => void,
     handleDeleteDispatch: () => void,
-    handleScoreUpdateDispatch: (score: number) => void
     children: React.ReactNode
 }) {
     const user = useAppSelector(state => state.users.byUsername[props.item.username])
-
-    const [voteStatus, setVoteStatus] = React.useState(VoteDif.InitialScore)
+    
     const [isReplying, setIsReplying] = React.useState(true)
     const [isEditting, setIsEditting] = React.useState(false)
     const [isHidden, setIsHidden] = React.useState(true)
-
-    const voteDiffRef = React.useRef(0)
-
+    
     const isCurrentUser = user.role === 'currentUser'
 
     return (
         <div className="container">
             <div className='card'>
-                <div className="score-component" style={{backgroundColor: voteStatus === VoteDif.UpVoted ? '#6EE7B7' : voteStatus === VoteDif.DownVoted ? '#9CA3AF' : ''}}>
-                    <button onClick={() => {
-                        voteDiffRef.current = voteDiffRef.current <= 0 ? 1 : 0
-                        setVoteStatus(voteDiffRef.current ? VoteDif.UpVoted : VoteDif.InitialScore)
-                        props.handleScoreUpdateDispatch(voteDiffRef.current)
-                    }}>
-                        <div className="icon-img">
-                            <img src="/interactive-comment-section/images/icon-plus.svg" alt="" />
-                        </div>
-                    </button>
-
-                    <span>{props.item.score}</span>
-
-                    <button onClick={() => {
-                        voteDiffRef.current = voteDiffRef.current >= 0 ? -1 : 0
-                        setVoteStatus(voteDiffRef.current ? VoteDif.DownVoted : VoteDif.InitialScore)
-                        props.handleScoreUpdateDispatch(voteDiffRef.current)
-                    }}>
-                        <div className="icon-img">
-                            <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
-                        </div>
-                    </button>
-                </div>
+                {props.children}
 
                 <div className="content">
                     <div className="profile-header">
@@ -117,7 +129,7 @@ const Card = React.memo(function Card(props: {
                         </div>
                     </div>
 
-                    {props.children}
+                    {props.content}
                 </div>
             </div>
 
