@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import users from '../../data/users.json'
+import type { RootState } from "../../store";
 
 type User = {
     image: {
@@ -25,8 +26,15 @@ const UsersSlice = createSlice({
     reducers: {}
 })
 
-const username = initialState.allUsername.find(username => initialState.byUsername[username].role === 'currentUser') as string
+export const selectUsers = (state: RootState) => state.users
+export const selectUserByUsername = (username: string) => (state: RootState) => state.users.byUsername[username]
 
-export const currentUser = initialState.byUsername[username]
+export const selectCurrentUser = createSelector(
+    selectUsers,
+    users => {
+        const username = users.allUsername.find(username => users.byUsername[username].role === 'currentUser')
+        if (username) return users.byUsername[username]
+    }
+)
 
 export default UsersSlice.reducer

@@ -1,7 +1,6 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import comments from '../../data/comments.json'
 import { replyCreated, replyDeleted } from "../replies/RepliesSlice";
-import { currentUser } from "../users/UsersSlice";
 import type { RootState } from "../../store";
 
 export type UserComment = {
@@ -38,6 +37,15 @@ interface UpdateCommentScorePayload {
 }
 
 const initialState: CommentState = comments
+
+const currentUser = {
+    image: { 
+        png: "/images/avatars/image-juliusomo.png",
+        webp: "/images/avatars/image-juliusomo.webp"
+    },
+    username: "juliusomo",
+    role: "currentUser"
+}
 
 const findCommentId = (state: CommentState, targetId: CommentID) =>
     state.allId.find(id => targetId === id)

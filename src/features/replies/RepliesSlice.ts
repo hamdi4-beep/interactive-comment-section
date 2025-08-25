@@ -1,7 +1,6 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { type UserComment } from "../comments/CommentsSlice";
 import replies from '../../data/replies.json'
-import { currentUser } from "../users/UsersSlice";
 import type { RootState } from "../../store";
 
 export type UserReply = Omit<UserComment, 'replies'> & {
@@ -40,6 +39,15 @@ export interface ReplyState {
 }
 
 export const initialState: ReplyState = replies
+
+const currentUser = {
+    image: { 
+        png: "/images/avatars/image-juliusomo.png",
+        webp: "/images/avatars/image-juliusomo.webp"
+    },
+    username: "juliusomo",
+    role: "currentUser"
+}
 
 const RepliesSlice = createSlice({
     name: 'replies',

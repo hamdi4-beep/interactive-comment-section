@@ -4,6 +4,7 @@ import { useAppSelector } from '../hooks'
 import { type UserReply } from '../features/replies/RepliesSlice'
 import type { UserComment } from '../features/comments/CommentsSlice'
 import TimeAgo from 'timeago-react'
+import { selectCurrentUser, selectUserByUsername } from '../features/users/UsersSlice'
 
 // @ts-ignore
 
@@ -84,13 +85,14 @@ const Card = React.memo(function Card(props: {
     handleDeleteDispatch: () => void,
     children: React.ReactNode
 }) {
-    const user = useAppSelector(state => state.users.byUsername[props.item.username])
+    const user = useAppSelector(selectUserByUsername(props.item.username))
+    const currentUser = useAppSelector(selectCurrentUser)
     
     const [isReplying, setIsReplying] = React.useState(true)
     const [isEditting, setIsEditting] = React.useState(false)
     const [isHidden, setIsHidden] = React.useState(true)
     
-    const isCurrentUser = user.role === 'currentUser'
+    const isCurrentUser = currentUser === user
 
     return (
         <div className="container">
