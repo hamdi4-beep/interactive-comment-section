@@ -2,7 +2,7 @@ import * as React from 'react'
 import Card, { ScoreComponent } from '@/components/Card'
 import Reply from '@/features/replies/Reply'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { commentDeleted, commentEdited, commentScoreUpdated, selectCommentById, type UserComment } from '@/features/comments/CommentsSlice'
+import { commentDeleted, commentEdited, selectCommentById, type UserComment } from '@/features/comments/CommentsSlice'
 import { replyCreated } from '@/features/replies/RepliesSlice'
 
 
@@ -25,7 +25,7 @@ const Comment = React.memo(function Comment(props: {
     const editCommentHandler = React.useCallback(
         (content: string) =>
             dispatch(commentEdited({
-                commentId: comment.id,
+                id: comment.id,
                 content
             })),
         [comment.id]
@@ -34,16 +34,7 @@ const Comment = React.memo(function Comment(props: {
     const deleteCommentHandler = React.useCallback(
         () =>
             dispatch(commentDeleted({
-                commentId: comment.id
-            })),
-        [comment.id]
-    )
-
-    const updateCommentScoreHandler = React.useCallback(
-        (voteDiff: number) =>
-            dispatch(commentScoreUpdated({
-                commentId: comment.id,
-                score: comment.score + voteDiff
+                id: comment.id
             })),
         [comment.id]
     )
@@ -57,7 +48,7 @@ const Comment = React.memo(function Comment(props: {
                 handleEditDispatch={editCommentHandler}
                 handleDeleteDispatch={deleteCommentHandler}
             >
-                <ScoreComponent score={comment.score} onUpdate={updateCommentScoreHandler} />
+                <ScoreComponent score={comment.score} onUpdate={() => {}} />
             </Card>
 
             {comment.replies.length > 0 && <button className='view-replies-btn' onClick={() => setIsRepliesHidden(prev => !prev)}>{comment.replies.length} replies</button>}

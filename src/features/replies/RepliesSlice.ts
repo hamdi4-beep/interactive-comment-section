@@ -10,28 +10,9 @@ export type UserReply = Omit<UserComment, 'replies'> & {
 
 type ReplyID = UserReply['id']
 
-interface CreateReplyPayload {
-    replyId: ReplyID
-    content: string
-    username: string
-    parentCommentId: UserComment['id'],
-    createdAt: string
-}
-
-interface EditReplyPayload {
-    replyId: ReplyID
-    content: string
-}
-
-interface DeleteReplyPayload {
-    replyId: ReplyID
-    parentCommentId: UserComment['id']
-}
-
-interface UpdateReplyScorePayload {
-    replyId: ReplyID
-    score: number
-}
+interface CreateReplyPayload extends Pick<UserReply, 'content' | 'username' | 'createdAt' | 'id' | 'parentCommentId'> {}
+interface DeleteReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId'> {}
+interface EditReplyPayload extends Pick<CreateReplyPayload, 'content' | 'id'> {}
 
 export interface ReplyState {
     byId: Record<ReplyID, UserReply>
@@ -55,8 +36,8 @@ const RepliesSlice = createSlice({
     reducers: {
         replyCreated: {
             reducer(state, action: PayloadAction<CreateReplyPayload>) {
-                state.byId[action.payload.replyId] = {
-                    id: action.payload.replyId,
+                state.byId[action.payload.id] = {
+                    id: action.payload.id,
                     parentCommentId: action.payload.parentCommentId,
                     createdAt: action.payload.createdAt,
                     username: currentUser.username,
@@ -65,13 +46,13 @@ const RepliesSlice = createSlice({
                     replyingTo: action.payload.username
                 }
 
-                state.allId.push(action.payload.replyId)
+                state.allId.push(action.payload.id)
             },
             prepare(content: string, username: string, parentCommentId: string) {
                 return {
                     payload: {
                         content,
-                        replyId: nanoid(),
+                        id: nanoid(),
                         username,
                         parentCommentId,
                         createdAt: (new Date()).toISOString()
@@ -80,21 +61,17 @@ const RepliesSlice = createSlice({
             }
         },
         replyEdited(state, action: PayloadAction<EditReplyPayload>) {
-            const reply = state.byId[action.payload.replyId]
+            const reply = state.byId[action.payload.id]
             reply.content = action.payload.content
         },
         replyDeleted(state, action: PayloadAction<DeleteReplyPayload>) {
-            delete state.byId[action.payload.replyId]
-            state.allId = state.allId.filter(id => action.payload.replyId !== id)
-        },
-        replyScoreUpdated(state, action: PayloadAction<UpdateReplyScorePayload>) {
-            const reply = state.byId[action.payload.replyId]
-            reply.score = action.payload.score
+            delete state.byId[action.payload.id]
+            state.allId = state.allId.filter(id => action.payload.id !== id)
         }
     }
 })
 
-export const { replyCreated, replyEdited, replyDeleted, replyScoreUpdated } = RepliesSlice.actions
+export const { replyCreated, replyEdited, replyDeleted } = RepliesSlice.actions
 
 export const selectAllReplies = (state: RootState) => state.replies.allId
 export const selectReplyById = (id: ReplyID) => (state: RootState) => state.replies.byId[id]

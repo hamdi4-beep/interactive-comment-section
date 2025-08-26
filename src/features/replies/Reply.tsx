@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/hooks"
 import Card, { ScoreComponent } from "@/components/Card"
-import { replyCreated, replyDeleted, replyEdited, replyScoreUpdated, selectReplyById, type UserReply } from "@/features/replies/RepliesSlice"
+import { replyCreated, replyDeleted, replyEdited, selectReplyById, type UserReply } from "@/features/replies/RepliesSlice"
 import type { UserComment } from "@/features/comments/CommentsSlice"
 import * as React from 'react'
 
@@ -25,7 +25,7 @@ const Reply = React.memo(function Reply({
     const editReplyHandler = React.useCallback(
         (content: string) =>
             dispatch(replyEdited({
-                replyId: id,
+                id,
                 content
             })),
         [id]
@@ -34,17 +34,8 @@ const Reply = React.memo(function Reply({
     const deleteReplyHandler = React.useCallback(
         () =>
             dispatch(replyDeleted({
-                replyId: id,
+                id,
                 parentCommentId
-            })),
-        [id]
-    )
-
-    const updateReplyScoreHandler = React.useCallback(
-        (voteDiff: number) =>
-            dispatch(replyScoreUpdated({
-                replyId: id,
-                score: reply.score + voteDiff
             })),
         [id]
     )
@@ -58,7 +49,7 @@ const Reply = React.memo(function Reply({
                 handleEditDispatch={editReplyHandler}
                 handleDeleteDispatch={deleteReplyHandler}
             >
-                <ScoreComponent score={reply.score} onUpdate={updateReplyScoreHandler} />
+                <ScoreComponent score={reply.score} onUpdate={() => {}} />
             </Card>
         </div>
     )

@@ -19,22 +19,9 @@ export interface CommentState {
     allId: CommentID[]
 }
 
-interface CreateCommentPayload {
-    commentId: CommentID
-    content: UserComment['content']
-    createdAt: string
-}
-
+interface CreateCommentPayload extends Pick<UserComment, 'content' | 'createdAt' | 'id'> {}
+interface DeleteCommentPayload extends Pick<UserComment, 'id'> {}
 interface EditCommentPayload extends Omit<CreateCommentPayload, 'createdAt'> {}
-
-interface DeleteCommentPayload {
-    commentId: CommentID
-}
-
-interface UpdateCommentScorePayload {
-    commentId: CommentID
-    score: number
-}
 
 const initialState: CommentState = comments
 
@@ -56,8 +43,8 @@ const CommentsSlice = createSlice({
     reducers: {
         commentCreated: {
             reducer: (state, action: PayloadAction<CreateCommentPayload>) => {
-                state.byId[action.payload.commentId] = {
-                    id: action.payload.commentId,
+                state.byId[action.payload.id] = {
+                    id: action.payload.id,
                     createdAt: action.payload.createdAt,
                     score: 0,
                     content: action.payload.content,
@@ -66,29 +53,25 @@ const CommentsSlice = createSlice({
                     replies: []
                 }
 
-                state.allId.push(action.payload.commentId)
+                state.allId.push(action.payload.id)
             },
             prepare: (content: string) => {
                 return {
                     payload: {
                         content,
-                        commentId: nanoid(),
+                        id: nanoid(),
                         createdAt: (new Date()).toISOString()
                     }
                 }
             }
         },
         commentEdited(state, action: PayloadAction<EditCommentPayload>) {
-            const comment = state.byId[action.payload.commentId]
+            const comment = state.byId[action.payload.id]
             comment.content = action.payload.content
         },
         commentDeleted(state, action: PayloadAction<DeleteCommentPayload>) {
-            delete state.byId[action.payload.commentId]
-            state.allId = state.allId.filter(id => action.payload.commentId !== id)
-        },
-        commentScoreUpdated(state, action: PayloadAction<UpdateCommentScorePayload>) {
-            const comment = state.byId[action.payload.commentId]
-            comment.score = action.payload.score
+            delete state.byId[action.payload.id]
+            state.allId = state.allId.filter(id => action.payload.id !== id)
         }
     },
     extraReducers: builder =>
@@ -97,17 +80,17 @@ const CommentsSlice = createSlice({
                 const commentID = findCommentId(state, action.payload.parentCommentId)
                 
                 if (commentID)
-                    state.byId[commentID].replies.push(action.payload.replyId)
+                    state.byId[commentID].replies.push(action.payload.id)
             })
             .addCase(replyDeleted, (state, action) => {
                 const commentID = findCommentId(state, action.payload.parentCommentId)
 
                 if (commentID)
-                    state.byId[commentID].replies = state.byId[commentID].replies.filter(replyId => replyId !== action.payload.replyId)
+                    state.byId[commentID].replies = state.byId[commentID].replies.filter(replyId => replyId !== action.payload.id)
             })
 })
 
-export const {commentCreated, commentEdited, commentDeleted, commentScoreUpdated} = CommentsSlice.actions
+export const {commentCreated, commentEdited, commentDeleted} = CommentsSlice.actions
 
 export const selectAllComments = (state: RootState) => state.comments.allId
 export const selectCommentById = (id: CommentID) => (state: RootState) => state.comments.byId[id]
