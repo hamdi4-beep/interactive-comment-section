@@ -12,7 +12,7 @@ const Comment = React.memo(function Comment(props: {
     const dispatch = useAppDispatch()
 
     const [isRepliesHidden, setIsRepliesHidden] = React.useState(true)
-    const comment = useAppSelector(selectCommentById(props.id))
+    const comment = useAppSelector(state => selectCommentById(state, props.id))
 
     if (!comment) throw new Error(`Comment with id ${props.id} not found`)
 

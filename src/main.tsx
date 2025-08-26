@@ -6,13 +6,22 @@ import { ErrorBoundary } from 'react-error-boundary'
 import FallbackRender from './components/ErrorComponent.tsx'
 import { Provider } from 'react-redux'
 import { store } from './store.ts'
+import { fetchComments } from './features/comments/CommentsSlice.ts'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ErrorBoundary fallbackRender={FallbackRender}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ErrorBoundary>
-  </StrictMode>,
-)
+function start() {
+  store.dispatch(fetchComments())
+
+  const root = createRoot(document.getElementById('root')!)
+
+  root.render(
+    <StrictMode>
+      <ErrorBoundary fallbackRender={FallbackRender}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ErrorBoundary>
+    </StrictMode>,
+  )
+}
+
+start()

@@ -1,5 +1,4 @@
-import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
-import comments from '@/data/comments.json'
+import { createAsyncThunk, createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { replyCreated, replyDeleted } from "@/features/replies/RepliesSlice";
 import type { RootState } from "@/store";
 
@@ -23,7 +22,10 @@ interface CreateCommentPayload extends Pick<UserComment, 'content' | 'createdAt'
 interface DeleteCommentPayload extends Pick<UserComment, 'id'> {}
 interface EditCommentPayload extends Omit<CreateCommentPayload, 'createdAt'> {}
 
-const initialState: CommentState = comments
+const initialState: CommentState = {
+    byId: {},
+    allId: []
+}
 
 const currentUser = {
     image: { 
@@ -76,6 +78,9 @@ const CommentsSlice = createSlice({
     },
     extraReducers: builder =>
         builder
+            .addCase(fetchComments.fulfilled, (state, action) => {
+                return action.payload
+            })
             .addCase(replyCreated, (state, action) => {
                 const commentID = findCommentId(state, action.payload.parentCommentId)
                 
@@ -90,9 +95,21 @@ const CommentsSlice = createSlice({
             })
 })
 
+export const fetchComments = createAsyncThunk(
+    'comments/fetchComments',
+    async () => {
+        try {
+            const response = await fetch('http://localhost:3000/comments')
+            return await response.json()
+        } catch (err) {
+            console.error('Something went wrong:', err)
+        }
+    }
+)
+
 export const {commentCreated, commentEdited, commentDeleted} = CommentsSlice.actions
 
 export const selectAllComments = (state: RootState) => state.comments.allId
-export const selectCommentById = (id: CommentID) => (state: RootState) => state.comments.byId[id]
+export const selectCommentById = (state: RootState, id: CommentID) => state.comments.byId[id]
 
 export default CommentsSlice.reducer
