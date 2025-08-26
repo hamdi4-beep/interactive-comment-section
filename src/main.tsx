@@ -3,15 +3,15 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './css/index.css'
 import { ErrorBoundary } from 'react-error-boundary'
-import FallbackRender from './components/ErrorComponent.tsx'
+import FallbackRender from '@/components/ErrorComponent.tsx'
 import { Provider } from 'react-redux'
-import { store } from './store.ts'
-import { fetchComments } from './features/comments/CommentsSlice.ts'
+import { store } from '@/store.ts'
+import { fetchComments } from '@/features/comments/CommentsSlice.ts'
 
 function start() {
-  store.dispatch(fetchComments())
-
   const root = createRoot(document.getElementById('root')!)
+
+  store.dispatch(fetchComments())
 
   root.render(
     <StrictMode>

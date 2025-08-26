@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "concurrently \"cd src/backend && pnpm run start\" \"vite\"",
     "build": "tsc -b && vite build",
     "predeploy": "pnpm run build",
     "deploy": "gh-pages -d dist",

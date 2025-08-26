@@ -46,7 +46,7 @@ export const ScoreComponent = ({
 }) => {
     return (
         <div className="score-component">
-            <button>
+            <button onClick={() => console.log('Invokes', onUpdate, 'which increments the score')}>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-plus.svg" alt="" />
                 </div>
@@ -54,7 +54,7 @@ export const ScoreComponent = ({
 
             <span>{score}</span>
 
-            <button>
+            <button onClick={() => console.log('Invokes', onUpdate, 'which decrements the score')}>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
                 </div>
@@ -68,10 +68,10 @@ export const ScoreComponent = ({
 
 const Card = React.memo(function Card(props: {
     item: UserComment | UserReply,
-    content: React.ReactNode
     handleReplyDispatch: (content: string) => void,
     handleEditDispatch: (content: string) => void,
     handleDeleteDispatch: () => void,
+    handleScoreUpdateDispatch: () => void
     children: React.ReactNode
 }) {
     const user = useAppSelector(selectUserByUsername(props.item.username))
@@ -86,7 +86,7 @@ const Card = React.memo(function Card(props: {
     return (
         <div className="container">
             <div className='card'>
-                {props.children}
+                <ScoreComponent score={props.item.score} onUpdate={props.handleScoreUpdateDispatch} />
 
                 <div className="content">
                     <div className="profile-header">
@@ -120,7 +120,7 @@ const Card = React.memo(function Card(props: {
                         </div>
                     </div>
 
-                    {props.content}
+                    {props.children}
                 </div>
             </div>
 

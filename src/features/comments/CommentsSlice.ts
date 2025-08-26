@@ -1,6 +1,7 @@
+import type { RootState } from "@/store";
 import { createAsyncThunk, createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { replyCreated, replyDeleted } from "@/features/replies/RepliesSlice";
-import type { RootState } from "@/store";
+import { currentUser } from "@/features/users/UsersSlice";
 
 export type UserComment = {
     id: string
@@ -18,22 +19,13 @@ export interface CommentState {
     allId: CommentID[]
 }
 
-interface CreateCommentPayload extends Pick<UserComment, 'content' | 'createdAt' | 'id'> {}
+interface CreateCommentPayload extends Pick<UserComment, 'id' | 'content' | 'createdAt'> {}
 interface DeleteCommentPayload extends Pick<UserComment, 'id'> {}
 interface EditCommentPayload extends Omit<CreateCommentPayload, 'createdAt'> {}
 
 const initialState: CommentState = {
     byId: {},
     allId: []
-}
-
-const currentUser = {
-    image: { 
-        png: "/images/avatars/image-juliusomo.png",
-        webp: "/images/avatars/image-juliusomo.webp"
-    },
-    username: "juliusomo",
-    role: "currentUser"
 }
 
 const findCommentId = (state: CommentState, targetId: CommentID) =>

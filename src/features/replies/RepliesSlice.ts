@@ -2,6 +2,7 @@ import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { type UserComment } from "@/features/comments/CommentsSlice";
 import replies from '@/data/replies.json'
 import type { RootState } from "@/store";
+import { currentUser } from "../users/UsersSlice";
 
 export type UserReply = Omit<UserComment, 'replies'> & {
     replyingTo: string,
@@ -10,9 +11,9 @@ export type UserReply = Omit<UserComment, 'replies'> & {
 
 type ReplyID = UserReply['id']
 
-interface CreateReplyPayload extends Pick<UserReply, 'content' | 'username' | 'createdAt' | 'id' | 'parentCommentId'> {}
+interface CreateReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId' | 'content' | 'username' | 'createdAt'> {}
 interface DeleteReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId'> {}
-interface EditReplyPayload extends Pick<CreateReplyPayload, 'content' | 'id'> {}
+interface EditReplyPayload extends Pick<CreateReplyPayload, 'id' | 'content'> {}
 
 export interface ReplyState {
     byId: Record<ReplyID, UserReply>
@@ -20,15 +21,6 @@ export interface ReplyState {
 }
 
 export const initialState: ReplyState = replies
-
-const currentUser = {
-    image: { 
-        png: "/images/avatars/image-juliusomo.png",
-        webp: "/images/avatars/image-juliusomo.webp"
-    },
-    username: "juliusomo",
-    role: "currentUser"
-}
 
 const RepliesSlice = createSlice({
     name: 'replies',

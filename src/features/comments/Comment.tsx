@@ -43,12 +43,12 @@ const Comment = React.memo(function Comment(props: {
         <div className="comment-wrapper">
             <Card
                 item={comment}
-                content={<p>{comment.content}</p>}
                 handleReplyDispatch={replyToCommentHandler}
                 handleEditDispatch={editCommentHandler}
                 handleDeleteDispatch={deleteCommentHandler}
+                handleScoreUpdateDispatch={() => console.log('This updates the score of a comment')}
             >
-                <ScoreComponent score={comment.score} onUpdate={() => {}} />
+                <p>{comment.content}</p>
             </Card>
 
             {comment.replies.length > 0 && <button className='view-replies-btn' onClick={() => setIsRepliesHidden(prev => !prev)}>{comment.replies.length} replies</button>}
