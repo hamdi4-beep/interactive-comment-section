@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useAppSelector } from '../hooks'
+import { useAppSelector } from '@/hooks'
 
 const textAreaRef = React.createRef<HTMLTextAreaElement>()
 

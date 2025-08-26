@@ -44,16 +44,9 @@ export const ScoreComponent = ({
     score: number
     onUpdate: (score: number) => void
 }) => {
-    const [currentVoteStatus, setCurrentVoteStatus] = React.useState<'initial' | 'upvoted' | 'downvoted'>('initial')
-    const voteDiffRef = React.useRef(0)
-
     return (
-        <div className="score-component" style={{backgroundColor: currentVoteStatus === 'upvoted' ? '#6EE7B7' : currentVoteStatus === 'downvoted' ? '#9CA3AF' : ''}}>
-            <button onClick={() => {
-                voteDiffRef.current = voteDiffRef.current <= 0 ? 1 : 0
-                setCurrentVoteStatus(voteDiffRef.current ? 'upvoted' : 'initial')
-                onUpdate(voteDiffRef.current)
-            }}>
+        <div className="score-component">
+            <button>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-plus.svg" alt="" />
                 </div>
@@ -61,11 +54,7 @@ export const ScoreComponent = ({
 
             <span>{score}</span>
 
-            <button onClick={() => {
-                voteDiffRef.current = voteDiffRef.current >= 0 ? -1 : 0
-                setCurrentVoteStatus(voteDiffRef.current ? 'downvoted' : 'initial')
-                onUpdate(voteDiffRef.current)
-            }}>
+            <button>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
                 </div>

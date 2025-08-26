@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from "../../hooks"
-import Card, { ScoreComponent } from "../../components/Card"
-import { replyCreated, replyDeleted, replyEdited, replyScoreUpdated, selectReplyById, type UserReply } from "./RepliesSlice"
-import type { UserComment } from "../comments/CommentsSlice"
+import { useAppDispatch, useAppSelector } from "@/hooks"
+import Card, { ScoreComponent } from "@/components/Card"
+import { replyCreated, replyDeleted, replyEdited, replyScoreUpdated, selectReplyById, type UserReply } from "@/features/replies/RepliesSlice"
+import type { UserComment } from "@/features/comments/CommentsSlice"
 import * as React from 'react'
 
 const Reply = React.memo(function Reply({

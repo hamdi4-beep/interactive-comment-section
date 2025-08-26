@@ -1,7 +1,7 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
-import comments from '../../data/comments.json'
-import { replyCreated, replyDeleted } from "../replies/RepliesSlice";
-import type { RootState } from "../../store";
+import comments from '@/data/comments.json'
+import { replyCreated, replyDeleted } from "@/features/replies/RepliesSlice";
+import type { RootState } from "@/store";
 
 export type UserComment = {
     id: string

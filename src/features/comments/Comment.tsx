@@ -1,9 +1,9 @@
 import * as React from 'react'
-import Card, { ScoreComponent } from '../../components/Card'
-import Reply from '../replies/Reply'
-import { useAppDispatch, useAppSelector } from '../../hooks'
-import { commentDeleted, commentEdited, commentScoreUpdated, selectCommentById, type UserComment } from './CommentsSlice'
-import { replyCreated } from '../replies/RepliesSlice'
+import Card, { ScoreComponent } from '@/components/Card'
+import Reply from '@/features/replies/Reply'
+import { useAppDispatch, useAppSelector } from '@/hooks'
+import { commentDeleted, commentEdited, commentScoreUpdated, selectCommentById, type UserComment } from '@/features/comments/CommentsSlice'
+import { replyCreated } from '@/features/replies/RepliesSlice'
 
 
 const Comment = React.memo(function Comment(props: {

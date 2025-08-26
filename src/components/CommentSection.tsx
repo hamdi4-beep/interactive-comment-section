@@ -1,7 +1,7 @@
-import { commentCreated } from "../features/comments/CommentsSlice";
-import { useAppDispatch } from "../hooks";
-import CommentsList from "./CommentsList";
-import FormComponent from "./FormComponent";
+import { commentCreated } from "@/features/comments/CommentsSlice";
+import { useAppDispatch } from "@/hooks";
+import CommentsList from "@/components/CommentsList";
+import FormComponent from "@/components/FormComponent"
 
 function CommentSection() {
     const dispatch = useAppDispatch()

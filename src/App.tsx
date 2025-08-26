@@ -1,4 +1,4 @@
-import CommentSection from './components/CommentSection'
+import CommentSection from '@/components/CommentSection'
 
 function App() {
   return (

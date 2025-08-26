@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-import users from '../../data/users.json'
-import type { RootState } from "../../store";
+import users from '@/data/users.json'
+import type { RootState } from "@/store";
 
 type User = {
     image: {
