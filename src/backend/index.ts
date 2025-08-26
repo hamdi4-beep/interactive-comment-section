@@ -25,5 +25,4 @@ app.get('/comments', (request, response) => {
     createReadStream(path)
         .pipe(response)
         .on('error', console.error)
-        .on('finish', () => console.log('Finished streaming the file'))
 })

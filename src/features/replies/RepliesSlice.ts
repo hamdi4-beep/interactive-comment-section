@@ -13,7 +13,7 @@ type ReplyID = UserReply['id']
 
 interface CreateReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId' | 'content' | 'username' | 'createdAt'> {}
 interface DeleteReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId'> {}
-interface EditReplyPayload extends Pick<CreateReplyPayload, 'id' | 'content'> {}
+interface EditReplyPayload extends Pick<UserReply, 'id' | 'content'> {}
 
 export interface ReplyState {
     byId: Record<ReplyID, UserReply>

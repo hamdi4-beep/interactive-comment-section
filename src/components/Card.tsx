@@ -42,11 +42,11 @@ export const ScoreComponent = ({
     onUpdate
 }: {
     score: number
-    onUpdate: (score: number) => void
+    onUpdate: () => void
 }) => {
     return (
         <div className="score-component">
-            <button onClick={() => console.log('Invokes', onUpdate, 'which increments the score')}>
+            <button onClick={onUpdate}>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-plus.svg" alt="" />
                 </div>
@@ -54,7 +54,7 @@ export const ScoreComponent = ({
 
             <span>{score}</span>
 
-            <button onClick={() => console.log('Invokes', onUpdate, 'which decrements the score')}>
+            <button onClick={onUpdate}>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
                 </div>
@@ -86,7 +86,10 @@ const Card = React.memo(function Card(props: {
     return (
         <div className="container">
             <div className='card'>
-                <ScoreComponent score={props.item.score} onUpdate={props.handleScoreUpdateDispatch} />
+                <ScoreComponent
+                    score={props.item.score}
+                    onUpdate={() => props.handleScoreUpdateDispatch()}
+                />
 
                 <div className="content">
                     <div className="profile-header">

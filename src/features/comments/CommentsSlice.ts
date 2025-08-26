@@ -21,7 +21,7 @@ export interface CommentState {
 
 interface CreateCommentPayload extends Pick<UserComment, 'id' | 'content' | 'createdAt'> {}
 interface DeleteCommentPayload extends Pick<UserComment, 'id'> {}
-interface EditCommentPayload extends Omit<CreateCommentPayload, 'createdAt'> {}
+interface EditCommentPayload extends Pick<UserComment, 'id' | 'content'> {}
 
 const initialState: CommentState = {
     byId: {},

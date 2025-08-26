@@ -46,7 +46,7 @@ const Comment = React.memo(function Comment(props: {
                 handleReplyDispatch={replyToCommentHandler}
                 handleEditDispatch={editCommentHandler}
                 handleDeleteDispatch={deleteCommentHandler}
-                handleScoreUpdateDispatch={() => console.log('This updates the score of a comment')}
+                handleScoreUpdateDispatch={() => console.log('This triggers an update to the score functionality')}
             >
                 <p>{comment.content}</p>
             </Card>
