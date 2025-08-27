@@ -92,6 +92,6 @@ export const fetchReplies = createAsyncThunk(
 export const { replyCreated, replyEdited, replyDeleted, replyScoreIncremented, replyScoreDecremented } = RepliesSlice.actions
 
 export const selectAllReplies = (state: RootState) => state.replies.allId
-export const selectReplyById = (id: ReplyID) => (state: RootState) => state.replies.byId[id]
+export const selectReplyById = (state: RootState, id: ReplyID) => state.replies.byId[id]
 
 export default RepliesSlice.reducer

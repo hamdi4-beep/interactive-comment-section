@@ -12,7 +12,7 @@ const Reply = React.memo(function Reply({
     parentCommentId: UserComment['id']
 }) {
     const dispatch = useAppDispatch()
-    const reply = useAppSelector(selectReplyById(id))
+    const reply = useAppSelector(state => selectReplyById(state, id))
     const previousScoreRef = React.useRef(reply.score)
     const previousScore = previousScoreRef.current
 
