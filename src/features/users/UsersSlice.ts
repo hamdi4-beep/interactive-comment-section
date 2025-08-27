@@ -27,7 +27,7 @@ const UsersSlice = createSlice({
 })
 
 export const selectUsers = (state: RootState) => state.users
-export const selectUserByUsername = (username: string) => (state: RootState) => state.users.byUsername[username]
+export const selectUserByUsername = (state: RootState, username: string) => state.users.byUsername[username]
 
 export const selectCurrentUser = createSelector(
     selectUsers,

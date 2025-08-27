@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Card, { ScoreComponent } from '@/components/Card'
+import Card from '@/components/Card'
 import Reply from '@/features/replies/Reply'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 import { commentDeleted, commentEdited, selectCommentById, type UserComment } from '@/features/comments/CommentsSlice'
