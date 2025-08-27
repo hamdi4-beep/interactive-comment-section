@@ -12,6 +12,8 @@ const Comment = React.memo(function Comment(props: {
 
     const [isRepliesHidden, setIsRepliesHidden] = React.useState(true)
     const comment = useAppSelector(state => selectCommentById(state, props.id))
+    const previousScoreRef = React.useRef<number>(comment.score)
+    const previousScore = previousScoreRef.current
 
     if (!comment) throw new Error(`Comment with id ${props.id} not found`)
 
@@ -42,18 +44,18 @@ const Comment = React.memo(function Comment(props: {
         () => {
             dispatch(commentScoreIncremented({
                 id: comment.id,
-                defaultScore: comment.score
+                defaultScore: previousScore
             }))
-        }, [comment.id]
+        }, [comment.id, previousScore]
     )
 
     const decrementCommentScoreHandler = React.useCallback(
         () => {
             dispatch(commentScoreDecremented({
                 id: comment.id,
-                defaultScore: comment.score
+                defaultScore: previousScore
             }))
-        }, [comment.id]
+        }, [comment.id, previousScore]
     )
 
     return (
