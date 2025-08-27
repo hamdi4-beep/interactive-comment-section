@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/hooks"
 import Card from "@/components/Card"
-import { replyCreated, replyDeleted, replyEdited, selectReplyById, type UserReply } from "@/features/replies/RepliesSlice"
+import { replyCreated, replyDeleted, replyEdited, replyScoreDecremented, replyScoreIncremented, selectReplyById, type UserReply } from "@/features/replies/RepliesSlice"
 import type { UserComment } from "@/features/comments/CommentsSlice"
 import * as React from 'react'
 
@@ -40,6 +40,26 @@ const Reply = React.memo(function Reply({
         [id]
     )
 
+    const incrementReplyScoreHandler = React.useCallback(
+        () => {
+            dispatch(replyScoreIncremented({
+                id,
+                defaultScore: reply.score
+            }))
+        },
+        [id]
+    )
+
+    const decrementedReplyScoreHandler = React.useCallback(
+        () => {
+            dispatch(replyScoreDecremented({
+                id,
+                defaultScore: reply.score
+            }))
+        },
+        [id]
+    )
+
     return (
         <div className="reply-wrapper">
             <Card
@@ -47,7 +67,8 @@ const Reply = React.memo(function Reply({
                 handleReplyDispatch={replyToReplyHandler}
                 handleEditDispatch={editReplyHandler}
                 handleDeleteDispatch={deleteReplyHandler}
-                handleScoreUpdateDispatch={() => console.log('This updates the score of a reply.')}
+                handleScoreIncrementedDispatch={incrementReplyScoreHandler}
+                handleScoreDecrementedDispatch={decrementedReplyScoreHandler}
             >
                 <p>
                     <span className="replying-to">@{reply.replyingTo} </span>

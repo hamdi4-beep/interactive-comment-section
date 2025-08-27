@@ -2,9 +2,8 @@ import * as React from 'react'
 import Card from '@/components/Card'
 import Reply from '@/features/replies/Reply'
 import { useAppDispatch, useAppSelector } from '@/hooks'
-import { commentDeleted, commentEdited, selectCommentById, type UserComment } from '@/features/comments/CommentsSlice'
+import { commentDeleted, commentEdited, commentScoreDecremented, commentScoreIncremented, selectCommentById, type UserComment } from '@/features/comments/CommentsSlice'
 import { replyCreated } from '@/features/replies/RepliesSlice'
-
 
 const Comment = React.memo(function Comment(props: {
     id: UserComment['id']
@@ -39,6 +38,24 @@ const Comment = React.memo(function Comment(props: {
         [comment.id]
     )
 
+    const incrementCommentScoreHandler = React.useCallback(
+        () => {
+            dispatch(commentScoreIncremented({
+                id: comment.id,
+                defaultScore: comment.score
+            }))
+        }, [comment.id]
+    )
+
+    const decrementCommentScoreHandler = React.useCallback(
+        () => {
+            dispatch(commentScoreDecremented({
+                id: comment.id,
+                defaultScore: comment.score
+            }))
+        }, [comment.id]
+    )
+
     return (
         <div className="comment-wrapper">
             <Card
@@ -46,7 +63,8 @@ const Comment = React.memo(function Comment(props: {
                 handleReplyDispatch={replyToCommentHandler}
                 handleEditDispatch={editCommentHandler}
                 handleDeleteDispatch={deleteCommentHandler}
-                handleScoreUpdateDispatch={() => console.log('This triggers an update to the score functionality')}
+                handleScoreIncrementedDispatch={incrementCommentScoreHandler}
+                handleScoreDecrementedDispatch={decrementCommentScoreHandler}
             >
                 <p>{comment.content}</p>
             </Card>

@@ -39,14 +39,16 @@ const CurrentUserActions = (props: {
 
 export const ScoreComponent = ({
     score,
-    onUpdate
+    onIncrementUpdate,
+    onDecrementUpdate
 }: {
     score: number
-    onUpdate: () => void
+    onIncrementUpdate: () => void
+    onDecrementUpdate: () => void
 }) => {
     return (
         <div className="score-component">
-            <button onClick={onUpdate}>
+            <button onClick={onIncrementUpdate}>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-plus.svg" alt="" />
                 </div>
@@ -54,7 +56,7 @@ export const ScoreComponent = ({
 
             <span>{score}</span>
 
-            <button onClick={onUpdate}>
+            <button onClick={onDecrementUpdate}>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
                 </div>
@@ -71,22 +73,24 @@ const Card = React.memo(function Card(props: {
     handleReplyDispatch: (content: string) => void,
     handleEditDispatch: (content: string) => void,
     handleDeleteDispatch: () => void,
-    handleScoreUpdateDispatch: () => void
+    handleScoreIncrementedDispatch: () => void,
+    handleScoreDecrementedDispatch: () => void
     children: React.ReactNode
 }) {
     const user = useAppSelector(state => selectUserByUsername(state, props.item.username))
     const isCurrentUser = user.role === 'currentUser'
     
-    const [isReplying, setIsReplying] = React.useState(true)
+    const [isReplying, setIsReplying] = React.useState(false)
     const [isEditting, setIsEditting] = React.useState(false)
-    const [isHidden, setIsHidden] = React.useState(true)
+    const [isModalHidden, setIsModalHidden] = React.useState(true)
 
     return (
         <div className="container">
             <div className='card'>
                 <ScoreComponent
                     score={props.item.score}
-                    onUpdate={() => props.handleScoreUpdateDispatch()}
+                    onIncrementUpdate={props.handleScoreIncrementedDispatch}
+                    onDecrementUpdate={props.handleScoreDecrementedDispatch}
                 />
 
                 <div className="content">
@@ -107,7 +111,7 @@ const Card = React.memo(function Card(props: {
                             {isCurrentUser ? (
                                 <CurrentUserActions
                                     editToggleHandler={() => setIsEditting(prev => !prev)}
-                                    deleteToggleHandler={() => setIsHidden(false)}
+                                    deleteToggleHandler={() => setIsModalHidden(false)}
                                 />
                             ) : (
                                 <button onClick={() => setIsReplying(prev => !prev)}>
@@ -147,13 +151,13 @@ const Card = React.memo(function Card(props: {
                 />
             )}
 
-            {!isHidden && (
+            {!isModalHidden && (
                 <div className="modal-container">
                     <h3>Delete comment</h3>
                     <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone.</p>
                     
                     <div className="buttons">
-                        <button className="cancel" onClick={() => setIsHidden(true)}>No, Cancel</button>
+                        <button className="cancel" onClick={() => setIsModalHidden(true)}>No, Cancel</button>
                         <button className="confirm" onClick={() => props.handleDeleteDispatch()}>Yes, Confirm</button>
                     </div>
                 </div>

@@ -15,6 +15,10 @@ interface CreateReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId' | 
 interface DeleteReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId'> {}
 interface EditReplyPayload extends Pick<UserReply, 'id' | 'content'> {}
 
+interface UpdateReplyScorePayload extends Pick<UserReply, 'id'> {
+    defaultScore: UserReply['score']
+}
+
 export interface ReplyState {
     byId: Record<ReplyID, UserReply>
     allId: ReplyID[]
@@ -59,11 +63,19 @@ const RepliesSlice = createSlice({
         replyDeleted(state, action: PayloadAction<DeleteReplyPayload>) {
             delete state.byId[action.payload.id]
             state.allId = state.allId.filter(id => action.payload.id !== id)
+        },
+        replyScoreIncremented(state, action: PayloadAction<UpdateReplyScorePayload>) {
+            const reply = state.byId[action.payload.id]
+            reply.score = action.payload.defaultScore === reply.score ? reply.score + 1 : action.payload.defaultScore
+        },
+        replyScoreDecremented(state, action: PayloadAction<UpdateReplyScorePayload>) {
+            const reply = state.byId[action.payload.id]
+            reply.score = action.payload.defaultScore === reply.score ? reply.score - 1 : action.payload.defaultScore
         }
     }
 })
 
-export const { replyCreated, replyEdited, replyDeleted } = RepliesSlice.actions
+export const { replyCreated, replyEdited, replyDeleted, replyScoreIncremented, replyScoreDecremented } = RepliesSlice.actions
 
 export const selectAllReplies = (state: RootState) => state.replies.allId
 export const selectReplyById = (id: ReplyID) => (state: RootState) => state.replies.byId[id]

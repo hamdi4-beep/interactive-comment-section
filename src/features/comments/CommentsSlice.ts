@@ -23,6 +23,10 @@ interface CreateCommentPayload extends Pick<UserComment, 'id' | 'content' | 'cre
 interface DeleteCommentPayload extends Pick<UserComment, 'id'> {}
 interface EditCommentPayload extends Pick<UserComment, 'id' | 'content'> {}
 
+interface UpdateCommentScorePayload extends Pick<UserComment, 'id'> {
+    defaultScore: number
+}
+
 const initialState: CommentState = {
     byId: {},
     allId: []
@@ -66,6 +70,14 @@ const CommentsSlice = createSlice({
         commentDeleted(state, action: PayloadAction<DeleteCommentPayload>) {
             delete state.byId[action.payload.id]
             state.allId = state.allId.filter(id => action.payload.id !== id)
+        },
+        commentScoreIncremented(state, action: PayloadAction<UpdateCommentScorePayload>) {
+            const comment = state.byId[action.payload.id]
+            comment.score = action.payload.defaultScore === comment.score ? comment.score + 1 : action.payload.defaultScore
+        },
+        commentScoreDecremented(state, action: PayloadAction<UpdateCommentScorePayload>) {
+            const comment = state.byId[action.payload.id]
+            comment.score = action.payload.defaultScore === comment.score ? comment.score - 1 : action.payload.defaultScore
         }
     },
     extraReducers: builder =>
@@ -99,7 +111,7 @@ export const fetchComments = createAsyncThunk(
     }
 )
 
-export const {commentCreated, commentEdited, commentDeleted} = CommentsSlice.actions
+export const {commentCreated, commentEdited, commentDeleted, commentScoreIncremented, commentScoreDecremented} = CommentsSlice.actions
 
 export const selectAllComments = (state: RootState) => state.comments.allId
 export const selectCommentById = (state: RootState, id: CommentID) => state.comments.byId[id]

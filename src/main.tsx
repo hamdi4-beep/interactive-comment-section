@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
+import App from '@/App.tsx'
 import '@/css/index.css'
 import { ErrorBoundary } from 'react-error-boundary'
 import FallbackRender from '@/components/ErrorComponent.tsx'
