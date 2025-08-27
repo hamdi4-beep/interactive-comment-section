@@ -1,10 +1,10 @@
 import * as React from 'react'
-import FormComponent from "./FormComponent"
-import { useAppSelector } from '../hooks'
-import { type UserReply } from '../features/replies/RepliesSlice'
-import type { UserComment } from '../features/comments/CommentsSlice'
+import FormComponent from "@/components/FormComponent"
+import { useAppSelector } from '@/hooks'
+import { type UserReply } from '@/features/replies/RepliesSlice'
+import type { UserComment } from '@/features/comments/CommentsSlice'
 import TimeAgo from 'timeago-react'
-import { selectCurrentUser, selectUserByUsername } from '../features/users/UsersSlice'
+import { selectUserByUsername } from '@/features/users/UsersSlice'
 
 // @ts-ignore
 
@@ -63,39 +63,6 @@ export const ScoreComponent = ({
     )
 }
 
-const UserProfile = ({
-    username,
-    createdAt,
-    children
-}: {
-    username: string
-    createdAt: string
-    children: React.ReactNode
-}) => {
-    const user = useAppSelector(state => selectUserByUsername(state, username))
-    const isCurrentUser = user.role === 'currentUser'
-
-    return (
-        <div className="profile-header">
-            <div className="user">
-                <div className="user-img">
-                    <img src={'/interactive-comment-section' + user.image.png} alt="" />
-                </div>
-
-                <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
-
-                <span className='comment-date'>
-                    <TimeAgo datetime={createdAt} live={false} />
-                </span>
-            </div>
-
-            <div className="actions">
-                {children}
-            </div>
-        </div>
-    )
-}
-
 // A component that's only responsible for visual appearance and structure. It shouldn't define logic or be responsible for how comments and replies behave.
 // It couples the markup structure of a comment and reply element so you only have to modify them consistently from a single location.
 
@@ -108,13 +75,11 @@ const Card = React.memo(function Card(props: {
     children: React.ReactNode
 }) {
     const user = useAppSelector(state => selectUserByUsername(state, props.item.username))
-    const currentUser = useAppSelector(selectCurrentUser)
+    const isCurrentUser = user.role === 'currentUser'
     
     const [isReplying, setIsReplying] = React.useState(true)
     const [isEditting, setIsEditting] = React.useState(false)
     const [isHidden, setIsHidden] = React.useState(true)
-    
-    const isCurrentUser = currentUser === user
 
     return (
         <div className="container">
@@ -125,25 +90,36 @@ const Card = React.memo(function Card(props: {
                 />
 
                 <div className="content">
-                    <UserProfile
-                        username={props.item.username}
-                        createdAt={props.item.createdAt}
-                    >
-                        {isCurrentUser ? (
-                            <CurrentUserActions
-                                editToggleHandler={() => setIsEditting(prev => !prev)}
-                                deleteToggleHandler={() => setIsHidden(false)}
-                            />
-                        ) : (
-                            <button onClick={() => setIsReplying(prev => !prev)}>
-                                <div className="icon-img">
-                                    <img src='/interactive-comment-section/images/icon-reply.svg' alt="" />
-                                </div>
-                        
-                                Reply
-                            </button>
-                        )}
-                    </UserProfile>
+                    <div className="profile-header">
+                        <div className="user">
+                            <div className="user-img">
+                                <img src={'/interactive-comment-section' + user.image.png} alt="" />
+                            </div>
+
+                            <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
+
+                            <span className='comment-date'>
+                                <TimeAgo datetime={props.item.createdAt} live={false} />
+                            </span>
+                        </div>
+
+                        <div className="actions">
+                            {isCurrentUser ? (
+                                <CurrentUserActions
+                                    editToggleHandler={() => setIsEditting(prev => !prev)}
+                                    deleteToggleHandler={() => setIsHidden(false)}
+                                />
+                            ) : (
+                                <button onClick={() => setIsReplying(prev => !prev)}>
+                                    <div className="icon-img">
+                                        <img src='/interactive-comment-section/images/icon-reply.svg' alt="" />
+                                    </div>
+                            
+                                    Reply
+                                </button>
+                            )}
+                        </div>
+                    </div>
 
                     {props.children}
                 </div>

@@ -2,7 +2,7 @@ import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { type UserComment } from "@/features/comments/CommentsSlice";
 import replies from '@/data/replies.json'
 import type { RootState } from "@/store";
-import { currentUser } from "../users/UsersSlice";
+import { currentUser } from "@/features/users/UsersSlice";
 
 export type UserReply = Omit<UserComment, 'replies'> & {
     replyingTo: string,
