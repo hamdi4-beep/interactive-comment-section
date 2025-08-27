@@ -1,8 +1,8 @@
-import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { type UserComment } from "@/features/comments/CommentsSlice";
-import replies from '@/data/replies.json'
 import type { RootState } from "@/store";
 import { currentUser } from "@/features/users/UsersSlice";
+import { fetchData } from "@/utils/util";
 
 export type UserReply = Omit<UserComment, 'replies'> & {
     replyingTo: string,
@@ -24,7 +24,10 @@ export interface ReplyState {
     allId: ReplyID[]
 }
 
-export const initialState: ReplyState = replies
+export const initialState: ReplyState = {
+    byId: {},
+    allId: []
+}
 
 const RepliesSlice = createSlice({
     name: 'replies',
@@ -72,8 +75,19 @@ const RepliesSlice = createSlice({
             const reply = state.byId[action.payload.id]
             reply.score = action.payload.defaultScore === reply.score ? reply.score - 1 : action.payload.defaultScore
         }
+    },
+    extraReducers(builder) {
+        builder
+            .addCase(fetchReplies.fulfilled, (state, action) => {
+                return action.payload
+            })
     }
 })
+
+export const fetchReplies = createAsyncThunk(
+    'replies/fetchReplies',
+    async () => await fetchData('http://localhost:3000/replies')
+)
 
 export const { replyCreated, replyEdited, replyDeleted, replyScoreIncremented, replyScoreDecremented } = RepliesSlice.actions
 

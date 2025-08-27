@@ -2,6 +2,7 @@ import type { RootState } from "@/store";
 import { createAsyncThunk, createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { replyCreated, replyDeleted } from "@/features/replies/RepliesSlice";
 import { currentUser } from "@/features/users/UsersSlice";
+import { fetchData } from "@/utils/util";
 
 export type UserComment = {
     id: string
@@ -101,14 +102,7 @@ const CommentsSlice = createSlice({
 
 export const fetchComments = createAsyncThunk(
     'comments/fetchComments',
-    async () => {
-        try {
-            const response = await fetch('http://localhost:3000/comments')
-            return await response.json()
-        } catch (err) {
-            console.error('Something went wrong:', err)
-        }
-    }
+    async () => await fetchData('http://localhost:3000/comments')
 )
 
 export const {commentCreated, commentEdited, commentDeleted, commentScoreIncremented, commentScoreDecremented} = CommentsSlice.actions

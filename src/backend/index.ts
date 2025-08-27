@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Response } from 'express'
 import { createReadStream, existsSync } from 'fs'
 
 const app = express()
@@ -11,7 +11,15 @@ app.use((request, response, next) => {
 
 app.get('/comments', (request, response) => {
     const path = '../data/comments.json'
+    streamFile(path, response)
+})
 
+app.get('/replies', (request, response) => {
+    const path = '../data/replies.json'
+    streamFile(path, response)
+})
+
+function streamFile(path: string, response: Response) {
     if (!existsSync(path)) {
         response
             .status(500)
@@ -25,4 +33,4 @@ app.get('/comments', (request, response) => {
     createReadStream(path)
         .pipe(response)
         .on('error', console.error)
-})
+}
