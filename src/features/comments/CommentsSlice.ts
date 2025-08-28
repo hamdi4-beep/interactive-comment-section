@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice, nanoid, type PayloadAction } from "@redu
 import { replyCreated, replyDeleted } from "@/features/replies/RepliesSlice";
 import { currentUser } from "@/features/users/UsersSlice";
 import { fetchData } from "@/utils/util";
+import type { AppStartListening } from "@/listenerMiddleware";
 
 export type UserComment = {
     id: string
@@ -104,6 +105,16 @@ export const fetchComments = createAsyncThunk(
     'comments/fetchComments',
     async () => await fetchData('http://localhost:3000/comments')
 )
+
+export const addCommentsListeners = (startAppListener: AppStartListening) => {
+    startAppListener({
+        actionCreator: fetchComments.fulfilled,
+        effect: async (action, listenerApi) => {
+            await listenerApi.delay(5000)
+            console.log('Remove the added comments notification')
+        }
+    })
+}
 
 export const {commentCreated, commentEdited, commentDeleted, commentScoreIncremented, commentScoreDecremented} = CommentsSlice.actions
 
