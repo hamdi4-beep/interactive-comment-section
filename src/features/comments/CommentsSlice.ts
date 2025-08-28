@@ -1,8 +1,8 @@
 import type { RootState } from "@/store";
-import { createAsyncThunk, createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { replyCreated, replyDeleted } from "@/features/replies/RepliesSlice";
 import { currentUser } from "@/features/users/UsersSlice";
-import { fetchData } from "@/utils/util";
+import comments from '@/data/comments.json'
 
 export type UserComment = {
     id: string
@@ -28,10 +28,7 @@ interface UpdateCommentScorePayload extends Pick<UserComment, 'id'> {
     defaultScore: number
 }
 
-const initialState: CommentState = {
-    byId: {},
-    allId: []
-}
+const initialState: CommentState = comments
 
 const findCommentId = (state: CommentState, targetId: CommentID) =>
     state.allId.find(id => targetId === id)
@@ -83,9 +80,6 @@ const CommentsSlice = createSlice({
     },
     extraReducers: builder =>
         builder
-            .addCase(fetchComments.fulfilled, (state, action) => {
-                return action.payload
-            })
             .addCase(replyCreated, (state, action) => {
                 const commentID = findCommentId(state, action.payload.parentCommentId)
                 
@@ -99,11 +93,6 @@ const CommentsSlice = createSlice({
                     state.byId[commentID].replies = state.byId[commentID].replies.filter(replyId => replyId !== action.payload.id)
             })
 })
-
-export const fetchComments = createAsyncThunk(
-    'comments/fetchComments',
-    async () => await fetchData('http://localhost:3000/comments')
-)
 
 export const {commentCreated, commentEdited, commentDeleted, commentScoreIncremented, commentScoreDecremented} = CommentsSlice.actions
 

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useAppSelector } from '@/hooks'
+import { selectCurrentUser } from '@/features/users/UsersSlice'
 
 const textAreaRef = React.createRef<HTMLTextAreaElement>()
 
@@ -8,12 +9,7 @@ function FormComponent(props: {
     placeholderValue: string
     dispatchHandler: Function
 }) {
-    const user = useAppSelector(state => {
-        const username = state.users.allUsername.find(username => state.users.byUsername[username].role === 'currentUser')
-        if (username) return state.users.byUsername[username]
-    })
-
-    if (!user) return
+    const currentUser = useAppSelector(state => selectCurrentUser(state))
     
     const handleSubmit: React.FormEventHandler = e => {
         e.preventDefault()
@@ -37,7 +33,7 @@ function FormComponent(props: {
         <div className="form-component">
             <div className="current-user">
                 <div className="user-img">
-                    <img src={'/interactive-comment-section' + user.image.png} alt="" />
+                    <img src={'/interactive-comment-section' + currentUser.image.png} alt="" />
                 </div>
             </div>
 
