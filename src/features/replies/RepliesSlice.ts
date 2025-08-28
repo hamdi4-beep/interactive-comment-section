@@ -1,28 +1,16 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
-import { type UserComment } from "@/features/comments/CommentsSlice";
 import type { RootState } from "@/store";
 import { currentUser } from "@/features/users/UsersSlice";
 import replies from '@/data/replies.json'
 
-export type UserReply = Omit<UserComment, 'replies'> & {
-    replyingTo: string,
-    parentCommentId: UserComment['id']
-}
-
-type ReplyID = UserReply['id']
-
-interface CreateReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId' | 'content' | 'username' | 'createdAt'> {}
-interface DeleteReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId'> {}
-interface EditReplyPayload extends Pick<UserReply, 'id' | 'content'> {}
-
-interface UpdateReplyScorePayload extends Pick<UserReply, 'id'> {
-    defaultScore: UserReply['score']
-}
-
-export interface ReplyState {
-    byId: Record<ReplyID, UserReply>
-    allId: ReplyID[]
-}
+import type {
+    CreateReplyPayload,
+    EditReplyPayload,
+    DeleteReplyPayload,
+    UpdateReplyScorePayload,
+    ReplyID,
+    ReplyState
+} from '@/features/replies/types'
 
 export const initialState: ReplyState = replies
 

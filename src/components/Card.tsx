@@ -1,8 +1,8 @@
 import * as React from 'react'
 import FormComponent from "@/components/FormComponent"
 import { useAppSelector } from '@/hooks'
-import { type UserReply } from '@/features/replies/RepliesSlice'
-import type { UserComment } from '@/features/comments/CommentsSlice'
+import { type UserReply } from '@/features/replies/types'
+import type { UserComment } from '@/features/comments/types'
 import TimeAgo from 'timeago-react'
 import { selectUserByUsername } from '@/features/users/UsersSlice'
 

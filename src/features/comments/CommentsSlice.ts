@@ -1,32 +1,19 @@
-import type { RootState } from "@/store";
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { replyCreated, replyDeleted } from "@/features/replies/RepliesSlice";
 import { currentUser } from "@/features/users/UsersSlice";
+
+import type { RootState } from "@/store";
+
+import type {
+    CommentState,
+    CreateCommentPayload,
+    EditCommentPayload,
+    DeleteCommentPayload,
+    UpdateCommentScorePayload,
+    CommentID
+} from "./types";
+
 import comments from '@/data/comments.json'
-
-export type UserComment = {
-    id: string
-    createdAt: string
-    score: number
-    content: string
-    username: string
-    replies: UserComment['id'][]
-}
-
-type CommentID = UserComment['id']
-
-export interface CommentState {
-    byId: Record<CommentID, UserComment>
-    allId: CommentID[]
-}
-
-interface CreateCommentPayload extends Pick<UserComment, 'id' | 'content' | 'createdAt'> {}
-interface DeleteCommentPayload extends Pick<UserComment, 'id'> {}
-interface EditCommentPayload extends Pick<UserComment, 'id' | 'content'> {}
-
-interface UpdateCommentScorePayload extends Pick<UserComment, 'id'> {
-    defaultScore: number
-}
 
 const initialState: CommentState = comments
 
