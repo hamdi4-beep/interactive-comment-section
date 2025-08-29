@@ -55,20 +55,22 @@ const RepliesSlice = createSlice({
         },
         replyScoreIncremented(state, action: PayloadAction<UpdateReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
+            // updates the score by two if the stateful score value is less than the current score (following Reddit's scoring logic)
             reply.score = action.payload.currentScore === reply.score ? reply.score + 1 : reply.score < action.payload.currentScore ? reply.score + 2 : action.payload.currentScore
         },
         replyScoreDecremented(state, action: PayloadAction<UpdateReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
+            // updates the score by two if the stateful score value is less than the current score (following Reddit's scoring logic)
             reply.score = action.payload.currentScore === reply.score ? reply.score - 1 : reply.score > action.payload.currentScore ? reply.score - 2 : action.payload.currentScore
         },
-        replyScoreReset(state, action: PayloadAction<ResetReplyScorePayload>) {
+        replyScoreReseted(state, action: PayloadAction<ResetReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
             reply.score = initialState.byId[action.payload.id].score
         }
     }
 })
 
-export const { replyCreated, replyEdited, replyDeleted, replyScoreIncremented, replyScoreDecremented, replyScoreReset } = RepliesSlice.actions
+export const { replyCreated, replyEdited, replyDeleted, replyScoreIncremented, replyScoreDecremented, replyScoreReseted } = RepliesSlice.actions
 
 export const selectAllReplies = (state: RootState) => state.replies.allId
 export const selectReplyById = (state: RootState, id: ReplyID) => state.replies.byId[id]
