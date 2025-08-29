@@ -1,7 +1,8 @@
 import { useAppDispatch, useAppSelector } from "@/hooks"
 import Card from "@/components/Card"
-import { replyCreated, replyDeleted, replyEdited, replyScoreDecremented, replyScoreIncremented, selectReplyById, type UserReply } from "@/features/replies/RepliesSlice"
-import type { UserComment } from "@/features/comments/CommentsSlice"
+import { replyCreated, replyDeleted, replyEdited, replyScoreDecremented, replyScoreIncremented, selectReplyById } from "@/features/replies/RepliesSlice"
+import type { UserComment } from "@/features/comments/types"
+import type { UserReply } from "@/features/replies/types"
 import * as React from 'react'
 
 const Reply = React.memo(function Reply({
@@ -13,8 +14,8 @@ const Reply = React.memo(function Reply({
 }) {
     const dispatch = useAppDispatch()
     const reply = useAppSelector(state => selectReplyById(state, id))
-    const previousScoreRef = React.useRef(reply.score)
-    const previousScore = previousScoreRef.current
+    const currentScoreRef = React.useRef(reply.score)
+    const currentScore = currentScoreRef.current
 
     if (!reply) throw new Error(`Reply with id ${id} not found`)
 
@@ -46,20 +47,20 @@ const Reply = React.memo(function Reply({
         () => {
             dispatch(replyScoreIncremented({
                 id,
-                defaultScore: previousScore
+                currentScore
             }))
         },
-        [id, previousScore]
+        [id, currentScore]
     )
 
     const decrementedReplyScoreHandler = React.useCallback(
         () => {
             dispatch(replyScoreDecremented({
                 id,
-                defaultScore: previousScore
+                currentScore
             }))
         },
-        [id, previousScore]
+        [id, currentScore]
     )
 
     return (

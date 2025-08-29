@@ -19,5 +19,5 @@ export interface DeleteCommentPayload extends Pick<UserComment, 'id'> {}
 export interface EditCommentPayload extends Pick<UserComment, 'id' | 'content'> {}
 
 export interface UpdateCommentScorePayload extends Pick<UserComment, 'id'> {
-    defaultScore: number
+    currentScore: number
 }
