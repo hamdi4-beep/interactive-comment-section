@@ -58,11 +58,12 @@ const CommentsSlice = createSlice({
         },
         commentScoreIncremented(state, action: PayloadAction<UpdateCommentScorePayload>) {
             const comment = state.byId[action.payload.id]
-            comment.score = action.payload.currentScore === comment.score ? comment.score + 1 : action.payload.currentScore
+            console.log(comment.score, action.payload.currentScore)
+            comment.score = action.payload.currentScore === comment.score ? comment.score + 1 : comment.score < action.payload.currentScore ? comment.score + 2 : action.payload.currentScore
         },
         commentScoreDecremented(state, action: PayloadAction<UpdateCommentScorePayload>) {
             const comment = state.byId[action.payload.id]
-            comment.score = action.payload.currentScore === comment.score ? comment.score - 1 : action.payload.currentScore
+            comment.score = action.payload.currentScore === comment.score ? comment.score - 1 : comment.score > action.payload.currentScore ? comment.score - 2 : action.payload.currentScore
         }
     },
     extraReducers: builder =>

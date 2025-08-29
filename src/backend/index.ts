@@ -1,20 +1,20 @@
-import express, { Response } from 'express'
+import express, { type Response } from 'express'
 import { createReadStream, existsSync } from 'fs'
 
 const app = express()
 app.listen(3000, () => console.log('Listening for requests on', 3000))
 
-app.use((request, response, next) => {
+app.use((_request, response, next) => {
     response.setHeader('access-control-allow-origin', '*')
     next()
 })
 
-app.get('/comments', (request, response) => {
+app.get('/comments', (_request, response) => {
     const path = '../data/comments.json'
     streamFile(path, response)
 })
 
-app.get('/replies', (request, response) => {
+app.get('/replies', (_request, response) => {
     const path = '../data/replies.json'
     streamFile(path, response)
 })
