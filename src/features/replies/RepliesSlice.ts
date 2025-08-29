@@ -12,6 +12,7 @@ import type {
     ReplyID,
     ReplyState,
 } from '@/features/replies/types'
+import { decrementScore, incrementScore } from "@/utils";
 
 export const initialState: ReplyState = replies
 
@@ -56,12 +57,12 @@ const RepliesSlice = createSlice({
         replyScoreIncremented(state, action: PayloadAction<UpdateReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
             // updates the score by two if the stateful score value is less than the current score (following Reddit's scoring logic)
-            reply.score = action.payload.currentScore === reply.score ? reply.score + 1 : reply.score < action.payload.currentScore ? reply.score + 2 : action.payload.currentScore
+            incrementScore(reply, action.payload.currentScore)
         },
         replyScoreDecremented(state, action: PayloadAction<UpdateReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
             // updates the score by two if the stateful score value is less than the current score (following Reddit's scoring logic)
-            reply.score = action.payload.currentScore === reply.score ? reply.score - 1 : reply.score > action.payload.currentScore ? reply.score - 2 : action.payload.currentScore
+            decrementScore(reply, action.payload.currentScore)
         },
         replyScoreReseted(state, action: PayloadAction<ResetReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
