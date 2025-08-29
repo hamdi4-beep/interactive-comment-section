@@ -14,6 +14,7 @@ import type {
 } from "./types";
 
 import comments from '@/data/comments.json'
+import { decrementScore, incrementScore } from "@/utils";
 
 const initialState: CommentState = comments
 
@@ -58,11 +59,11 @@ const CommentsSlice = createSlice({
         },
         commentScoreIncremented(state, action: PayloadAction<UpdateCommentScorePayload>) {
             const comment = state.byId[action.payload.id]
-            comment.score = action.payload.currentScore === comment.score ? comment.score + 1 : comment.score < action.payload.currentScore ? comment.score + 2 : action.payload.currentScore
+            incrementScore(comment, action.payload.currentScore)
         },
         commentScoreDecremented(state, action: PayloadAction<UpdateCommentScorePayload>) {
             const comment = state.byId[action.payload.id]
-            comment.score = action.payload.currentScore === comment.score ? comment.score - 1 : comment.score > action.payload.currentScore ? comment.score - 2 : action.payload.currentScore
+            decrementScore(comment, action.payload.currentScore)
         }
     },
     extraReducers: builder =>
