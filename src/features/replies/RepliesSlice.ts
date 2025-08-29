@@ -55,11 +55,11 @@ const RepliesSlice = createSlice({
         },
         replyScoreIncremented(state, action: PayloadAction<UpdateReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
-            reply.score = action.payload.currentScore === reply.score ? reply.score + 1 : action.payload.currentScore
+            reply.score = action.payload.currentScore === reply.score ? reply.score + 1 : reply.score < action.payload.currentScore ? reply.score + 2 : action.payload.currentScore
         },
         replyScoreDecremented(state, action: PayloadAction<UpdateReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
-            reply.score = action.payload.currentScore === reply.score ? reply.score - 1 : action.payload.currentScore
+            reply.score = action.payload.currentScore === reply.score ? reply.score - 1 : reply.score > action.payload.currentScore ? reply.score - 2 : action.payload.currentScore
         },
         replyScoreReset(state, action: PayloadAction<ResetReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
