@@ -8,8 +8,9 @@ import type {
     EditReplyPayload,
     DeleteReplyPayload,
     UpdateReplyScorePayload,
+    ResetReplyScorePayload,
     ReplyID,
-    ReplyState
+    ReplyState,
 } from '@/features/replies/types'
 
 export const initialState: ReplyState = replies
@@ -59,11 +60,15 @@ const RepliesSlice = createSlice({
         replyScoreDecremented(state, action: PayloadAction<UpdateReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
             reply.score = action.payload.currentScore === reply.score ? reply.score - 1 : action.payload.currentScore
+        },
+        replyScoreReset(state, action: PayloadAction<ResetReplyScorePayload>) {
+            const reply = state.byId[action.payload.id]
+            reply.score = initialState.byId[action.payload.id].score
         }
     }
 })
 
-export const { replyCreated, replyEdited, replyDeleted, replyScoreIncremented, replyScoreDecremented } = RepliesSlice.actions
+export const { replyCreated, replyEdited, replyDeleted, replyScoreIncremented, replyScoreDecremented, replyScoreReset } = RepliesSlice.actions
 
 export const selectAllReplies = (state: RootState) => state.replies.allId
 export const selectReplyById = (state: RootState, id: ReplyID) => state.replies.byId[id]

@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/hooks"
 import Card from "@/components/Card"
-import { replyCreated, replyDeleted, replyEdited, replyScoreDecremented, replyScoreIncremented, selectReplyById } from "@/features/replies/RepliesSlice"
+import { replyCreated, replyDeleted, replyEdited, replyScoreDecremented, replyScoreIncremented, replyScoreReset, selectReplyById } from "@/features/replies/RepliesSlice"
 import type { UserComment } from "@/features/comments/types"
 import type { UserReply } from "@/features/replies/types"
 import * as React from 'react'
@@ -17,7 +17,14 @@ const Reply = React.memo(function Reply({
     const currentScoreRef = React.useRef(reply.score)
     const currentScore = currentScoreRef.current
 
-    if (!reply) throw new Error(`Reply with id ${id} not found`)
+    if (!reply)
+        throw new Error(`Reply with id ${id} not found`)
+
+    React.useEffect(() => {
+        return () => {
+            dispatch(replyScoreReset({ id }))
+        }
+    }, [])
 
     const replyToReplyHandler = React.useCallback(
         (content: string) =>

@@ -11,6 +11,7 @@ export interface CreateReplyPayload extends Pick<UserReply, 'id' | 'parentCommen
 export interface DeleteReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId'> {}
 export interface EditReplyPayload extends Pick<UserReply, 'id' | 'content'> {}
 export interface UpdateReplyScorePayload extends UpdateCommentScorePayload {}
+export interface ResetReplyScorePayload extends Omit<UpdateReplyScorePayload, 'currentScore'> {}
 
 export interface ReplyState {
     byId: Record<ReplyID, UserReply>
