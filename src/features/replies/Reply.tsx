@@ -14,8 +14,6 @@ const Reply = React.memo(function Reply({
 }) {
     const dispatch = useAppDispatch()
     const reply = useAppSelector(state => selectReplyById(state, id))
-    const currentScoreRef = React.useRef(reply.score)
-    const currentScore = currentScoreRef.current
 
     if (!reply)
         throw new Error(`Reply with id ${id} not found`)
@@ -51,23 +49,23 @@ const Reply = React.memo(function Reply({
     )
 
     const incrementReplyScoreHandler = React.useCallback(
-        () => {
+        (currentScore: number) => {
             dispatch(replyScoreIncremented({
                 id,
                 currentScore
             }))
         },
-        [id, currentScore]
+        [id]
     )
 
     const decrementedReplyScoreHandler = React.useCallback(
-        () => {
+        (currentScore: number) => {
             dispatch(replyScoreDecremented({
                 id,
                 currentScore
             }))
         },
-        [id, currentScore]
+        [id]
     )
 
     return (

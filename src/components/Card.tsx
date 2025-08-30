@@ -49,8 +49,6 @@ export const ScoreComponent = ({
     const currentScoreRef = React.useRef(score)
     const currentScore = currentScoreRef.current
 
-    console.log(score, currentScore)
-
     return (
         <div className="score-component">
             <button onClick={() => onIncrementUpdate(currentScore)}>
