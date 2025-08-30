@@ -19,7 +19,7 @@ const CurrentUserAvatar = () => {
 function FormComponent(props: {
     value?: string
     placeholderValue: string
-    dispatchHandler: Function
+    handleDispatch: (content: string) => void
 }) {
     const handleSubmit: React.FormEventHandler = e => {
         e.preventDefault()
@@ -29,7 +29,7 @@ function FormComponent(props: {
 
         const content = formData.get('comment') as string
 
-        if (content) props.dispatchHandler(content)
+        if (content) props.handleDispatch(content)
 
         formElement.reset()
     }

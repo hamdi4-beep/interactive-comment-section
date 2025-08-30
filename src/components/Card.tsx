@@ -136,7 +136,7 @@ const Card = React.memo(function Card(props: {
             {isReplying && !isCurrentUser && (
                 <FormComponent
                     placeholderValue='Add a reply...'
-                    dispatchHandler={(content: string) => {
+                    handleDispatch={content => {
                         props.handleReplyDispatch(content)
                         setIsReplying(false)
                     }}
@@ -147,7 +147,7 @@ const Card = React.memo(function Card(props: {
                 <FormComponent
                     placeholderValue='Edit a comment...'
                     value={props.item.content}
-                    dispatchHandler={(content: string) => {
+                    handleDispatch={content => {
                         props.handleEditDispatch(content)
                         setIsEditting(false)
                     }}
