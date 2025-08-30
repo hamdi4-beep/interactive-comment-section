@@ -4,13 +4,23 @@ import { selectCurrentUser } from '@/features/users/UsersSlice'
 
 const textAreaRef = React.createRef<HTMLTextAreaElement>()
 
+const CurrentUserAvatar = () => {
+    const currentUser = useAppSelector(state => selectCurrentUser(state))
+
+    return (
+        <div className="current-user">
+            <div className="user-img">
+                <img src={'/interactive-comment-section' + currentUser.image.png} alt="" />
+            </div>
+        </div>
+    )
+}
+
 function FormComponent(props: {
     value?: string
     placeholderValue: string
     dispatchHandler: Function
 }) {
-    const currentUser = useAppSelector(state => selectCurrentUser(state))
-    
     const handleSubmit: React.FormEventHandler = e => {
         e.preventDefault()
         
@@ -31,11 +41,7 @@ function FormComponent(props: {
 
     return (
         <div className="form-component">
-            <div className="current-user">
-                <div className="user-img">
-                    <img src={'/interactive-comment-section' + currentUser.image.png} alt="" />
-                </div>
-            </div>
+            <CurrentUserAvatar />
 
             <form action="#" onSubmit={handleSubmit}>
                 <textarea name="comment" id="comment" defaultValue={props.value} placeholder={props.placeholderValue} ref={textAreaRef}></textarea>
