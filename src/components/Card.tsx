@@ -15,11 +15,11 @@ enum VoteDif {
 }
 
 const CurrentUserActions = (props: {
-    editToggleHandler: React.MouseEventHandler
-    deleteToggleHandler: React.MouseEventHandler
+    handleEditDispatch: React.Dispatch<React.SetStateAction<boolean>>
+    handleHideDispatch: React.Dispatch<React.SetStateAction<boolean>>
 }) => (
     <div className="user-actions">
-        <button onClick={props.editToggleHandler}>
+        <button onClick={() => props.handleEditDispatch(prev => !prev)}>
             <div className="icon-img">
                 <img src='/interactive-comment-section/images/icon-edit.svg' alt="" />
             </div>
@@ -27,7 +27,7 @@ const CurrentUserActions = (props: {
             Edit
         </button>
 
-        <button onClick={props.deleteToggleHandler}>
+        <button onClick={() => props.handleHideDispatch(false)}>
             <div className="icon-img">
                 <img src='/interactive-comment-section/images/icon-delete.svg' alt="" />
             </div>
@@ -113,8 +113,8 @@ const Card = React.memo(function Card(props: {
                         <div className="actions">
                             {isCurrentUser ? (
                                 <CurrentUserActions
-                                    editToggleHandler={() => setIsEditting(prev => !prev)}
-                                    deleteToggleHandler={() => setIsModalHidden(false)}
+                                    handleEditDispatch={setIsEditting}
+                                    handleHideDispatch={setIsModalHidden}
                                 />
                             ) : (
                                 <button onClick={() => setIsReplying(prev => !prev)}>
