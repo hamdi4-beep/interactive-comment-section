@@ -51,7 +51,7 @@ const Comment = React.memo(function Comment(props: {
     )
 
     const incrementCommentScoreHandler = React.useCallback(
-        () => {
+        (currentScore: number) => {
             dispatch(commentScoreIncremented({
                 id: comment.id,
                 currentScore
@@ -60,7 +60,7 @@ const Comment = React.memo(function Comment(props: {
     )
 
     const decrementCommentScoreHandler = React.useCallback(
-        () => {
+        (currentScore: number) => {
             dispatch(commentScoreDecremented({
                 id: comment.id,
                 currentScore

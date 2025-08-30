@@ -43,12 +43,17 @@ export const ScoreComponent = ({
     onDecrementUpdate
 }: {
     score: number
-    onIncrementUpdate: () => void
-    onDecrementUpdate: () => void
+    onIncrementUpdate: (currentScore: number) => void
+    onDecrementUpdate: (currentScore: number) => void
 }) => {
+    const currentScoreRef = React.useRef(score)
+    const currentScore = currentScoreRef.current
+
+    console.log(score, currentScore)
+
     return (
         <div className="score-component">
-            <button onClick={onIncrementUpdate}>
+            <button onClick={() => onIncrementUpdate(currentScore)}>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-plus.svg" alt="" />
                 </div>
@@ -56,7 +61,7 @@ export const ScoreComponent = ({
 
             <span>{score}</span>
 
-            <button onClick={onDecrementUpdate}>
+            <button onClick={() => onDecrementUpdate(currentScore)}>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
                 </div>
@@ -73,8 +78,8 @@ const Card = React.memo(function Card(props: {
     handleReplyDispatch: (content: string) => void,
     handleEditDispatch: (content: string) => void,
     handleDeleteDispatch: () => void,
-    handleScoreIncrementedDispatch: () => void,
-    handleScoreDecrementedDispatch: () => void
+    handleScoreIncrementedDispatch: (currentScore: number) => void,
+    handleScoreDecrementedDispatch: (currentScore: number) => void
     children: React.ReactNode
 }) {
     const user = useAppSelector(state => selectUserByUsername(state, props.item.username))
