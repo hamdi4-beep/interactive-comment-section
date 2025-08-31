@@ -15,15 +15,17 @@ import {
 
 import { replyCreated } from '@/features/replies/RepliesSlice'
 
-const Comment = React.memo(function Comment(props: {
+const Comment = React.memo(function Comment({
+    id
+}: {
     id: UserComment['id']
 }) {
     const dispatch = useAppDispatch()
 
     const [isRepliesHidden, setIsRepliesHidden] = React.useState(true)
-    const comment = useAppSelector(state => selectCommentById(state, props.id))
+    const comment = useAppSelector(state => selectCommentById(state, id))
 
-    if (!comment) throw new Error(`Comment with id ${props.id} not found`)
+    if (!comment) throw new Error(`Comment with id ${id} not found`)
 
     const replyToCommentHandler = React.useCallback(
         (content: string) =>
