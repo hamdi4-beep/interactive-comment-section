@@ -12,7 +12,7 @@ function CommentSection() {
 
             <FormComponent
                 placeholderValue='Add a comment...'
-                handleDispatch={content => dispatch(commentCreated(content))}
+                onSubmitUpdate={content => dispatch(commentCreated(content))}
             />
         </div>
     )

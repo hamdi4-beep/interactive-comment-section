@@ -118,7 +118,7 @@ const Card = React.memo(function Card(props: {
             {isReplying && !isCurrentUser && (
                 <FormComponent
                     placeholderValue='Add a reply...'
-                    handleDispatch={content => {
+                    onSubmitUpdate={content => {
                         props.handleReplyDispatch(content)
                         setIsReplying(false)
                     }}
@@ -129,7 +129,7 @@ const Card = React.memo(function Card(props: {
                 <FormComponent
                     placeholderValue='Edit a comment...'
                     value={props.item.content}
-                    handleDispatch={content => {
+                    onSubmitUpdate={content => {
                         props.handleEditDispatch(content)
                         setIsEditting(false)
                     }}
