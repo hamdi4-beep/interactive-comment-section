@@ -67,16 +67,16 @@ const CommentsSlice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(replyCreated, (state, action) => {
-                const commentID = findCommentId(state, action.payload.parentCommentId)
-                
-                if (commentID)
-                    state.byId[commentID].replies.push(action.payload.id)
+                const parentCommentId = findCommentId(state, action.payload.parentCommentId)
+                if (parentCommentId) state.byId[parentCommentId].replies.push(action.payload.id)
             })
             .addCase(replyDeleted, (state, action) => {
-                const commentID = findCommentId(state, action.payload.parentCommentId)
+                const parentCommentId = findCommentId(state, action.payload.parentCommentId)
 
-                if (commentID)
-                    state.byId[commentID].replies = state.byId[commentID].replies.filter(replyId => replyId !== action.payload.id)
+                if (parentCommentId) {
+                    const parentComment = state.byId[parentCommentId]
+                    parentComment.replies = parentComment.replies.filter(replyId => replyId !== action.payload.id)
+                }
             })
 })
 
