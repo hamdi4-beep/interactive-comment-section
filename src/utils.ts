@@ -1,5 +1,5 @@
-import type { CommentState, UserComment, CommentID } from "./features/comments/types";
-import type { UserReply } from "./features/replies/types";
+import type { CommentState, UserComment, CommentID } from "@/features/comments/types";
+import type { UserReply } from "@/features/replies/types";
 
 export const incrementScore = (entity: UserComment | UserReply, currentScore: number) =>
     entity.score = currentScore === entity.score ?
