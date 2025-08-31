@@ -1,6 +1,7 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { replyCreated, replyDeleted } from "@/features/replies/RepliesSlice";
 import { currentUser } from "@/features/users/UsersSlice";
+import { findCommentId } from "@/utils";
 
 import type { RootState } from "@/store";
 
@@ -17,9 +18,6 @@ import comments from '@/data/comments.json'
 import { decrementScore, incrementScore } from "@/utils";
 
 const initialState: CommentState = comments
-
-const findCommentId = (state: CommentState, targetId: CommentID) =>
-    state.allId.find(id => targetId === id)
 
 const CommentsSlice = createSlice({
     name: 'comments',
