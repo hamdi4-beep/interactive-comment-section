@@ -6,29 +6,6 @@ import type { UserComment } from '@/features/comments/types'
 import TimeAgo from 'timeago-react'
 import { selectUserByUsername } from '@/features/users/UsersSlice'
 
-const CurrentUserActions = (props: {
-    handleEditDispatch: React.Dispatch<React.SetStateAction<boolean>>
-    handleHideDispatch: React.Dispatch<React.SetStateAction<boolean>>
-}) => (
-    <div className="user-actions">
-        <button onClick={() => props.handleEditDispatch(prev => !prev)}>
-            <div className="icon-img">
-                <img src='/interactive-comment-section/images/icon-edit.svg' alt="" />
-            </div>
-    
-            Edit
-        </button>
-
-        <button onClick={() => props.handleHideDispatch(false)}>
-            <div className="icon-img">
-                <img src='/interactive-comment-section/images/icon-delete.svg' alt="" />
-            </div>
-    
-            Delete
-        </button>
-    </div>
-)
-
 export const ScoreComponent = ({
     score,
     onIncrementUpdate,
@@ -104,10 +81,23 @@ const Card = React.memo(function Card(props: {
 
                         <div className="actions">
                             {isCurrentUser ? (
-                                <CurrentUserActions
-                                    handleEditDispatch={setIsEditting}
-                                    handleHideDispatch={setIsModalHidden}
-                                />
+                                <div className="user-actions">
+                                    <button onClick={() => setIsEditting(prev => !prev)}>
+                                        <div className="icon-img">
+                                            <img src='/interactive-comment-section/images/icon-edit.svg' alt="" />
+                                        </div>
+                                
+                                        Edit
+                                    </button>
+
+                                    <button onClick={() => setIsModalHidden(false)}>
+                                        <div className="icon-img">
+                                            <img src='/interactive-comment-section/images/icon-delete.svg' alt="" />
+                                        </div>
+                                
+                                        Delete
+                                    </button>
+                                </div>
                             ) : (
                                 <button onClick={() => setIsReplying(prev => !prev)}>
                                     <div className="icon-img">
