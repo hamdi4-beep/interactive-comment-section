@@ -6,14 +6,6 @@ import type { UserComment } from '@/features/comments/types'
 import TimeAgo from 'timeago-react'
 import { selectUserByUsername } from '@/features/users/UsersSlice'
 
-// @ts-ignore
-
-enum VoteDif {
-    UpVoted = 1,
-    DownVoted = -1,
-    InitialScore = 0
-}
-
 const CurrentUserActions = (props: {
     handleEditDispatch: React.Dispatch<React.SetStateAction<boolean>>
     handleHideDispatch: React.Dispatch<React.SetStateAction<boolean>>
