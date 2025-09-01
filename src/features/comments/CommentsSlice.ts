@@ -68,7 +68,9 @@ const CommentsSlice = createSlice({
         builder
             .addCase(replyCreated, (state, action) => {
                 const parentCommentId = findCommentId(state, action.payload.parentCommentId)
-                if (parentCommentId) state.byId[parentCommentId].replies.push(action.payload.id)
+                
+                if (parentCommentId)
+                    state.byId[parentCommentId].replies.push(action.payload.id)
             })
             .addCase(replyDeleted, (state, action) => {
                 const parentCommentId = findCommentId(state, action.payload.parentCommentId)
