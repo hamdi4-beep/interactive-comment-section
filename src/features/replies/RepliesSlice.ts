@@ -73,7 +73,7 @@ const RepliesSlice = createSlice({
 
 export const { replyCreated, replyEdited, replyDeleted, replyScoreIncremented, replyScoreDecremented, replyScoreReseted } = RepliesSlice.actions
 
-export const selectAllReplies = (state: RootState) => state.replies.allId
+export const selectAllReplyIds = (state: RootState) => state.replies.allId
 export const selectReplyById = (state: RootState, id: ReplyID) => state.replies.byId[id]
 
 export default RepliesSlice.reducer
