@@ -1,17 +1,17 @@
 import type { CommentState, UserComment, CommentID } from "@/features/comments/types";
 import type { UserReply } from "@/features/replies/types";
 
-type Entity = UserComment | UserReply
+type Item = UserComment | UserReply
 
-export const incrementScore = (entity: Entity, currentScore: number) =>
-    entity.score = currentScore === entity.score ?
+export const incrementScore = (item: Item, currentScore: number) =>
+    item.score = currentScore === item.score ?
         // Updates the score by two to skip the current score because upvoting is only meant to increase the current value by one
-        entity.score + 1 : entity.score < currentScore ? entity.score + 2 : currentScore
+        item.score + 1 : item.score < currentScore ? item.score + 2 : currentScore
 
-export const decrementScore = (entity: Entity, currentScore: number) =>
-    entity.score = currentScore === entity.score ?
+export const decrementScore = (item: Item, currentScore: number) =>
+    item.score = currentScore === item.score ?
         // Updates the score by two to skip the current score because upvoting is only meant to decrease the current value by one
-        entity.score - 1 : entity.score > currentScore ? entity.score - 2 : currentScore
+        item.score - 1 : item.score > currentScore ? item.score - 2 : currentScore
 
 export const findCommentId = (state: CommentState, targetId: CommentID) =>
     state.allId.find(id => targetId === id)
