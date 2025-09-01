@@ -1,9 +1,9 @@
 import Comment from '@/features/comments/Comment'
-import { selectAllComments } from '@/features/comments/CommentsSlice'
+import { selectAllCommentIds } from '@/features/comments/CommentsSlice'
 import { useAppSelector } from '@/hooks'
 
 function CommentsList() {
-    const allCommentIds = useAppSelector(selectAllComments)
+    const allCommentIds = useAppSelector(selectAllCommentIds)
 
     return (
         <div className="comments-list">

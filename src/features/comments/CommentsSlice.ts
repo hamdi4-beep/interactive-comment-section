@@ -82,7 +82,7 @@ const CommentsSlice = createSlice({
 
 export const {commentCreated, commentEdited, commentDeleted, commentScoreIncremented, commentScoreDecremented} = CommentsSlice.actions
 
-export const selectAllComments = (state: RootState) => state.comments.allId
+export const selectAllCommentIds = (state: RootState) => state.comments.allId
 export const selectCommentById = (state: RootState, id: CommentID) => state.comments.byId[id]
 
 export default CommentsSlice.reducer
