@@ -15,14 +15,13 @@ const Reply = React.memo(function Reply({
     const dispatch = useAppDispatch()
     const reply = useAppSelector(state => selectReplyById(state, id))
 
-    if (!reply)
-        throw new Error(`Reply with id ${id} not found`)
+    if (!reply) throw new Error(`Reply with id ${id} not found`)
 
     React.useEffect(() => {
         return () => {
             dispatch(replyScoreReseted({ id }))
         }
-    }, [])
+    }, [id])
 
     const replyToReplyHandler = React.useCallback(
         (content: string) =>
