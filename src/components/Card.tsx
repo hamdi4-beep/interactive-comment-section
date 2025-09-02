@@ -119,9 +119,6 @@ const Card = React.memo(function Card(props: {
     const [isEditting, setIsEditting] = React.useState(false)
     const [isModalHidden, setIsModalHidden] = React.useState(true)
 
-    // only temporary until I update the structure
-    const isCurrentUser = currentUser.username === props.item.username
-
     return (
         <div className="container">
             <div className='card'>
@@ -151,8 +148,7 @@ const Card = React.memo(function Card(props: {
                 </div>
             </div>
 
-            {/* This keeps the current user from replying to their comment/reply which goes against the specified specs */}
-            {isReplying && !isCurrentUser && (
+            {isReplying && (
                 <FormComponent
                     placeholderValue='Add a reply...'
                     onSubmitUpdate={content => {
