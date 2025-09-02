@@ -25,17 +25,22 @@ const CommentsSlice = createSlice({
     reducers: {
         commentCreated: {
             reducer: (state, action: PayloadAction<CreateCommentPayload>) => {
-                state.byId[action.payload.id] = {
-                    id: action.payload.id,
-                    createdAt: action.payload.createdAt,
-                    score: 0,
-                    content: action.payload.content,
-                    // this works just fine when the information about the current user is stored in a local file, but needs to be updated if it's retrieved from a remote resource.
-                    username: currentUser.username,
-                    replies: []
+                const newCommentID = action.payload.id
+
+                state.byId = {
+                    ...state.byId,
+                    [newCommentID]: {
+                        id: newCommentID,
+                        createdAt: action.payload.createdAt,
+                        score: 0,
+                        content: action.payload.content,
+                        // this works just fine when the information about the current user is stored in a local file, but needs to be updated if it's retrieved from a remote resource.
+                        username: currentUser.username,
+                        replies: []
+                    }
                 }
 
-                state.allId.push(action.payload.id)
+                state.allId.push(newCommentID)
             },
             prepare: (content: string) => {
                 return {
