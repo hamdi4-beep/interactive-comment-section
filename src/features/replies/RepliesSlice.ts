@@ -66,7 +66,9 @@ const RepliesSlice = createSlice({
         },
         replyScoreReseted(state, action: PayloadAction<ResetReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
-            reply.score = initialState.byId[action.payload.id].score
+            // prevents the score property from being mutated if the reply object is deleted.
+            // only updates the score property if the reply component was unmounted.
+            if (reply) reply.score = initialState.byId[action.payload.id].score
         }
     }
 })

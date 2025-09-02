@@ -19,8 +19,7 @@ const Reply = React.memo(function Reply({
 
     React.useEffect(() => {
         return () => {
-            // prevents the score from being resetted if the reply object was deleted entirely otherwise reset the score if the component was just unmounted.
-            if (reply) replyScoreReseted({ id })
+            replyScoreReseted({ id })
         }
     }, [id])
 
