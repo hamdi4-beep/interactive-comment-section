@@ -72,7 +72,7 @@ const RepliesSlice = createSlice({
         replyScoreReseted(state, action: PayloadAction<ResetReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
             // only update the reply's score if it is included in the initial state otherwise the initial score value does not exist and this would throw an error
-            if (initialState.allId.includes(reply.id)) reply.score = initialState.byId[reply.id].score
+            if (reply && initialState.allId.includes(reply.id)) reply.score = initialState.byId[reply.id].score
         }
     }
 })
