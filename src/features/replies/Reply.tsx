@@ -1,16 +1,16 @@
 import { useAppDispatch, useAppSelector } from "@/hooks"
 import Card from "@/components/Card"
 import { replyCreated, replyDeleted, replyEdited, replyScoreDecremented, replyScoreIncremented, replyScoreReseted, selectReplyById } from "@/features/replies/RepliesSlice"
-import type { UserComment } from "@/features/comments/types"
-import type { UserReply } from "@/features/replies/types"
+import type { CommentID } from "@/features/comments/types"
+import type { ReplyID } from "@/features/replies/types"
 import * as React from 'react'
 
 const Reply = React.memo(function Reply({
     id,
     parentCommentId
 }: {
-    id: UserReply['id']
-    parentCommentId: UserComment['id']
+    id: ReplyID
+    parentCommentId: CommentID
 }) {
     const dispatch = useAppDispatch()
     const reply = useAppSelector(state => selectReplyById(state, id))
