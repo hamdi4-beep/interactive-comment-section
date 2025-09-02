@@ -4,9 +4,9 @@ import { useAppSelector } from '@/hooks'
 import { type UserReply } from '@/features/replies/types'
 import type { UserComment } from '@/features/comments/types'
 import TimeAgo from 'timeago-react'
-import { selectUserByUsername } from '@/features/users/UsersSlice'
+import { currentUser, selectUserByUsername } from '@/features/users/UsersSlice'
 
-export const ScoreComponent = ({
+const ScoreComponent = ({
     score,
     onIncrementUpdate,
     onDecrementUpdate
@@ -37,6 +37,25 @@ export const ScoreComponent = ({
     )
 }
 
+const UserComponent = ({
+    username
+}: {
+    username: string
+}) => {
+    const user = useAppSelector(state => selectUserByUsername(state, username))
+    const isCurrentUser = user.role === 'currentUser'
+
+    return (
+        <div className="user">
+            <div className="user-img">
+                <img src={'/interactive-comment-section' + user.image.png} alt="" />
+            </div>
+
+            <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
+        </div>
+    )
+}
+
 // A component that's only responsible for visual appearance and structure. It shouldn't define logic or be responsible for how comments and replies behave.
 // It couples the markup structure of a comment and reply element so you only have to modify them consistently from a single location.
 
@@ -49,12 +68,12 @@ const Card = React.memo(function Card(props: {
     handleScoreDecrementedDispatch: (currentScore: number) => void
     children: React.ReactNode
 }) {
-    const user = useAppSelector(state => selectUserByUsername(state, props.item.username))
-    const isCurrentUser = user.role === 'currentUser'
-    
     const [isReplying, setIsReplying] = React.useState(false)
     const [isEditting, setIsEditting] = React.useState(false)
     const [isModalHidden, setIsModalHidden] = React.useState(true)
+
+    // only temporary until I update the structure
+    const isCurrentUser = currentUser.username === props.item.username
 
     return (
         <div className="container">
@@ -67,17 +86,11 @@ const Card = React.memo(function Card(props: {
 
                 <div className="content">
                     <div className="profile-header">
-                        <div className="user">
-                            <div className="user-img">
-                                <img src={'/interactive-comment-section' + user.image.png} alt="" />
-                            </div>
+                        <UserComponent username={props.item.username} />
 
-                            <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
-
-                            <span className='comment-date'>
-                                <TimeAgo datetime={props.item.createdAt} live={false} />
-                            </span>
-                        </div>
+                        <span className='comment-date'>
+                            <TimeAgo datetime={props.item.createdAt} live={false} />
+                        </span>
 
                         <div className="actions">
                             {isCurrentUser ? (
