@@ -58,14 +58,14 @@ const UserComponent = ({
 
 const UserActions = ({
     username,
-    toggleEditForm,
     toggleReplyForm,
-    toggleModal
+    toggleEditForm,
+    hideModal
 }: {
     username: string,
-    toggleEditForm: () => void
     toggleReplyForm: () => void
-    toggleModal: () => void
+    toggleEditForm: () => void
+    hideModal: () => void
 }) => {
     const user = useAppSelector(state => selectUserByUsername(state, username))
     const isCurrentUser = user.role === 'currentUser'
@@ -74,7 +74,7 @@ const UserActions = ({
         <div className="actions">
             {isCurrentUser ? (
                 <div className="user-actions">
-                    <button onClick={toggleEditForm}>
+                    <button onClick={() => toggleEditForm()}>
                         <div className="icon-img">
                             <img src='/interactive-comment-section/images/icon-edit.svg' alt="" />
                         </div>
@@ -82,7 +82,7 @@ const UserActions = ({
                         Edit
                     </button>
 
-                    <button onClick={toggleModal}>
+                    <button onClick={() => hideModal()}>
                         <div className="icon-img">
                             <img src='/interactive-comment-section/images/icon-delete.svg' alt="" />
                         </div>
@@ -91,7 +91,7 @@ const UserActions = ({
                     </button>
                 </div>
             ) : (
-                <button onClick={toggleReplyForm}>
+                <button onClick={() => toggleReplyForm()}>
                     <div className="icon-img">
                         <img src='/interactive-comment-section/images/icon-reply.svg' alt="" />
                     </div>
@@ -143,7 +143,7 @@ const Card = React.memo(function Card(props: {
                             username={props.item.username}
                             toggleReplyForm={() => setIsReplying(prev => !prev)}
                             toggleEditForm={() => setIsEditting(prev => !prev)}
-                            toggleModal={() => setIsModalHidden(true)}
+                            hideModal={() => setIsModalHidden(false)}
                         />
                     </div>
 
