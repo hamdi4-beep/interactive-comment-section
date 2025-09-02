@@ -56,6 +56,53 @@ const UserComponent = ({
     )
 }
 
+const UserActions = ({
+    username,
+    toggleEditForm,
+    toggleReplyForm,
+    toggleModal
+}: {
+    username: string,
+    toggleEditForm: () => void
+    toggleReplyForm: () => void
+    toggleModal: () => void
+}) => {
+    const user = useAppSelector(state => selectUserByUsername(state, username))
+    const isCurrentUser = user.role === 'currentUser'
+
+    return (
+        <div className="actions">
+            {isCurrentUser ? (
+                <div className="user-actions">
+                    <button onClick={toggleEditForm}>
+                        <div className="icon-img">
+                            <img src='/interactive-comment-section/images/icon-edit.svg' alt="" />
+                        </div>
+                
+                        Edit
+                    </button>
+
+                    <button onClick={toggleModal}>
+                        <div className="icon-img">
+                            <img src='/interactive-comment-section/images/icon-delete.svg' alt="" />
+                        </div>
+                
+                        Delete
+                    </button>
+                </div>
+            ) : (
+                <button onClick={toggleReplyForm}>
+                    <div className="icon-img">
+                        <img src='/interactive-comment-section/images/icon-reply.svg' alt="" />
+                    </div>
+            
+                    Reply
+                </button>
+            )}
+        </div>
+    )
+}
+
 // A component that's only responsible for visual appearance and structure. It shouldn't define logic or be responsible for how comments and replies behave.
 // It couples the markup structure of a comment and reply element so you only have to modify them consistently from a single location.
 
@@ -92,35 +139,12 @@ const Card = React.memo(function Card(props: {
                             <TimeAgo datetime={props.item.createdAt} live={false} />
                         </span>
 
-                        <div className="actions">
-                            {isCurrentUser ? (
-                                <div className="user-actions">
-                                    <button onClick={() => setIsEditting(prev => !prev)}>
-                                        <div className="icon-img">
-                                            <img src='/interactive-comment-section/images/icon-edit.svg' alt="" />
-                                        </div>
-                                
-                                        Edit
-                                    </button>
-
-                                    <button onClick={() => setIsModalHidden(false)}>
-                                        <div className="icon-img">
-                                            <img src='/interactive-comment-section/images/icon-delete.svg' alt="" />
-                                        </div>
-                                
-                                        Delete
-                                    </button>
-                                </div>
-                            ) : (
-                                <button onClick={() => setIsReplying(prev => !prev)}>
-                                    <div className="icon-img">
-                                        <img src='/interactive-comment-section/images/icon-reply.svg' alt="" />
-                                    </div>
-                            
-                                    Reply
-                                </button>
-                            )}
-                        </div>
+                        <UserActions
+                            username={props.item.username}
+                            toggleReplyForm={() => setIsReplying(prev => !prev)}
+                            toggleEditForm={() => setIsEditting(prev => !prev)}
+                            toggleModal={() => setIsModalHidden(true)}
+                        />
                     </div>
 
                     {props.children}

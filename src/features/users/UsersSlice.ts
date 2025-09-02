@@ -26,11 +26,11 @@ const UsersSlice = createSlice({
     reducers: {}
 })
 
-export const selectUsers = (state: RootState) => state.users
+export const selectAllUsers = (state: RootState) => state.users
 export const selectUserByUsername = (state: RootState, username: string) => state.users.byUsername[username]
 
 export const selectCurrentUser = createSelector(
-    selectUsers,
+    selectAllUsers,
     users => {
         const username = users.allUsername.find(username => users.byUsername[username].role === 'currentUser')!
         return users.byUsername[username]
