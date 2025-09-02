@@ -29,43 +29,43 @@ const Comment = React.memo(function Comment({
 
     const replyToCommentHandler = React.useCallback(
         (content: string) =>
-            dispatch(replyCreated(content, comment.username, comment.id)),
-        [comment.username, comment.id]
+            dispatch(replyCreated(content, comment.username, id)),
+        [comment.username, id]
     )
 
     const editCommentHandler = React.useCallback(
         (content: string) =>
             dispatch(commentEdited({
-                id: comment.id,
+                id,
                 content
             })),
-        [comment.id]
+        [id]
     )
 
     const deleteCommentHandler = React.useCallback(
         () =>
             dispatch(commentDeleted({
-                id: comment.id
+                id
             })),
-        [comment.id]
+        [id]
     )
 
     const incrementCommentScoreHandler = React.useCallback(
         (currentScore: number) => {
             dispatch(commentScoreIncremented({
-                id: comment.id,
+                id,
                 currentScore
             }))
-        }, [comment.id]
+        }, [id]
     )
 
     const decrementCommentScoreHandler = React.useCallback(
         (currentScore: number) => {
             dispatch(commentScoreDecremented({
-                id: comment.id,
+                id,
                 currentScore
             }))
-        }, [comment.id]
+        }, [id]
     )
 
     return (
@@ -85,11 +85,11 @@ const Comment = React.memo(function Comment({
 
             {!isRepliesHidden && (
                 <div className="replies-list">
-                    {comment.replies.map(id => (
+                    {comment.replies.map(replyId => (
                         <Reply
-                            id={id}
-                            parentCommentId={comment.id}
-                            key={id}
+                            id={replyId}
+                            parentCommentId={id}
+                            key={replyId}
                         />
                     ))}
                 </div>
