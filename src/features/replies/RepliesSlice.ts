@@ -22,17 +22,22 @@ const RepliesSlice = createSlice({
     reducers: {
         replyCreated: {
             reducer(state, action: PayloadAction<CreateReplyPayload>) {
-                state.byId[action.payload.id] = {
-                    id: action.payload.id,
-                    parentCommentId: action.payload.parentCommentId,
-                    createdAt: action.payload.createdAt,
-                    username: currentUser.username,
-                    score: 0,
-                    content: action.payload.content,
-                    replyingTo: action.payload.username
+                const newReplyId = action.payload.id
+
+                state.byId = {
+                    ...state.byId,
+                    [newReplyId]: {
+                        id: newReplyId,
+                        parentCommentId: action.payload.parentCommentId,
+                        createdAt: action.payload.createdAt,
+                        username: currentUser.username,
+                        score: 0,
+                        content: action.payload.content,
+                        replyingTo: action.payload.username
+                    }
                 }
 
-                state.allId.push(action.payload.id)
+                state.allId.push(newReplyId)
             },
             prepare(content: string, username: string, parentCommentId: string) {
                 return {
@@ -66,9 +71,8 @@ const RepliesSlice = createSlice({
         },
         replyScoreReseted(state, action: PayloadAction<ResetReplyScorePayload>) {
             const reply = state.byId[action.payload.id]
-            // prevents the score property from being mutated if the reply object is deleted.
-            // only updates the score property if the reply component was unmounted.
-            if (reply) reply.score = initialState.byId[action.payload.id].score
+            // only update the reply's score if it is included in the initial state otherwise the initial score value does not exist and this would throw an error
+            if (initialState.allId.includes(reply.id)) reply.score = initialState.byId[reply.id].score
         }
     }
 })
