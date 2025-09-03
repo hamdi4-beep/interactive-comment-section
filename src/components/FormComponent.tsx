@@ -10,7 +10,7 @@ const CurrentUserAvatar = () => {
     return (
         <div className="current-user">
             <div className="user-img">
-                <img src={'/interactive-comment-section' + currentUser.image.png} alt="" />
+                <img src={currentUser.image.png} alt="" />
             </div>
         </div>
     )

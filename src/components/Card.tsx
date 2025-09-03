@@ -48,7 +48,7 @@ const UserComponent = ({
     return (
         <div className="user">
             <div className="user-img">
-                <img src={'/interactive-comment-section' + user.image.png} alt="" />
+                <img src={user.image.png} alt="" />
             </div>
 
             <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
