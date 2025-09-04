@@ -45,15 +45,15 @@ const UserComponent = ({
     const currentUser = useAppSelector(state => selectCurrentUser(state))
     const user = useAppSelector(state => selectUserByUsername(state, username))
 
-    console.log(user, currentUser)
+    const userAvatarPath = currentUser.username === username ? currentUser.image.png : user.image.png
 
     return (
         <div className="user">
             <div className="user-img">
-                <img src={'/interactive-comment-section' + (user || currentUser).image.png} alt="" />
+                <img src={'/interactive-comment-section' + userAvatarPath} alt="" />
             </div>
 
-            <h3>{username}</h3>
+            <h3 className={currentUser.username === username ? 'current-user' : ''}>{username}</h3>
         </div>
     )
 }
@@ -69,11 +69,12 @@ const UserActions = ({
     toggleEditForm: () => void
     hideModal: () => void
 }) => {
-    const user = useAppSelector(state => selectUserByUsername(state, username))
+    const currentUser = useAppSelector(state => selectCurrentUser(state))
+    const isCurrentUser = currentUser.username === username
 
     return (
         <div className="actions">
-            {!user ? (
+            {isCurrentUser ? (
                 <div className="user-actions">
                     <button onClick={() => toggleEditForm()}>
                         <div className="icon-img">
