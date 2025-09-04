@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "@/store";
 import users from '@/data/users.json'
 
@@ -8,10 +8,10 @@ type User = {
         webp: string
     }
     username: string
-    role: string
 }
 
 export interface UserState {
+    currentUser: User
     byUsername: {
         [x: string]: User
     }
@@ -28,15 +28,9 @@ const UsersSlice = createSlice({
 
 export const selectAllUsers = (state: RootState) => state.users
 export const selectUserByUsername = (state: RootState, username: string) => state.users.byUsername[username]
+export const selectCurrentUser = (state: RootState) => state.users.currentUser
 
-export const selectCurrentUser = createSelector(
-    selectAllUsers,
-    users => {
-        const username = users.allUsername.find(username => users.byUsername[username].role === 'currentUser')!
-        return users.byUsername[username]
-    }
-)
-
-export const currentUser = users.byUsername['juliusomo']
+// temporarily exports the local currentUser when the data is available locally
+export const currentUser = users.currentUser
 
 export default UsersSlice.reducer

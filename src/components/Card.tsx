@@ -4,7 +4,7 @@ import { useAppSelector } from '@/hooks'
 import { type UserReply } from '@/features/replies/types'
 import type { UserComment } from '@/features/comments/types'
 import TimeAgo from 'timeago-react'
-import { selectUserByUsername } from '@/features/users/UsersSlice'
+import { selectCurrentUser, selectUserByUsername } from '@/features/users/UsersSlice'
 
 const ScoreComponent = ({
     score,
@@ -42,16 +42,18 @@ const UserComponent = ({
 }: {
     username: string
 }) => {
+    const currentUser = useAppSelector(state => selectCurrentUser(state))
     const user = useAppSelector(state => selectUserByUsername(state, username))
-    const isCurrentUser = user.role === 'currentUser'
+
+    console.log(user, currentUser)
 
     return (
         <div className="user">
             <div className="user-img">
-                <img src={'/interactive-comment-section' + user.image.png} alt="" />
+                <img src={'/interactive-comment-section' + (user || currentUser).image.png} alt="" />
             </div>
 
-            <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
+            <h3>{username}</h3>
         </div>
     )
 }
@@ -68,11 +70,10 @@ const UserActions = ({
     hideModal: () => void
 }) => {
     const user = useAppSelector(state => selectUserByUsername(state, username))
-    const isCurrentUser = user.role === 'currentUser'
 
     return (
         <div className="actions">
-            {isCurrentUser ? (
+            {!user ? (
                 <div className="user-actions">
                     <button onClick={() => toggleEditForm()}>
                         <div className="icon-img">
