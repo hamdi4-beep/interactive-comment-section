@@ -23,7 +23,7 @@ const Reply = React.memo(function Reply({
         }
     }, [id])
 
-    const replyToReplyHandler = React.useCallback(
+    const createReplyHandler = React.useCallback(
         (content: string) =>
             dispatch(replyCreated(content, reply.username, parentCommentId)),
         [reply.username, parentCommentId]
@@ -71,7 +71,7 @@ const Reply = React.memo(function Reply({
         <div className="reply-wrapper">
             <Card
                 item={reply}
-                handleReplyDispatch={replyToReplyHandler}
+                handleReplyDispatch={createReplyHandler}
                 handleEditDispatch={editReplyHandler}
                 handleDeleteDispatch={deleteReplyHandler}
                 handleScoreIncrementedDispatch={incrementReplyScoreHandler}

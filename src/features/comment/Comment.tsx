@@ -27,7 +27,7 @@ const Comment = React.memo(function Comment({
 
     if (!comment) throw new Error(`Comment with id ${id} not found`)
 
-    const replyToCommentHandler = React.useCallback(
+    const createReplyHandler = React.useCallback(
         (content: string) =>
             dispatch(replyCreated(content, comment.username, id)),
         [comment.username, id]
@@ -72,7 +72,7 @@ const Comment = React.memo(function Comment({
         <div className="comment-wrapper">
             <Card
                 item={comment}
-                handleReplyDispatch={replyToCommentHandler}
+                handleReplyDispatch={createReplyHandler}
                 handleEditDispatch={editCommentHandler}
                 handleDeleteDispatch={deleteCommentHandler}
                 handleScoreIncrementedDispatch={incrementCommentScoreHandler}
