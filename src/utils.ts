@@ -13,5 +13,17 @@ export const decrementScore = (item: Item, currentScore: number) =>
         // Updates the score by two to skip the current score because upvoting is only meant to decrease the current value by one
         item.score - 1 : item.score > currentScore ? item.score - 2 : currentScore
 
-export const findCommentId = (state: CommentState, targetId: CommentID) =>
-    state.allId.find(id => targetId === id)
+export const findCommentById = (state: CommentState, targetId: CommentID) => {
+    try {
+        const comment = state.byId[targetId]
+        
+        if (!comment) {
+            const error = new Error(`A comment with an ID of ${targetId} does not exist`)
+            throw error
+        }
+
+        return comment
+    } catch (err) {
+        console.error(err)
+    }
+}
