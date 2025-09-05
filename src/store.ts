@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import CommentsSlice from '@/features/comments/CommentsSlice'
-import RepliesSlice from '@/features/replies/RepliesSlice'
-import UsersSlice from '@/features/users/UsersSlice'
+import CommentsSlice from '@/features/comment/CommentsSlice'
+import RepliesSlice from '@/features/reply/RepliesSlice'
+import UsersSlice from '@/features/user/UsersSlice'
 
 export const store = configureStore({
     reducer: {

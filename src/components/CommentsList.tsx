@@ -1,5 +1,5 @@
-import Comment from '@/features/comments/Comment'
-import { selectAllCommentIds } from '@/features/comments/CommentsSlice'
+import Comment from '@/features/comment/Comment'
+import { selectAllCommentIds } from '@/features/comment/CommentsSlice'
 import { useAppSelector } from '@/hooks'
 
 function CommentsList() {

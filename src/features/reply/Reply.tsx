@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/hooks"
 import Card from "@/components/Card"
-import { replyCreated, replyDeleted, replyEdited, replyScoreDecremented, replyScoreIncremented, replyScoreReseted, selectReplyById } from "@/features/replies/RepliesSlice"
-import type { CommentID } from "@/features/comments/types"
+import { replyCreated, replyDeleted, replyEdited, replyScoreDecremented, replyScoreIncremented, replyScoreReseted, selectReplyById } from "@/features/reply/RepliesSlice"
+import type { CommentID } from "@/features/comment/types"
 import type { ReplyID } from "@/features/replies/types"
 import * as React from 'react'
 

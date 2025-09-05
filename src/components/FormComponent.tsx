@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useAppSelector } from '@/hooks'
-import { selectCurrentUser } from '@/features/users/UsersSlice'
+import { selectCurrentUser } from '@/features/user/UsersSlice'
 
 const textAreaRef = React.createRef<HTMLTextAreaElement>()
 

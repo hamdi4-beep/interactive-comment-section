@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Card from '@/components/Card'
-import Reply from '@/features/replies/Reply'
+import Reply from '@/features/reply/Reply'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 
 import type { UserComment } from './types'
@@ -11,9 +11,9 @@ import {
     commentScoreDecremented,
     commentScoreIncremented,
     selectCommentById
-} from '@/features/comments/CommentsSlice'
+} from '@/features/comment/CommentsSlice'
 
-import { replyCreated } from '@/features/replies/RepliesSlice'
+import { replyCreated } from '@/features/reply/RepliesSlice'
 
 const Comment = React.memo(function Comment({
     id

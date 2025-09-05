@@ -1,4 +1,4 @@
-import type { UpdateCommentScorePayload, UserComment } from "@/features/comments/types"
+import type { UpdateCommentScorePayload, UserComment } from "@/features/comment/types"
 
 export type UserReply = Omit<UserComment, 'replies'> & {
     replyingTo: string,

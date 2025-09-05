@@ -1,10 +1,11 @@
 import * as React from 'react'
 import FormComponent from "@/components/FormComponent"
+import User from '@/features/user/User'
 import { useAppSelector } from '@/hooks'
-import { type UserReply } from '@/features/replies/types'
-import type { UserComment } from '@/features/comments/types'
+import { type UserReply } from '@/features/reply/types'
+import type { UserComment } from '@/features/comment/types'
 import TimeAgo from 'timeago-react'
-import { selectCurrentUser, selectUserByUsername } from '@/features/users/UsersSlice'
+import { selectCurrentUser } from '@/features/user/UsersSlice'
 
 const ScoreComponent = ({
     score,
@@ -33,27 +34,6 @@ const ScoreComponent = ({
                     <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
                 </div>
             </button>
-        </div>
-    )
-}
-
-const UserComponent = ({
-    username
-}: {
-    username: string
-}) => {
-    const currentUser = useAppSelector(state => selectCurrentUser(state))
-    const user = useAppSelector(state => selectUserByUsername(state, username))
-
-    const userAvatarPath = currentUser.username === username ? currentUser.image.png : user.image.png
-
-    return (
-        <div className="user">
-            <div className="user-img">
-                <img src={'/interactive-comment-section' + userAvatarPath} alt="" />
-            </div>
-
-            <h3 className={currentUser.username === username ? 'current-user' : ''}>{username}</h3>
         </div>
     )
 }
@@ -132,7 +112,7 @@ const Card = React.memo(function Card(props: {
 
                 <div className="content">
                     <div className="profile-header">
-                        <UserComponent username={props.item.username} />
+                        <User username={props.item.username} />
 
                         <span className='comment-date'>
                             <TimeAgo datetime={props.item.createdAt} live={false} />

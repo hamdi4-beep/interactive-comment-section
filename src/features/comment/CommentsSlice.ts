@@ -1,6 +1,6 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
-import { replyCreated, replyDeleted } from "@/features/replies/RepliesSlice";
-import { currentUser } from "@/features/users/UsersSlice";
+import { replyCreated, replyDeleted } from "@/features/reply/RepliesSlice";
+import { currentUser } from "@/features/user/UsersSlice";
 import { findCommentId } from "@/utils";
 
 import type { RootState } from "@/store";

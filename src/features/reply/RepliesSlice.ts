@@ -1,6 +1,6 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/store";
-import { currentUser } from "@/features/users/UsersSlice";
+import { currentUser } from "@/features/user/UsersSlice";
 import replies from '@/data/replies.json'
 
 import type {
@@ -11,7 +11,7 @@ import type {
     ResetReplyScorePayload,
     ReplyID,
     ReplyState,
-} from '@/features/replies/types'
+} from '@/features/reply/types'
 import { decrementScore, incrementScore } from "@/utils";
 
 export const initialState: ReplyState = replies
