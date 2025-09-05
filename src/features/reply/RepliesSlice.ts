@@ -22,25 +22,22 @@ const RepliesSlice = createSlice({
     reducers: {
         replyCreated: {
             reducer(state, action: PayloadAction<CreateReplyPayload>) {
-                const newReplyId = action.payload.id
+                // points to an id of the newly created reply object
+                const replyId = action.payload.id
 
-                state.byId = {
-                    ...state.byId,
-                    [newReplyId]: {
-                        id: newReplyId,
-                        parentCommentId: action.payload.parentCommentId,
-                        createdAt: action.payload.createdAt,
-                        username: currentUser.username,
-                        score: 0,
-                        content: action.payload.content,
-                        replyingTo: action.payload.username
-                    }
+                state.byId[replyId] = {
+                    id: replyId,
+                    parentCommentId: action.payload.parentCommentId,
+                    createdAt: action.payload.createdAt,
+                    username: currentUser.username,
+                    score: 0,
+                    content: action.payload.content,
+                    replyingTo: action.payload.username
                 }
 
-                state.allId.push(newReplyId)
+                state.allId.push(replyId)
             },
-            prepare(content: string, username: string, parentCommentId: string) {
-                return {
+            prepare: (content: string, username: string, parentCommentId: string) => ({
                     payload: {
                         content,
                         id: nanoid(),
@@ -48,8 +45,7 @@ const RepliesSlice = createSlice({
                         parentCommentId,
                         createdAt: (new Date()).toISOString()
                     }
-                }
-            }
+                })
         },
         replyEdited(state, action: PayloadAction<EditReplyPayload>) {
             const reply = state.byId[action.payload.id]
