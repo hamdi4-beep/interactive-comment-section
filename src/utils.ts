@@ -1,4 +1,4 @@
-import type { CommentState, UserComment, CommentID } from "@/features/comments/types";
+import type { CommentState, UserComment, CommentID } from "@/features/comment/types";
 import type { UserReply } from "@/features/replies/types";
 
 type Item = UserComment | UserReply
