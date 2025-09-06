@@ -32,16 +32,17 @@ const RepliesSlice = createSlice({
                     username: currentUser.username,
                     score: 0,
                     content: action.payload.content,
-                    replyingTo: action.payload.username
+                    replyingTo: action.payload.replyingTo
                 }
 
                 state.allId.push(replyId)
             },
-            prepare: (content: string, username: string, parentCommentId: string) => ({
+            prepare: (content: string, username: string, replyingTo: string, parentCommentId: string) => ({
                     payload: {
                         content,
                         id: nanoid(),
                         username,
+                        replyingTo,
                         parentCommentId,
                         createdAt: (new Date()).toISOString()
                     }

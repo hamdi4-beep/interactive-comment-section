@@ -14,12 +14,14 @@ import {
 } from '@/features/comment/CommentsSlice'
 
 import { replyCreated } from '@/features/reply/RepliesSlice'
+import { selectCurrentUser } from '../user/UsersSlice'
 
 const Comment = React.memo(function Comment({
     id
 }: {
     id: UserComment['id']
 }) {
+    const currentUser = useAppSelector(state => selectCurrentUser(state))
     const dispatch = useAppDispatch()
 
     const [isRepliesHidden, setIsRepliesHidden] = React.useState(true)
@@ -29,7 +31,7 @@ const Comment = React.memo(function Comment({
 
     const createReplyHandler = React.useCallback(
         (content: string) =>
-            dispatch(replyCreated(content, comment.username, id)),
+            dispatch(replyCreated(content, currentUser.username, comment.username, id)),
         [comment.username, id]
     )
 

@@ -7,7 +7,7 @@ export type UserReply = Omit<UserComment, 'replies'> & {
 
 export type ReplyID = UserReply['id']
 
-export interface CreateReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId' | 'content' | 'username' | 'createdAt'> {}
+export interface CreateReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId' | 'content' | 'username' | 'replyingTo' | 'createdAt'> {}
 export interface DeleteReplyPayload extends Pick<UserReply, 'id' | 'parentCommentId'> {}
 export interface EditReplyPayload extends Pick<UserReply, 'id' | 'content'> {}
 export interface UpdateReplyScorePayload extends UpdateCommentScorePayload {}
