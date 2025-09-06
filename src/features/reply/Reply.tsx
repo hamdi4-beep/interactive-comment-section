@@ -2,8 +2,9 @@ import { useAppDispatch, useAppSelector } from "@/hooks"
 import Card from "@/components/Card"
 import { replyCreated, replyDeleted, replyEdited, replyScoreDecremented, replyScoreIncremented, replyScoreReseted, selectReplyById } from "@/features/reply/RepliesSlice"
 import type { CommentID } from "@/features/comment/types"
-import type { ReplyID } from "@/features/replies/types"
+import type { ReplyID } from "@/features/reply/types"
 import * as React from 'react'
+import { selectCurrentUser } from "../user/UsersSlice"
 
 const Reply = React.memo(function Reply({
     id,
@@ -12,6 +13,7 @@ const Reply = React.memo(function Reply({
     id: ReplyID
     parentCommentId: CommentID
 }) {
+    const currentUser = useAppSelector(state => selectCurrentUser(state))
     const dispatch = useAppDispatch()
     const reply = useAppSelector(state => selectReplyById(state, id))
 
@@ -25,7 +27,7 @@ const Reply = React.memo(function Reply({
 
     const createReplyHandler = React.useCallback(
         (content: string) =>
-            dispatch(replyCreated(content, reply.username, parentCommentId)),
+            dispatch(replyCreated(content, currentUser.username, reply.username, parentCommentId)),
         [reply.username, parentCommentId]
     )
 

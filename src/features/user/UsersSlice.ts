@@ -30,7 +30,4 @@ export const selectAllUsers = (state: RootState) => state.users
 export const selectUserByUsername = (state: RootState, username: string) => state.users.byUsername[username]
 export const selectCurrentUser = (state: RootState) => state.users.currentUser
 
-// temporarily exports the local currentUser when the data is available locally
-export const currentUser = users.currentUser
-
 export default UsersSlice.reducer

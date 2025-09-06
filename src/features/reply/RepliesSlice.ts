@@ -1,6 +1,5 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/store";
-import { currentUser } from "@/features/user/UsersSlice";
 import replies from '@/data/replies.json'
 
 import type {
@@ -29,19 +28,20 @@ const RepliesSlice = createSlice({
                     id: replyId,
                     parentCommentId: action.payload.parentCommentId,
                     createdAt: action.payload.createdAt,
-                    username: currentUser.username,
+                    username: action.payload.username,
                     score: 0,
                     content: action.payload.content,
-                    replyingTo: action.payload.username
+                    replyingTo: action.payload.replyingTo
                 }
 
                 state.allId.push(replyId)
             },
-            prepare: (content: string, username: string, parentCommentId: string) => ({
+            prepare: (content: string, username: string, replyingTo: string, parentCommentId: string) => ({
                     payload: {
                         content,
                         id: nanoid(),
                         username,
+                        replyingTo,
                         parentCommentId,
                         createdAt: (new Date()).toISOString()
                     }
