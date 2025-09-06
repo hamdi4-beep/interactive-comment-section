@@ -73,14 +73,8 @@ const CommentsSlice = createSlice({
                 // adds an id of the newly created reply object to the parentComment's replies array.
                 const parentComment = findCommentById(state, action.payload.parentCommentId)
                 if (parentComment) parentComment.replies.push(action.payload.id)
-                // adds an id of the newly created reply object to the parentComment's replies array.
-                const parentComment = findCommentById(state, action.payload.parentCommentId)
-                if (parentComment) parentComment.replies.push(action.payload.id)
             })
             .addCase(replyDeleted, (state, action) => {
-                // removes an id of the target reply object from the parentComment's replies array.
-                const parentComment = findCommentById(state, action.payload.parentCommentId)
-                if (parentComment) parentComment.replies = parentComment.replies.filter(replyId => replyId !== action.payload.id)
                 // removes an id of the target reply object from the parentComment's replies array.
                 const parentComment = findCommentById(state, action.payload.parentCommentId)
                 if (parentComment) parentComment.replies = parentComment.replies.filter(replyId => replyId !== action.payload.id)
