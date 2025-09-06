@@ -14,7 +14,7 @@ export interface CommentState {
     allId: CommentID[]
 }
 
-export interface CreateCommentPayload extends Pick<UserComment, 'id' | 'content' | 'createdAt'> {}
+export interface CreateCommentPayload extends Pick<UserComment, 'id' | 'username' | 'content' | 'createdAt'> {}
 export interface DeleteCommentPayload extends Pick<UserComment, 'id'> {}
 export interface EditCommentPayload extends Pick<UserComment, 'id' | 'content'> {}
 

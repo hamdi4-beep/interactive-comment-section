@@ -1,9 +1,11 @@
 import { commentCreated } from "@/features/comment/CommentsSlice";
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import CommentsList from "@/components/CommentsList";
 import FormComponent from "@/components/FormComponent"
+import { selectCurrentUser } from "@/features/user/UsersSlice";
 
 function CommentSection() {
+    const currentUser = useAppSelector(state => selectCurrentUser(state))
     const dispatch = useAppDispatch()
 
     return (
@@ -12,7 +14,7 @@ function CommentSection() {
 
             <FormComponent
                 placeholderValue='Add a comment...'
-                onSubmitUpdate={content => dispatch(commentCreated(content))}
+                onSubmitUpdate={content => dispatch(commentCreated(content, currentUser.username))}
             />
         </div>
     )

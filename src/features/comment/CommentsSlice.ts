@@ -1,6 +1,5 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import { replyCreated, replyDeleted } from "@/features/reply/RepliesSlice";
-import { currentUser } from "@/features/user/UsersSlice";
 import { findCommentById } from "@/utils";
 
 import type { RootState } from "@/store";
@@ -34,17 +33,18 @@ const CommentsSlice = createSlice({
                     score: 0,
                     content: action.payload.content,
                     // this works just fine when the information about the current user is stored in a local file, but needs to be updated if it's retrieved from a remote resource.
-                    username: currentUser.username,
+                    username: action.payload.username,
                     replies: []
                 }
 
                 state.allId.push(commentId)
             },
-            prepare: (content: string) => {
+            prepare: (content: string, username: string) => {
                 return {
                     payload: {
                         content,
                         id: nanoid(),
+                        username,
                         createdAt: (new Date()).toISOString()
                     }
                 }
