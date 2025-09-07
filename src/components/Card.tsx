@@ -93,8 +93,8 @@ const Card = React.memo(function Card(props: {
     handleReplyDispatch: (content: string) => void,
     handleEditDispatch: (content: string) => void,
     handleDeleteDispatch: () => void,
-    handleScoreIncrementedDispatch: (currentScore: number) => void,
-    handleScoreDecrementedDispatch: (currentScore: number) => void
+    handleIncrementScoreDispatch: (currentScore: number) => void,
+    handleDecrementScoreDispatch: (currentScore: number) => void
     children: React.ReactNode
 }) {
     const [isReplying, setIsReplying] = React.useState(false)
@@ -106,8 +106,8 @@ const Card = React.memo(function Card(props: {
             <div className='card'>
                 <ScoreComponent
                     score={props.item.score}
-                    onIncrementUpdate={props.handleScoreIncrementedDispatch}
-                    onDecrementUpdate={props.handleScoreDecrementedDispatch}
+                    onIncrementUpdate={props.handleIncrementScoreDispatch}
+                    onDecrementUpdate={props.handleDecrementScoreDispatch}
                 />
 
                 <div className="content">

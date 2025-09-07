@@ -59,7 +59,7 @@ const Reply = React.memo(function Reply({
         [id]
     )
 
-    const decrementedReplyScoreHandler = React.useCallback(
+    const decremetReplyScoreHandler = React.useCallback(
         (currentScore: number) => {
             dispatch(replyScoreDecremented({
                 id,
@@ -76,8 +76,8 @@ const Reply = React.memo(function Reply({
                 handleReplyDispatch={createReplyHandler}
                 handleEditDispatch={editReplyHandler}
                 handleDeleteDispatch={deleteReplyHandler}
-                handleScoreIncrementedDispatch={incrementReplyScoreHandler}
-                handleScoreDecrementedDispatch={decrementedReplyScoreHandler}
+                handleIncrementScoreDispatch={incrementReplyScoreHandler}
+                handleDecrementScoreDispatch={decremetReplyScoreHandler}
             >
                 <p>
                     <span className="replying-to">@{reply.replyingTo} </span>

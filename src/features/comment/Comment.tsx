@@ -77,8 +77,8 @@ const Comment = React.memo(function Comment({
                 handleReplyDispatch={createReplyHandler}
                 handleEditDispatch={editCommentHandler}
                 handleDeleteDispatch={deleteCommentHandler}
-                handleScoreIncrementedDispatch={incrementCommentScoreHandler}
-                handleScoreDecrementedDispatch={decrementCommentScoreHandler}
+                handleIncrementScoreDispatch={incrementCommentScoreHandler}
+                handleDecrementScoreDispatch={decrementCommentScoreHandler}
             >
                 <p>{comment.content}</p>
             </Card>
