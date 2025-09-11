@@ -16,12 +16,25 @@ const ScoreComponent = ({
     onIncrementUpdate: (currentScore: number) => void
     onDecrementUpdate: (currentScore: number) => void
 }) => {
+    const [voteIntent, setVoteIntent] = React.useState<null | 'upvote' | 'downvote'>(null)
     const currentScoreRef = React.useRef(score)
     const currentScore = currentScoreRef.current
 
+    console.log(voteIntent)
+
+    const handleUpvoteClick = () => {
+        setVoteIntent(prev => prev === 'upvote' ? null : 'upvote')
+        onIncrementUpdate(currentScore)
+    }
+
+    const handleDownvoteClick = () => {
+        setVoteIntent(prev => prev === 'downvote' ? null : 'downvote')
+        onDecrementUpdate(currentScore)
+    }
+
     return (
-        <div className="score-component">
-            <button onClick={() => onIncrementUpdate(currentScore)}>
+        <div className="score-component" style={{ backgroundColor: voteIntent === 'upvote' ? 'hsl(223, 19%, 93%)' : voteIntent === 'downvote' ? 'hsl(223, 19%, 98%)' : '' }}>
+            <button onClick={handleUpvoteClick}>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-plus.svg" alt="" />
                 </div>
@@ -29,7 +42,7 @@ const ScoreComponent = ({
 
             <span>{score}</span>
 
-            <button onClick={() => onDecrementUpdate(currentScore)}>
+            <button onClick={handleDownvoteClick}>
                 <div className="icon-img">
                     <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
                 </div>
