@@ -1,191 +1,275 @@
-# 🧱 Comment Section – Architecture & Data Model
+# Interactive Comment Section
 
-This document provides a comprehensive overview of the architecture, data model, and component responsibilities of the interactive comment section. It is written for maintainers, contributors, and future developers who need to understand how the system behaves, how state flows, and what data contracts are required.
+A React-based interactive comment system built with TypeScript and Redux Toolkit, featuring nested replies, scoring, and user management.
 
----
+## Architecture Overview
 
-## 🧭 Overview
+The application follows a feature-based architecture with Redux for state management, implementing a normalized data structure for efficient comment and reply handling.
 
-This application renders an interactive comment thread from structured JSON data. Users can:
+### Core Technologies
 
-- Add top-level comments
-- Add replies to comments or other replies
-- Edit their own comments/replies
-- Delete their own comments/replies
+- **React 18** with TypeScript
+- **Redux Toolkit** for state management
+- **CSS3** with custom properties for theming
+- **Vite** as build tool
 
-All interactions are handled through Redux, and structured for maintainability and scalability.
+## Feature Structure
 
-> ⚠️ **Important**: The system currently runs entirely on mock data. Persistence and backend integration are planned but not yet implemented.
+The codebase is organized around three main features:
 
----
+### 1. Comments (`/features/comment/`)
 
-## 🧩 Data Model
-
-### 🔶 User Object
-
-```ts
-type User = {
-  username: string
-  image: {
-    png: string
-    webp: string
-  }
-}
-```
-
-### 🔷 Comment Object
-
-```ts
+**Types:**
+```typescript
 type UserComment = {
     id: string
     createdAt: string
     score: number
     content: string
-    user: string
+    username: string
     replies: UserComment['id'][]
 }
 ```
 
-### 🔷 Reply Object
+**Key Components:**
+- `Comment.tsx` - Main comment display component
+- `CommentsSlice.ts` - Redux slice managing comment state
+- Handles CRUD operations and score updates
 
-```ts
-type UserReply = {
-  id: string
-  content: string
-  createdAt: string
-  score: number
-  user: User
-  replyingTo: string // username
-  parentId: string   // ID of the parent comment
+**State Management:**
+- Normalized structure with `byId` and `allId` patterns
+- Automatic ID generation using `nanoid()`
+- Cross-slice communication for reply management
+
+### 2. Replies (`/features/reply/`)
+
+**Types:**
+```typescript
+type UserReply = Omit<UserComment, 'replies'> & {
+    replyingTo: string,
+    parentCommentId: UserComment['id']
 }
 ```
 
-> ⚠️ `id` must be globally unique across both comments and replies.
+**Key Features:**
+- Nested reply system with parent-child relationships
+- Score reset functionality on component unmount
+- Reply-to-reply threading support
 
----
+### 3. Users (`/features/user/`)
 
-## 📦 Reducers & Actions
+**Management:**
+- Current user identification
+- Avatar and username display
+- User-specific action permissions
 
-### 🟢 `commentCreated(content: string)`
+## Component Architecture
 
-Creates a new top-level comment.
+### Core Components (`/components/`)
 
-- Generates a unique `commentId` using `nanoid()`
-- Sets initial score to `0`
-- Sets `createdAt` to `"now"` (placeholder)
-- Assigns user from `data.currentUser`
-- Initializes `replies` as an empty array
+**Card.tsx** - Universal container component
+- Handles both comments and replies
+- Manages local UI states (editing, replying, modal)
+- Props-based event handling for Redux actions
 
-### 🟡 `commentEdited({ commentId, content })`
+**FormComponent.tsx** - Unified form handling
+- Supports both creation and editing modes
+- Auto-focus functionality
+- Form validation and submission
 
-Updates the `content` of an existing comment.
+**CommentsList.tsx** - Comment rendering orchestrator
+- ID-based rendering for performance
+- Memoized components to prevent unnecessary re-renders
 
-- Requires valid `commentId`
-- No error handling for nonexistent ID
+## State Management
 
-### 🔴 `commentDeleted({ commentId })`
+### Redux Store Structure
 
-Deletes a comment by ID.
+```typescript
+{
+  comments: {
+    byId: Record<CommentID, UserComment>,
+    allId: CommentID[]
+  },
+  replies: {
+    byId: Record<ReplyID, UserReply>,
+    allId: ReplyID[]
+  },
+  users: {
+    currentUser: User,
+    byUsername: Record<string, User>,
+    allUsername: string[]
+  }
+}
+```
 
-- Removes the comment from both `byId` and `allId`
-- Does **not** cascade delete related replies (replies must be deleted separately)
+### Key Patterns
 
-### 🔵 `commentScoreUpdated({ commentId, score })`
+**Normalized Data:**
+- Entities stored by ID for O(1) lookups
+- Separate arrays maintain order
+- Prevents data duplication and synchronization issues
 
-Sets the new `score` for a given comment.
+**Cross-Slice Communication:**
+- `extraReducers` handle actions from other slices
+- Comment deletion automatically updates reply references
+- Reply creation updates parent comment's reply array
 
-- Overwrites previous score
-- No validation logic
+**Optimistic Updates:**
+- Immediate UI feedback for score changes
+- Background validation prevents invalid states
 
----
+## Scoring System
 
-## 🔄 Extra Reducers
+Implements Reddit-style voting with optimistic updates:
 
-These handle reply events dispatched from `RepliesSlice`.
+```typescript
+const incrementScore = (item: Item, currentScore: number) =>
+    item.score = currentScore === item.score ?
+        item.score + 1 : item.score < currentScore ? item.score + 2 : currentScore
+```
 
-### ✅ `replyCreated({ parentCommentId, replyId })`
+**Logic:**
+- Single click increments by 1
+- Prevents double-voting through state comparison
+- Handles race conditions with server synchronization
 
-Adds the new `replyId` to the `replies` array of the parent comment.
+## UI/UX Features
 
-- Checks if `parentCommentId` exists in `state.allId` before proceeding
+### Responsive Design
+- Mobile-first approach with breakpoint at 768px
+- Desktop: Horizontal layout with side scoring
+- Mobile: Vertical stacking with bottom actions
 
-### ❌ `replyDeleted({ parentCommentId, replyId })`
+### Interactive Elements
+- Modal confirmations for destructive actions
+- Inline editing with pre-populated content
+- Collapsible reply threads
+- Visual current user indicators
 
-Removes `replyId` from the `replies` array of the associated parent comment.
+### Theming
+CSS custom properties enable consistent theming:
+```css
+:root {
+  --primary-purple-600: hsl(238, 40%, 52%);
+  --neutral-grey-800: hsl(212, 24%, 26%);
+  /* ... */
+}
+```
 
-- Only mutates the `replies` array; the actual reply object is deleted in `RepliesSlice`
+## Performance Optimizations
 
-> All actions assume valid IDs and sanitized payloads. No runtime schema validation is implemented (yet).
+**React.memo Usage:**
+- `Card`, `Comment`, and `Reply` components memoized
+- Prevents cascading re-renders on state updates
 
----
+**Callback Optimization:**
+- `useCallback` for event handlers passed to children
+- Stable references prevent unnecessary re-renders
 
-## 🧠 State Management
+**Selective Re-rendering:**
+- ID-based selectors limit update scope
+- Normalized state prevents deep object updates
 
-- State is managed via Redux using dispatchers
-- Only the reducer modifies data—there is no state mutation inside components
-- Components consume state by selecting data via ID (not entire objects)
+## Data Flow
 
----
+1. **User Action** → Component event handler
+2. **Event Handler** → Redux action dispatch
+3. **Redux Action** → Reducer state update
+4. **State Update** → Component re-render via selector
+5. **Component Update** → UI reflects new state
 
-## 🧱 Component Responsibility
+### Example: Adding a Reply
 
-### 📍 `App.tsx`
-- Entry point only. Does **not** hold state or logic.
-- Delegates to `CommentSection`.
+```typescript
+// 1. User submits form
+const createReplyHandler = useCallback(
+    (content: string) =>
+        dispatch(replyCreated(content, currentUser.username, comment.username, id)),
+    [comment.username, id]
+)
 
----
+// 2. Action creator generates payload
+prepare: (content, username, replyingTo, parentCommentId) => ({
+    payload: {
+        content,
+        id: nanoid(),
+        username,
+        replyingTo,
+        parentCommentId,
+        createdAt: new Date().toISOString()
+    }
+})
 
-### 🧠 `CommentSection.tsx`
-- Houses the reducer and context provider.
-- Responsible for:
-  - Initializing data
-  - Rendering the list of comments + root-level form
+// 3. Reply slice creates new reply
+// 4. Comment slice adds reply ID to parent's replies array (extraReducers)
+// 5. Components re-render with new data
+```
 
----
+## Error Handling
 
-### 📃 `CommentsList.tsx`
-- Grabs all top-level comment IDs.
-- Renders a `Comment` for each one by passing in its ID.
+**Error Boundaries:**
+- Top-level error boundary catches component errors
+- Custom fallback component displays error information
 
----
+**Runtime Validation:**
+- Entity existence checks with meaningful error messages
+- Graceful degradation for missing data
 
-### 🧾 `Comment.tsx`
-- Selects the full comment object by its ID.
-- Renders:
-  - `Card` (visual structure)
-  - List of `Reply` components (if any)
-  - Comment-specific interaction logic (edit, delete, reply)
+## Testing Strategy
 
----
+The codebase includes unit testing setup:
+- Jest configuration for computational functions
+- Component testing patterns established
+- Redux action and reducer testing ready
 
-### 💬 `Reply.tsx`
-- Mirrors the `Comment` component.
-- Selects reply object by ID.
-- Owns logic for replying to a reply or editing/deleting one.
+## Development Considerations
 
----
+**Type Safety:**
+- Strict TypeScript configuration
+- Typed Redux hooks and selectors
+- Comprehensive interface definitions
 
-### 📦 `Card.tsx`
-- Presentational only.
-- Receives a comment or reply object and renders it visually.
-- **Does not know** whether it’s rendering a comment or a reply.
-- Owns shared layout (score display, avatar, metadata).
+**Code Organization:**
+- Feature-based folder structure
+- Clear separation of concerns
+- Consistent naming conventions
 
-> Note: Card should not handle logic. All behavior is abstracted away into the calling `Comment` or `Reply` component.
+**Scalability:**
+- Normalized data structure supports large datasets
+- Memoization prevents performance degradation
+- Modular architecture enables feature additions
 
----
+## Deployment
 
-### 📝 `FormComponent.tsx`
-- Reusable form for both replies and comments.
-- Accepts a `dispatchHandler(content: string)` prop.
-- Can optionally accept a `defaultValue` for editing.
+The application uses Vite for development and build processes:
+- Hot module replacement for development
+- Optimized production builds
+- Static asset handling for images
 
----
+## 🔮 Future Enhancements
 
-## 📈 Next Steps
+Potential improvements based on current architecture:
+- 🔄 Real-time updates via WebSocket integration
+- 📄 Pagination for large comment threads  
+- ✏️ Rich text editing capabilities
+- 🔐 User authentication integration
+- 🔔 Notification system for replies
 
-- Add `zod` or runtime validator for `data.json`
-- Memoize `Comment` and `Reply` to avoid deep re-renders
-- Introduce `commentService.ts` for persistence abstraction
-- Add input validation and submission debouncing
-- Document full reducer contract in `reducers/reducer.ts`
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with modern React patterns and Redux Toolkit
+- Responsive design inspired by contemporary comment systems
+- TypeScript integration for enhanced developer experience
