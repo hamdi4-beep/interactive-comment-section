@@ -2,8 +2,6 @@ import * as React from 'react'
 import { useAppSelector } from '@/hooks'
 import { selectCurrentUser } from '@/features/user/UsersSlice'
 
-const textAreaRef = React.createRef<HTMLTextAreaElement>()
-
 const CurrentUserAvatar = () => {
     const currentUser = useAppSelector(state => selectCurrentUser(state))
 
@@ -21,6 +19,8 @@ function FormComponent(props: {
     placeholderValue: string
     onSubmitUpdate: (content: string) => void
 }) {
+    const textAreaRef = React.useRef<HTMLTextAreaElement>(null)
+    
     const handleSubmit: React.FormEventHandler = e => {
         e.preventDefault()
         
