@@ -16,6 +16,8 @@ const ScoreComponent = ({
     onIncrementUpdate: (currentScore: number) => void
     onDecrementUpdate: (currentScore: number) => void
 }) => {
+    // temporary state to track whether the user has upvoted or downvoted
+    // in a real-world application, this information would be stored in a database and retrieved when needed
     const [voteIntent, setVoteIntent] = React.useState<null | 'upvote' | 'downvote'>(null)
     const currentScoreRef = React.useRef(score)
     const currentScore = currentScoreRef.current
