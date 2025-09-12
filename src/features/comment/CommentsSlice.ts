@@ -1,6 +1,6 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
-import { replyCreated, replyDeleted } from "@/features/reply/RepliesSlice";
-import { findCommentById } from "@/utils";
+import { replyCreated, replyDeleted } from "../reply/RepliesSlice"
+import { findCommentById } from "../../utils";
 
 import type { RootState } from "@/store";
 
@@ -13,8 +13,8 @@ import type {
     CommentID
 } from "./types";
 
-import comments from '@/data/comments.json'
-import { decrementScore, incrementScore } from "@/utils";
+import comments from '../../data/comments.json'
+import { decrementScore, incrementScore } from "../../utils";
 
 const initialState: CommentState = comments
 

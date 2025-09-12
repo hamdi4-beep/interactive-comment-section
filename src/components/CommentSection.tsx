@@ -1,8 +1,8 @@
-import { commentCreated } from "@/features/comment/CommentsSlice";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import CommentsList from "@/components/CommentsList";
-import FormComponent from "@/components/FormComponent"
-import { selectCurrentUser } from "@/features/user/UsersSlice";
+import { commentCreated } from '../features/comment/CommentsSlice'
+import { useAppDispatch, useAppSelector } from "../hooks";
+import CommentsList from "../components/CommentsList";
+import FormComponent from "../components/FormComponent"
+import { selectCurrentUser } from "../features/user/UsersSlice";
 
 function CommentSection() {
     const currentUser = useAppSelector(state => selectCurrentUser(state))

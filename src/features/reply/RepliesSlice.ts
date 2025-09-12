@@ -1,6 +1,6 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/store";
-import replies from '@/data/replies.json'
+import replies from '../../data/replies.json'
 
 import type {
     CreateReplyPayload,
@@ -11,7 +11,7 @@ import type {
     ReplyID,
     ReplyState,
 } from '@/features/reply/types'
-import { decrementScore, incrementScore } from "@/utils";
+import { decrementScore, incrementScore } from "../../utils"
 
 export const initialState: ReplyState = replies
 
