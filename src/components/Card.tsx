@@ -22,8 +22,6 @@ const ScoreComponent = ({
     const currentScoreRef = React.useRef(score)
     const currentScore = currentScoreRef.current
 
-    console.log(voteIntent)
-
     const handleUpvoteClick = () => {
         setVoteIntent(prev => prev === 'upvote' ? null : 'upvote')
         onIncrementUpdate(currentScore)
