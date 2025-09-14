@@ -52,14 +52,12 @@ type UserReply = Omit<UserComment, 'replies'> & {
 ```
 
 **Key Features:**
-- Nested reply system with parent-child relationships
 - Score reset functionality on component unmount
 - Reply-to-reply threading support
 
 ### 3. Users (`/features/user/`)
 
 **Management:**
-- Current user identification
 - Avatar and username display
 - User-specific action permissions
 
