@@ -1,22 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "@/store";
 import users from '../../data/users.json'
-
-type User = {
-    image: {
-        png: string
-        webp: string
-    }
-    username: string
-}
-
-export interface UserState {
-    currentUser: User
-    byUsername: {
-        [x: string]: User
-    }
-    allUsername: string[]
-}
+import type { UserState } from "./types";
 
 const initialState: UserState = users
 
