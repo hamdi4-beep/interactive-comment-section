@@ -98,9 +98,6 @@ const UserActions = ({
     )
 }
 
-// A component that's only responsible for visual appearance and structure. It shouldn't define logic or be responsible for how comments and replies behave.
-// It couples the markup structure of a comment and reply element so you only have to modify them consistently from a single location.
-
 const Card = React.memo(function Card(props: {
     item: UserComment | UserReply,
     handleReplyDispatch: (content: string) => void,
