@@ -15,7 +15,7 @@ const CurrentUserAvatar = () => {
 }
 
 function FormComponent(props: {
-    value?: string
+    value: string | null
     placeholderValue: string
     onSubmitUpdate: (content: string) => void
 }) {
@@ -44,7 +44,7 @@ function FormComponent(props: {
             <CurrentUserAvatar />
 
             <form action="#" onSubmit={handleSubmit}>
-                <textarea name="comment" id="comment" defaultValue={props.value} placeholder={props.placeholderValue} ref={textAreaRef}></textarea>
+                <textarea name="comment" id="comment" defaultValue={props.value || ''} placeholder={props.placeholderValue} ref={textAreaRef}></textarea>
                 <button>Send</button>
             </form>
         </div>
