@@ -27,6 +27,8 @@ export function reducer(state: State, action: {
     type: string
     payload: any
 }) {
+    // cloning the state object to avoid mutating the original object though it causes other comment components to be re-render since they recieve a new reference each time an object is updated
+    // should performance becomes an issue, i could use Immer which maintains a reference to unchanged objects
     const clonedState = structuredClone(state)
     const comment = clonedState.byId[action.payload.id]
 

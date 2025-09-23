@@ -10,7 +10,43 @@ import { CreateComment, CreateReply, DeleteComment, EditComment, UpdateScore } f
 
 export function useComments() {
     const [comments, dispatch] = useReducer(reducer, data)
-    const newId = uuidv4()
+
+    const commentCreated: CreateComment = content =>
+        dispatch({
+            type: 'CREATE_COMMENT',
+            payload: {
+                content,
+                newId: uuidv4()
+            }
+        })
+
+    const replyCreated: CreateReply = (id, username, content) =>
+        dispatch({
+            type: 'CREATE_REPLY',
+            payload: {
+                id,
+                newId: uuidv4(),
+                username,
+                content
+            }
+        })
+
+    const commentEdited: EditComment = (id, content) =>
+        dispatch({
+            type: 'EDIT_COMMENT',
+            payload: {
+                id,
+                content
+            }
+        })
+
+    const commentDeleted: DeleteComment = id =>
+        dispatch({
+            type: 'DELETE_COMMENT',
+            payload: {
+                id
+            }
+        })
 
     const scoreIncremented: UpdateScore = (id, currentScore) =>
         dispatch({
@@ -27,43 +63,6 @@ export function useComments() {
             payload: {
                 id,
                 currentScore
-            }
-        })
-
-    const commentCreated: CreateComment = content =>
-        dispatch({
-            type: 'CREATE_COMMENT',
-            payload: {
-                content,
-                newId
-            }
-        })
-
-    const replyCreated: CreateReply = (id, username, content) =>
-        dispatch({
-            type: 'CREATE_REPLY',
-            payload: {
-                id,
-                newId,
-                username,
-                content
-            }
-        })
-
-    const commentDeleted: DeleteComment = id =>
-        dispatch({
-            type: 'DELETE_COMMENT',
-            payload: {
-                id
-            }
-        })
-
-    const commentEdited: EditComment = (id, content) =>
-        dispatch({
-            type: 'EDIT_COMMENT',
-            payload: {
-                id,
-                content
             }
         })
 
