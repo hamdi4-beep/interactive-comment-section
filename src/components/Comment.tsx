@@ -67,8 +67,7 @@ const DeleteModal = ({
   )
 }
 
-// This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
-const Comment = ({
+const CommentContent = ({
   comment
 }: {
   comment: Comment
@@ -139,6 +138,42 @@ const Comment = ({
           commentId={comment.id}
           hideDeleteModal={() => setIsModalHidden(true)}
         />
+      )}
+    </div>
+  )
+}
+
+const RepliesList = ({
+  replyIds
+}: {
+  replyIds: CommentId[]
+}) => {
+  const {comments} = useContext(StateContext)
+
+  return (
+    <div className="replies-list">
+      {replyIds.map(replyId => (
+        <CommentContent
+          comment={comments.byId[replyId]}
+          key={replyId}
+        />
+      ))}
+    </div>
+  )
+}
+
+// This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
+const Comment = ({
+  comment
+}: {
+  comment: Comment
+}) => {
+  return (
+    <div className="container">
+      <CommentContent comment={comment} />
+      
+      {comment.replies && (
+        <RepliesList replyIds={comment.replies} />
       )}
     </div>
   )

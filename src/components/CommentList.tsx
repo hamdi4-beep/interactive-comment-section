@@ -13,18 +13,10 @@ function CommentList() {
         const comment = comments.byId[id]
 
         return (
-          <div className="thread" key={id}>
-            <Comment comment={comment} />
-
-            <div className="replies-list">
-              {comment.replies && comment.replies.map(replyId => (
-                <Comment
-                  comment={comments.byId[replyId]}
-                  key={replyId}
-                />
-              ))}
-            </div>
-          </div>
+          <Comment
+            comment={comment}
+            key={id}
+          />
         )
       })}
     </div>
