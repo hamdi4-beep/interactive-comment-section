@@ -77,13 +77,13 @@ const CommentContent = ({
   const [isEditing, setIsEditing] = useState(false)
   const [isModalHidden, setIsModalHidden] = useState(true)
 
-  if (!comment) return
-
   const handleAddReplyDispatch = (content: string) =>
     actions.replyCreated(comment.id, comment.user, content)
 
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(comment.id, content)
+
+  if (!comment) return
 
   return (
     <div className="container">
