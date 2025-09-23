@@ -169,7 +169,7 @@ const Comment = ({
   comment: Comment
 }) => {
   return (
-    <div className="container">
+    <div className="thread">
       <CommentContent comment={comment} />
       
       {comment.replies && (
