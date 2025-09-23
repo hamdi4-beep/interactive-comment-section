@@ -143,7 +143,7 @@ const CommentContent = ({
   )
 }
 
-const RepliesList = ({
+const ReplyList = ({
   replyIds
 }: {
   replyIds: CommentId[]
@@ -173,7 +173,7 @@ const Comment = ({
       <CommentContent comment={comment} />
       
       {comment.replies && (
-        <RepliesList replyIds={comment.replies} />
+        <ReplyList replyIds={comment.replies} />
       )}
     </div>
   )
