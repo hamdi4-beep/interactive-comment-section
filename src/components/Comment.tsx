@@ -88,7 +88,7 @@ const Comment = ({
 
   return (
     <div className="container">
-      <div className="card">
+      <div className="comment">
         <ScoreComponent
           score={comment.score}
           commentId={comment.id}

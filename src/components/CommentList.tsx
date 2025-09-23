@@ -4,6 +4,7 @@ import Comment from "./Comment"
 
 function CommentList() {
   const {comments} = useContext(StateContext)
+  // grabs top level comments only
   const commentIds = comments.allId.filter(id => !comments.byId[id].parentId)
 
   return (
@@ -12,7 +13,7 @@ function CommentList() {
         const comment = comments.byId[id]
 
         return (
-          <div className="comment" key={id}>
+          <div className="thread" key={id}>
             <Comment comment={comment} />
 
             <div className="replies-list">

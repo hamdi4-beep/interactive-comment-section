@@ -128,21 +128,21 @@ button {
 
 /* Comment Component */
 
-.card {
+.comment {
     display: flex;
     align-items: flex-start;
     background-color: var(--neutral-white);
     padding: var(--spacing);
     padding-bottom: 1.5em;
-    margin-bottom: 1em;
+    margin-top: 1em;
     border-radius: var(--rounded-corners);
 }
 
-.card .content {
+.comment .content {
     width: 100%;
 }
 
-.card p {
+.comment p {
     padding-top: .5em;
 }
 
@@ -209,6 +209,7 @@ span.comment-date {
 
 .replies-list {
     margin-left: 1em;
+    margin-block: 1em;
 }
 
 .score-component button {
@@ -217,7 +218,7 @@ span.comment-date {
 
 /* Reply Component */
 
-.card .replying-to {
+.comment .replying-to {
     color: var(--primary-purple-600);
     font-weight: bold;
 }
@@ -236,8 +237,8 @@ span.comment-date {
     align-items: flex-start;
 }
 
-.comment .form-component {
-    margin-top: -1.5em;
+.container .form-component {
+    margin-top: -.5em;
     margin-bottom: 1em;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -288,7 +289,7 @@ span.comment-date {
         bottom: -4em;
     }
 
-    .card {
+    .comment {
         flex-direction: column-reverse;
     }
 
