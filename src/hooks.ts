@@ -1,7 +1,7 @@
 import { reducer } from "./reducer"
 import data from './data/comments.json'
 import { v4 as uuidv4 } from 'uuid'
-import { Comment, CommentId, CreateComment, CreateReply, DeleteComment, EditComment, UpdateScore } from "./context"
+import { Comment, CommentId } from "./context"
 import { useImmerReducer } from "use-immer"
 
 /*
@@ -11,6 +11,12 @@ export type State = {
     byId: Record<CommentId, Comment>
     allId: CommentId[]
 }
+
+export type CreateComment = (content: Comment['content']) => void
+export type CreateReply = (commentId: CommentId, username: Comment['user'], content: Comment['content']) => void
+export type EditComment = (commentId: CommentId, content: string) => void
+export type DeleteComment = (commentId: CommentId) => void
+export type UpdateScore = (commentId: CommentId, currentScore: number) => void
 
 type Actions = {
     commentCreated: CreateComment

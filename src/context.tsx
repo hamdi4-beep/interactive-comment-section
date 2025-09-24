@@ -1,5 +1,5 @@
 import { createContext } from "react"
-import { useComments } from "./hooks"
+import { useComments, CreateComment, CreateReply, EditComment, DeleteComment, UpdateScore } from "./hooks"
 
 export type Comment = {
     parentId: string | null
@@ -13,12 +13,6 @@ export type Comment = {
 }
 
 export type CommentId = Comment['id']
-
-export type CreateComment = (content: Comment['content']) => void
-export type CreateReply = (commentId: CommentId, username: Comment['user'], content: Comment['content']) => void
-export type EditComment = (commentId: CommentId, content: string) => void
-export type DeleteComment = (commentId: CommentId) => void
-export type UpdateScore = (commentId: CommentId, currentScore: number) => void
 
 export const StateContext = createContext<{
     comments: {
