@@ -1,5 +1,7 @@
 import users from './data/users.json'
 import { Comment, CommentId } from './context'
+import { State } from './hooks'
+import { Draft } from 'immer'
 
 interface CreateCommentPayload extends Pick<Comment, 'content'> {
     newId: string
@@ -18,26 +20,18 @@ interface UpdateScorePayload {
     currentScore: number
 }
 
-type State = {
-    byId: Record<CommentId, Comment>
-    allId: CommentId[]
-}
-
-export function reducer(state: State, action: {
+export function reducer(draft: Draft<State>, action: {
     type: string
     payload: any
 }) {
-    // cloning the state object to avoid mutating the original object though it causes other comment components to be re-render since they recieve a new reference each time an object is updated
-    // should performance becomes an issue, i could use Immer which maintains a reference to unchanged objects
-    const clonedState = structuredClone(state)
-    const comment = clonedState.byId[action.payload.id]
+    const comment = draft.byId[action.payload.id]
 
     switch (action.type) {
         case 'CREATE_COMMENT': {
             const payload = action.payload as CreateCommentPayload
             const newId = payload.newId
 
-            clonedState.byId[newId] = {
+            draft.byId[newId] = {
                 content: payload.content,
                 score: 0,
                 replies: [],
@@ -48,17 +42,17 @@ export function reducer(state: State, action: {
                 user: users.currentUser.username
             }
 
-            clonedState.allId.push(newId)
+            draft.allId.push(newId)
 
-            return clonedState
+            break
         }
             
         case 'CREATE_REPLY': {
             const payload = action.payload as CreateReplyPayload
             const targetId = comment?.parentId || payload.id
-            const targetComment = clonedState.byId[targetId]
+            const targetComment = draft.byId[targetId]
             
-            clonedState.byId[payload.newId] = {
+            draft.byId[payload.newId] = {
                 content: payload.content,
                 score: 0,
                 replies: null,
@@ -71,38 +65,38 @@ export function reducer(state: State, action: {
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
             targetComment.replies && targetComment.replies.push(payload.newId)
-            clonedState.allId.push(payload.newId)
+            draft.allId.push(payload.newId)
 
-            return clonedState
+            break
         }
 
         case 'EDIT_COMMENT': {
             const payload = action.payload as EditCommentPayload
             comment.content = payload.content
-            return clonedState
+            break
         }
 
         case 'DELETE_COMMENT': {
             const payload = action.payload as DeleteCommentPayload
-            const {[payload.id]: comment, ...rest} = clonedState.byId
-            clonedState.allId = clonedState.allId.filter(id => id !== comment.id)
-            clonedState.byId = rest
-            return clonedState
+            const {[payload.id]: comment, ...rest} = draft.byId
+            draft.allId = draft.allId.filter(id => id !== comment.id)
+            draft.byId = rest
+            break
         }
 
         case 'INCREMENT_SCORE': {
             const payload = action.payload as UpdateScorePayload
             comment.score = comment.score === payload.currentScore ? comment.score + 1 : comment.score < payload.currentScore ? comment.score + 2 : payload.currentScore
-            return clonedState
+            break
         }
 
         case 'DECREMENT_SCORE': {
             const payload = action.payload as UpdateScorePayload
             comment.score = comment.score === payload.currentScore ? comment.score - 1 : comment.score > payload.currentScore ? comment.score - 2 : payload.currentScore
-            return clonedState
+            break
         }
 
         default:
-            return state
+            break
     }
   }
