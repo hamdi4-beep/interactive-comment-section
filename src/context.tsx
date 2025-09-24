@@ -54,7 +54,6 @@ function StateProvider({
     children: React.ReactNode
 }) {
     const {comments, actions} = useComments()
-    console.log(comments)
 
     return (
         <StateContext.Provider value={{comments, actions}}>

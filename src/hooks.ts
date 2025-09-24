@@ -1,4 +1,3 @@
-import { useCallback, useReducer } from "react"
 import { reducer } from "./reducer"
 import data from './data/comments.json'
 import { v4 as uuidv4 } from 'uuid'
@@ -13,11 +12,20 @@ export type State = {
     allId: CommentId[]
 }
 
+type Actions = {
+    commentCreated: CreateComment
+    replyCreated: CreateReply
+    commentEdited: EditComment
+    commentDeleted: DeleteComment
+    scoreIncremented: UpdateScore
+    scoreDecremented: UpdateScore
+}
+
 export function useComments() {
     const [comments, dispatch] = useImmerReducer(reducer, data)
 
-    const commentCreated: CreateComment = useCallback(
-        content =>
+    const actions: Actions = {
+        commentCreated: content =>
             dispatch({
                 type: 'CREATE_COMMENT',
                 payload: {
@@ -25,11 +33,7 @@ export function useComments() {
                     newId: uuidv4()
                 }
             }),
-        []
-    )
-
-    const replyCreated: CreateReply = useCallback(
-        (id, username, content) =>
+        replyCreated: (id, username, content) =>
             dispatch({
                 type: 'CREATE_REPLY',
                 payload: {
@@ -39,11 +43,7 @@ export function useComments() {
                     content
                 }
             }),
-        []
-    )
-
-    const commentEdited: EditComment = useCallback(
-        (id, content) =>
+        commentEdited: (id, content) =>
             dispatch({
                 type: 'EDIT_COMMENT',
                 payload: {
@@ -51,22 +51,14 @@ export function useComments() {
                     content
                 }
             }),
-        []
-    )
-
-    const commentDeleted: DeleteComment = useCallback(
-        id =>
+        commentDeleted: id =>
             dispatch({
                 type: 'DELETE_COMMENT',
                 payload: {
                     id
                 }
             }),
-        []
-    )
-
-    const scoreIncremented: UpdateScore = useCallback(
-        (id, currentScore) =>
+        scoreIncremented: (id, currentScore) =>
             dispatch({
                 type: 'INCREMENT_SCORE',
                 payload: {
@@ -74,30 +66,18 @@ export function useComments() {
                     currentScore
                 }
             }),
-        []
-    )
-
-    const scoreDecremented: UpdateScore = useCallback(
-        (id, currentScore) =>
+        scoreDecremented: (id, currentScore) =>
             dispatch({
                 type: 'DECREMENT_SCORE',
                 payload: {
                     id,
                     currentScore
                 }
-            }),
-        []
-    )
+            })
+    }
 
     return {
         comments,
-        actions: {
-            scoreIncremented,
-            scoreDecremented,
-            commentCreated,
-            replyCreated,
-            commentEdited,
-            commentDeleted
-        }
+        actions
     }
 }
