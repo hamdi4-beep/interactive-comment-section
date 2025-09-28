@@ -1,5 +1,5 @@
 # Interactive Comment System
-A react-based comment system with nested replies, voting, and real-time interactions built with TypeScript and modern React patterns.
+A react-based comment system with one level nested replies, voting, and real-time interactions built with TypeScript and modern React patterns.
 
 ## Features
 
