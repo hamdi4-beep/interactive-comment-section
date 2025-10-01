@@ -49,6 +49,7 @@ export function reducer(draft: Draft<State>, action: {
             
         case 'CREATE_REPLY': {
             const payload = action.payload as CreateReplyPayload
+            // keeps the reply logic functional by checking if the user is replying to a top level comment or nested one using the parentId property
             const targetId = comment?.parentId || payload.id
             const targetComment = draft.byId[targetId]
             
