@@ -1,48 +1,34 @@
-# Interactive Comment System
-A react-based comment system with one level nested replies, voting, and real-time interactions built with TypeScript and modern React patterns.
+# Interactive Comment Section
+
+A React-based comment system where users can post comments, reply to others, edit their own comments, and vote on content.
 
 ## Features
 
-- Threaded Comments: Create and view nested comment replies
-- Vote System: Upvote and downvote comments with score tracking
-- User Authentication: Mock authentication system with current user context
-- CRUD Operations: Create, read, update, and delete comments
-- Responsive Design: Mobile-friendly interface with adaptive layouts
-- Real-time Updates: Instant UI updates using Immer for immutable state management
+- Create and post comments
+- Reply to existing comments
+- Edit your own comments
+- Delete your own comments (with confirmation)
+- Upvote/downvote comments
+- Visual distinction between your comments and others
 
-# Installation
+## Getting Started
 
-1. Clone the repository
-`
-git clone <repository-url>
-cd comment-system
-`
-
-2. Install dependencies
-`
+1. Install dependencies:
+```bash
 npm install
-`
+```
 
-3. Run development server
-`
+2. Run the development server:
+```bash
 npm run dev
-`
+```
 
-## Available Scripts
+3. Open your browser and start commenting!
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+## How It Works
 
-## Contributing
+The app loads with sample comments. You're logged in as "juliusomo" by default, which lets you edit and delete your own comments while being able to reply to others.
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+---
 
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
+Built with React, TypeScript, and Immer for state management.
