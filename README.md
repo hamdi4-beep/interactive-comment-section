@@ -1,12 +1,48 @@
-# React + Vite
+# Interactive Comment System
+A react-based comment system with one level nested replies, voting, and real-time interactions built with TypeScript and modern React patterns.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
 
-Currently, two official plugins are available:
+- Threaded Comments: Create and view nested comment replies
+- Vote System: Upvote and downvote comments with score tracking
+- User Authentication: Mock authentication system with current user context
+- CRUD Operations: Create, read, update, and delete comments
+- Responsive Design: Mobile-friendly interface with adaptive layouts
+- Real-time Updates: Instant UI updates using Immer for immutable state management
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Installation
 
-## Expanding the ESLint configuration
+1. Clone the repository
+`
+git clone <repository-url>
+cd comment-system
+`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. Install dependencies
+`
+npm install
+`
+
+3. Run development server
+`
+npm run dev
+`
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
