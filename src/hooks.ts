@@ -5,8 +5,9 @@ import { Comment, CommentId } from "./context"
 import { useImmerReducer } from "use-immer"
 
 /*
-    Just keeping this here for reference. I'm going to define some "abstract" methods that update state so I don't have to track dispatch calls throughout the codebase. The easier it gets to modify the way dispatch calls work, the less time I can spend on making several changes within components that shouldn't care how state gets updated.
+    Created action-like methods that run side effects logic outside of dispatch calls which keeps state logic pure
 */
+
 export type State = {
     byId: Record<CommentId, Comment>
     allId: CommentId[]
