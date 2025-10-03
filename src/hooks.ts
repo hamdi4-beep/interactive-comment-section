@@ -15,7 +15,7 @@ export type State = {
 }
 
 export type CreateComment = (content: Comment['content']) => void
-export type CreateReply = (commentId: CommentId, username: Comment['userId'], content: Comment['content']) => void
+export type CreateReply = (commentId: CommentId, userId: Comment['userId'], content: Comment['content']) => void
 export type EditComment = (commentId: CommentId, content: string) => void
 export type DeleteComment = (commentId: CommentId) => void
 export type UpdateScore = (commentId: CommentId, currentScore: number) => void
@@ -28,6 +28,7 @@ type Actions = {
     scoreIncremented: UpdateScore
     scoreDecremented: UpdateScore
 }
+
 
 export function useComments() {
     const [comments, dispatch] = useImmerReducer(reducer, data)
