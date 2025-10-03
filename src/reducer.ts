@@ -13,7 +13,6 @@ interface CreateReplyPayload extends CreateCommentPayload {
 }
 
 interface EditCommentPayload extends Pick<Comment, 'content'> {}
-interface DeleteCommentPayload extends Pick<Comment, 'id'> {}
 
 interface UpdateScorePayload {
     id: CommentId
@@ -78,10 +77,8 @@ export function reducer(draft: Draft<State>, action: {
         }
 
         case 'DELETE_COMMENT': {
-            const payload = action.payload as DeleteCommentPayload
-            const {[payload.id]: comment, ...rest} = draft.byId
+            delete draft.byId[action.payload.id]
             draft.allId = draft.allId.filter(id => id !== comment.id)
-            draft.byId = rest
             break
         }
 
