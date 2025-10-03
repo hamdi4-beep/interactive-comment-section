@@ -78,7 +78,7 @@ const CommentContent = ({
   const [isModalHidden, setIsModalHidden] = useState(true)
 
   const handleAddReplyDispatch = (content: string) =>
-    actions.replyCreated(comment.id, comment.user, content)
+    actions.replyCreated(comment.id, comment.userId, content)
 
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(comment.id, content)
@@ -95,14 +95,14 @@ const CommentContent = ({
 
         <div className="content">
           <div className="profile-header">
-            <UserProfile username={comment.user} />
+            <UserProfile userId={comment.userId} />
             <span className="comment-date">{comment.createdAt}</span>
 
             <UserActions
+              userId={comment.userId}
               toggleReplyForm={() => setIsReplying(prev => !prev)}
               toggleEditForm={() => setIsEditing(prev => !prev)}
               showDeleteModal={() => setIsModalHidden(false)}
-              username={comment.user}
             />
           </div>
 

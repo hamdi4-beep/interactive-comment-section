@@ -9,7 +9,7 @@ interface CreateCommentPayload extends Pick<Comment, 'content'> {
 
 interface CreateReplyPayload extends CreateCommentPayload {
     id: CommentId
-    username: string
+    replyingTo: string
 }
 
 interface EditCommentPayload extends Pick<Comment, 'content'> {}
@@ -38,7 +38,7 @@ export function reducer(draft: Draft<State>, action: {
                 parentId: null,
                 replyingTo: null,
                 createdAt: 'just now',
-                user: users.currentUser.username
+                userId: users.currentUser.id
             }
 
             draft.allId.push(newId)
@@ -58,9 +58,9 @@ export function reducer(draft: Draft<State>, action: {
                 replies: null,
                 id: payload.newId,
                 parentId: targetId,
-                replyingTo: payload.username,
+                replyingTo: payload.replyingTo,
                 createdAt: 'just now',
-                user: users.currentUser.username
+                userId: users.currentUser.username
             }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.

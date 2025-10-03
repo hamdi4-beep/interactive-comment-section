@@ -5,7 +5,7 @@ export type Comment = {
     parentId: string | null
     id: string
     content: string
-    user: string
+    userId: string
     score: number
     replyingTo: string | null
     replies: string[] | null

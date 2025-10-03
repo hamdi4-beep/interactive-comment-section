@@ -6,7 +6,7 @@
       "content": "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.",
       "createdAt": "1 month ago",
       "score": 12,
-      "user": "amyrobson",
+      "userId": "3d4c125c-baf8-45a1-98c7-9472f6c49cdb",
       "replies": [],
       "replyingTo": null
     },
@@ -16,7 +16,7 @@
       "content": "Woah, your project looks awesome! How long have you been coding for? I'm still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!",
       "createdAt": "2 weeks ago",
       "score": 5,
-      "user": "maxblagun",
+      "userId": "70935ed2-ec07-483e-ae74-1b36cfd56dec",
       "replies": ["ebb06eea-9569-4eb0-9f2d-cacbaacc601e", "aa31419-e250-4bd6-8a72-53adaccdb005"],
       "replyingTo": null
     },
@@ -27,7 +27,7 @@
       "createdAt": "1 week ago",
       "score": 4,
       "replyingTo": "maxblagun",
-      "user": "ramsesmiron",
+      "userId": "8eb73273-2236-48ec-b9ff-35ef90c6295a",
       "replies": null
     },
     "aa31419-e250-4bd6-8a72-53adaccdb005": {
@@ -37,7 +37,7 @@
       "createdAt": "2 days ago",
       "score": 2,
       "replyingTo": "ramsesmiron",
-      "user": "juliusomo",
+      "userId": "bff2167b-0821-4f3e-b393-a79c8c88896d",
       "replies": null
     }
   },

@@ -1,5 +1,6 @@
 import { reducer } from "./reducer"
 import data from './data/comments.json'
+import users from './data/users.json'
 import { v4 as uuidv4 } from 'uuid'
 import { Comment, CommentId } from "./context"
 import { useImmerReducer } from "use-immer"
@@ -14,7 +15,7 @@ export type State = {
 }
 
 export type CreateComment = (content: Comment['content']) => void
-export type CreateReply = (commentId: CommentId, username: Comment['user'], content: Comment['content']) => void
+export type CreateReply = (commentId: CommentId, username: Comment['userId'], content: Comment['content']) => void
 export type EditComment = (commentId: CommentId, content: string) => void
 export type DeleteComment = (commentId: CommentId) => void
 export type UpdateScore = (commentId: CommentId, currentScore: number) => void
@@ -40,16 +41,19 @@ export function useComments() {
                     newId: uuidv4()
                 }
             }),
-        replyCreated: (id, username, content) =>
+        replyCreated: (id, userId, content) => {
+            const user = (users.byId as Record<string, any>)[userId]
+
             dispatch({
                 type: 'CREATE_REPLY',
                 payload: {
                     id,
                     newId: uuidv4(),
-                    username,
+                    replyingTo: user.username,
                     content
                 }
-            }),
+            })
+        },
         commentEdited: (id, content) =>
             dispatch({
                 type: 'EDIT_COMMENT',
