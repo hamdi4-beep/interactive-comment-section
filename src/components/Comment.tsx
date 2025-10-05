@@ -3,6 +3,7 @@ import { CommentId, StateContext } from "../context"
 import UserActions, { UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
 import { type Comment } from "../context"
+import users from '../data/users.json'
 
 const ScoreComponent = ({
   score,
@@ -77,8 +78,10 @@ const CommentContent = ({
   const [isEditing, setIsEditing] = useState(false)
   const [isModalHidden, setIsModalHidden] = useState(true)
 
+  const user = (users.byId as Record<string, any>)[comment.userId]
+
   const handleAddReplyDispatch = (content: string) =>
-    actions.replyCreated(comment.id, comment.userId, content)
+    actions.replyCreated(comment.id, user.username, content)
 
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(comment.id, content)
