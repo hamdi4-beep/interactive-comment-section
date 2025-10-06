@@ -74,8 +74,7 @@ const CommentContent = ({
   comment: Comment
 }) => {
   const {actions} = useContext(StateContext)
-  const [isReplying, setIsReplying] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
+  const [formStatus, setFormStatus] = useState('')
   const [isModalHidden, setIsModalHidden] = useState(true)
 
   const user = (users.byId as Record<string, any>)[comment.userId]
@@ -103,8 +102,7 @@ const CommentContent = ({
 
             <UserActions
               userId={comment.userId}
-              toggleReplyForm={() => setIsReplying(prev => !prev)}
-              toggleEditForm={() => setIsEditing(prev => !prev)}
+              updateFormStatus={status => setFormStatus(status)}
               showDeleteModal={() => setIsModalHidden(false)}
             />
           </div>
@@ -120,7 +118,7 @@ const CommentContent = ({
         </div>
       </div>
 
-      {isReplying && (
+      {formStatus === 'replying' && (
         <FormComponent
           placeholderValue='Add reply'
           value=""
@@ -128,7 +126,7 @@ const CommentContent = ({
         />
       )}
 
-      {isEditing && (
+      {formStatus === 'editing' && (
         <FormComponent
           placeholderValue=""
           value={comment.content}

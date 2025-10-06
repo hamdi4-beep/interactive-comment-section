@@ -28,23 +28,15 @@ export const UserProfile = ({
 
 function UserActions({
   userId,
-  toggleReplyForm,
-  toggleEditForm,
+  updateFormStatus,
   showDeleteModal
 }: {
   userId: string
-  toggleReplyForm: () => void
-  toggleEditForm: () => void
+  updateFormStatus: (staatus: string) => void
   showDeleteModal: () => void
 }) {
   // mimicks user authentication for now
   const isCurrentUser = users.currentUser.id === userId
-
-  const handleReplyClick = () =>
-    toggleReplyForm()
-
-  const handleEditClick = () =>
-    toggleEditForm()
 
   const handleDeleteClick = () =>
     showDeleteModal()
@@ -52,7 +44,7 @@ function UserActions({
   return (
     <div className="actions">
       {!isCurrentUser && (
-        <button onClick={handleReplyClick}>
+        <button onClick={() => updateFormStatus('replying')}>
           <div className="icon-img">
             <img src="/images/icon-reply.svg" alt="" />
           </div>
@@ -62,7 +54,7 @@ function UserActions({
       )}
 
       {isCurrentUser && (
-        <button onClick={handleEditClick}>
+        <button onClick={() => updateFormStatus('editing')}>
             <div className="icon-img">
               <img src="/images/icon-edit.svg" alt="" />
             </div>
