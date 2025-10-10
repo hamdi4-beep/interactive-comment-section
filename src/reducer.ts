@@ -1,10 +1,10 @@
-import users from './data/users.json'
 import { Comment, CommentId } from './context'
 import { State } from './hooks'
 import { Draft } from 'immer'
 
 interface CreateCommentPayload extends Pick<Comment, 'content'> {
     newId: string
+    userId: string
 }
 
 interface CreateReplyPayload extends CreateCommentPayload {
@@ -38,7 +38,7 @@ export function reducer(draft: Draft<State>, action: {
                 parentId: null,
                 replyingTo: null,
                 createdAt: 'just now',
-                userId: users.currentUser.id
+                userId: payload.userId
             }
 
             draft.allId.push(newId)
@@ -60,7 +60,7 @@ export function reducer(draft: Draft<State>, action: {
                 parentId: targetId,
                 replyingTo: payload.replyingTo,
                 createdAt: 'just now',
-                userId: users.currentUser['id']
+                userId: payload.userId
             }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.

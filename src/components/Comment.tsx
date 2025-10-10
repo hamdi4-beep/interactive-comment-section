@@ -80,7 +80,7 @@ const CommentContent = ({
   const user = (users.byId as Record<string, any>)[comment.userId]
 
   const handleAddReplyDispatch = (content: string) =>
-    actions.replyCreated(comment.id, user.username, content)
+    actions.replyCreated(comment.id, user.username, users.currentUser['id'], content)
 
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(comment.id, content)

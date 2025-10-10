@@ -13,8 +13,8 @@ export type State = {
     allId: CommentId[]
 }
 
-export type CreateComment = (content: Comment['content']) => void
-export type CreateReply = (commentId: CommentId, userId: Comment['userId'], content: Comment['content']) => void
+export type CreateComment = (content: Comment['content'], userId: string) => void
+export type CreateReply = (commentId: CommentId, replyingTo: string, userId: string, content: Comment['content']) => void
 export type EditComment = (commentId: CommentId, content: string) => void
 export type DeleteComment = (commentId: CommentId) => void
 export type UpdateScore = (commentId: CommentId, currentScore: number) => void
@@ -28,27 +28,28 @@ type Actions = {
     scoreDecremented: UpdateScore
 }
 
-
 export function useComments() {
     const [comments, dispatch] = useImmerReducer(reducer, data)
 
     const actions: Actions = {
-        commentCreated: content =>
+        commentCreated: (content, userId) =>
             dispatch({
                 type: 'CREATE_COMMENT',
                 payload: {
                     content,
-                    newId: uuidv4()
+                    newId: uuidv4(),
+                    userId
                 }
             }),
-        replyCreated: (id, replyingTo, content) =>
+        replyCreated: (id, replyingTo, userId, content) =>
             dispatch({
                 type: 'CREATE_REPLY',
                 payload: {
                     id,
                     newId: uuidv4(),
                     replyingTo,
-                    content
+                    content,
+                    userId
                 }
             }),
         commentEdited: (id, content) =>

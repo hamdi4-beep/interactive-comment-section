@@ -1,3 +1,4 @@
+import users from '../data/users.json'
 import { useContext } from "react";
 import CommentList from "./CommentList";
 import FormComponent from "./FormComponent";
@@ -13,7 +14,7 @@ function CommentSection() {
             <FormComponent
                 value=""
                 placeholderValue="Add a comment..."
-                onSubmitUpdate={content => actions.commentCreated(content)}
+                onSubmitUpdate={content => actions.commentCreated(content, users.currentUser['id'])}
             />
         </div>
     )
