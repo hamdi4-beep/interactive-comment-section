@@ -32,7 +32,7 @@ function UserActions({
   showDeleteModal
 }: {
   userId: string
-  updateFormStatus: (staatus: string) => void
+  updateFormStatus: React.Dispatch<React.SetStateAction<string>>
   showDeleteModal: () => void
 }) {
   // mimicks user authentication for now
@@ -44,7 +44,7 @@ function UserActions({
   return (
     <div className="actions">
       {!isCurrentUser && (
-        <button onClick={() => updateFormStatus('replying')}>
+        <button onClick={() => updateFormStatus(prev => prev === 'replying' ? '' : 'replying')}>
           <div className="icon-img">
             <img src="/images/icon-reply.svg" alt="" />
           </div>

@@ -102,7 +102,7 @@ const CommentContent = ({
 
             <UserActions
               userId={comment.userId}
-              updateFormStatus={status => setFormStatus(status)}
+              updateFormStatus={setFormStatus}
               showDeleteModal={() => setIsModalHidden(false)}
             />
           </div>
