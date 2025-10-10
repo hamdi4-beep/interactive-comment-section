@@ -85,7 +85,7 @@ const CommentContent = ({
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(comment.id, content)
 
-  if (!comment) return
+  if (!comment) throw Error('No such comment was found!')
 
   return (
     <div className="container">
