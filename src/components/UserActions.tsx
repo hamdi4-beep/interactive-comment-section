@@ -54,7 +54,7 @@ function UserActions({
       )}
 
       {isCurrentUser && (
-        <button onClick={() => updateFormStatus('editing')}>
+        <button onClick={() => updateFormStatus(prev => prev === 'editing' ? '' : 'editing')}>
             <div className="icon-img">
               <img src="/images/icon-edit.svg" alt="" />
             </div>
