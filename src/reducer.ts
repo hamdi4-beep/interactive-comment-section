@@ -64,7 +64,7 @@ export function reducer(draft: Draft<State>, action: {
             }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
-            targetComment.replies && targetComment.replies.push(payload.newId)
+            if (targetComment.parentId && targetComment.replies) targetComment.replies.push(payload.newId)
             draft.allId.push(payload.newId)
 
             break
