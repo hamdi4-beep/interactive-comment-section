@@ -79,7 +79,7 @@ export function reducer(draft: Draft<State>, action: {
         case 'DELETE_COMMENT': {
             if (comment.parentId) {
                 const parentComment = draft.byId[comment.parentId]
-                draft.byId[comment.parentId].replies = parentComment.replies!.filter(replyId => replyId !== comment.id)
+                parentComment.replies = parentComment.replies!.filter(replyId => replyId !== comment.id)
             }
 
             delete draft.byId[action.payload.id]
