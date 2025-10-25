@@ -84,6 +84,8 @@ export function reducer(draft: Draft<State>, action: {
 
             delete draft.byId[action.payload.id]
             draft.allId = draft.allId.filter(id => comment.id !== id)
+
+            break
         }
 
         case 'INCREMENT_SCORE': {
