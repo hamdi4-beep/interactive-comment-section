@@ -77,9 +77,13 @@ export function reducer(draft: Draft<State>, action: {
         }
 
         case 'DELETE_COMMENT': {
+            if (comment.parentId) {
+                const parentComment = draft.byId[comment.parentId]
+                draft.byId[comment.parentId].replies = parentComment.replies!.filter(replyId => replyId !== comment.id)
+            }
+
             delete draft.byId[action.payload.id]
-            draft.allId = draft.allId.filter(id => id !== comment.id)
-            break
+            draft.allId = draft.allId.filter(id => comment.id !== id)
         }
 
         case 'INCREMENT_SCORE': {

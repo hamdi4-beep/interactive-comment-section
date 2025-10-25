@@ -77,8 +77,6 @@ const CommentContent = ({
   const [formStatus, setFormStatus] = useState('')
   const [isModalHidden, setIsModalHidden] = useState(true)
 
-  if (!comment) return
-
   const user = users.byId[comment.userId as keyof typeof users.byId]
 
   const handleAddReplyDispatch = (content: string) =>

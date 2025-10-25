@@ -41,7 +41,7 @@ export function useComments() {
                     userId
                 }
             }),
-        replyCreated: (id, replyingTo, userId, content) =>
+        replyCreated: (id, replyingTo, userId, content) => {
             dispatch({
                 type: 'CREATE_REPLY',
                 payload: {
@@ -51,7 +51,10 @@ export function useComments() {
                     content,
                     userId
                 }
-            }),
+            })
+
+            console.log(comments)
+        },
         commentEdited: (id, content) =>
             dispatch({
                 type: 'EDIT_COMMENT',
@@ -60,13 +63,16 @@ export function useComments() {
                     content
                 }
             }),
-        commentDeleted: id =>
+        commentDeleted: id => {
             dispatch({
                 type: 'DELETE_COMMENT',
                 payload: {
                     id
                 }
-            }),
+            })
+
+            console.log(comments)
+        },
         scoreIncremented: (id, currentScore) =>
             dispatch({
                 type: 'INCREMENT_SCORE',
