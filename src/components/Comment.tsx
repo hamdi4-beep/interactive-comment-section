@@ -79,7 +79,7 @@ const CommentContent = ({
 
   if (!comment) return
 
-  const user = (users.byId as Record<string, any>)[comment.userId]
+  const user = users.byId[comment.userId as keyof typeof users.byId]
 
   const handleAddReplyDispatch = (content: string) =>
     actions.replyCreated(comment.id, user.username, users.currentUser['id'], content)
