@@ -31,14 +31,14 @@ export function reducer(draft: Draft<State>, action: {
             const newId = payload.newId
 
             draft.byId[newId] = {
-                content: payload.content,
-                score: 0,
-                replies: [],
                 id: newId,
                 parentId: null,
-                replyingTo: null,
+                content: payload.content,
                 createdAt: 'just now',
-                userId: payload.userId
+                score: 0,
+                replyingTo: null,
+                userId: payload.userId,
+                replies: []
             }
 
             draft.allId.push(newId)
@@ -53,14 +53,14 @@ export function reducer(draft: Draft<State>, action: {
             const targetComment = draft.byId[targetId]
             
             draft.byId[payload.newId] = {
-                content: payload.content,
-                score: 0,
-                replies: null,
                 id: payload.newId,
                 parentId: targetId,
-                replyingTo: payload.replyingTo,
+                content: payload.content,
                 createdAt: 'just now',
-                userId: payload.userId
+                score: 0,
+                replyingTo: payload.replyingTo,
+                userId: payload.userId,
+                replies: null
             }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
