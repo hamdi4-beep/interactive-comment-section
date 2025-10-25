@@ -52,8 +52,6 @@ export function useComments() {
                     userId
                 }
             })
-
-            console.log(comments)
         },
         commentEdited: (id, content) =>
             dispatch({
@@ -70,8 +68,6 @@ export function useComments() {
                     id
                 }
             })
-
-            console.log(comments)
         },
         scoreIncremented: (id, currentScore) =>
             dispatch({

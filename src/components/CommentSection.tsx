@@ -5,13 +5,8 @@ import FormComponent from "./FormComponent";
 import { StateContext } from "../context";
 
 function CommentSection() {
-    const {comments, actions} = useContext(StateContext)
+    const {actions} = useContext(StateContext)
     const currentUserId = users.currentUser['id']
-
-    const handleSubmitUpdate = (content: string) => {
-        actions.commentCreated(content, currentUserId)
-        console.log(comments)
-    }
 
     return (
         <div className="comment-section">
@@ -20,7 +15,7 @@ function CommentSection() {
             <FormComponent
                 value=""
                 placeholderValue="Add a comment..."
-                onSubmitUpdate={handleSubmitUpdate}
+                onSubmitUpdate={content => actions.commentCreated(content, currentUserId)}
             />
         </div>
     )

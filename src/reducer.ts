@@ -88,13 +88,23 @@ export function reducer(draft: Draft<State>, action: {
 
         case 'INCREMENT_SCORE': {
             const payload = action.payload as UpdateScorePayload
-            comment.score = comment.score === payload.currentScore ? comment.score + 1 : comment.score < payload.currentScore ? comment.score + 2 : payload.currentScore
+
+            // covers an edge case that prevents a user from incrementing the score infinitely
+            comment.score = comment.score === payload.currentScore ?
+                comment.score + 1 : comment.score < payload.currentScore ?
+                    comment.score + 2 : payload.currentScore
+
             break
         }
 
         case 'DECREMENT_SCORE': {
             const payload = action.payload as UpdateScorePayload
-            comment.score = comment.score === payload.currentScore ? comment.score - 1 : comment.score > payload.currentScore ? comment.score - 2 : payload.currentScore
+
+            // covers an edge case that prevents a user from decrementing the score infinitely
+            comment.score = comment.score === payload.currentScore ?
+                comment.score - 1 : comment.score > payload.currentScore ?
+                    comment.score - 2 : payload.currentScore
+
             break
         }
 
