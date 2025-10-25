@@ -77,6 +77,8 @@ const CommentContent = ({
   const [formStatus, setFormStatus] = useState('')
   const [isModalHidden, setIsModalHidden] = useState(true)
 
+  if (!comment) return
+
   const user = (users.byId as Record<string, any>)[comment.userId]
 
   const handleAddReplyDispatch = (content: string) =>
@@ -84,8 +86,6 @@ const CommentContent = ({
 
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(comment.id, content)
-
-  if (!comment) throw Error('No such comment was found!')
 
   return (
     <div className="container">
