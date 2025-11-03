@@ -41,11 +41,11 @@ export function useComments() {
                     userId
                 }
             }),
-        replyCreated: (id, replyingTo, userId, content) => {
+        replyCreated: (commentId, replyingTo, userId, content) => {
             dispatch({
                 type: 'CREATE_REPLY',
                 payload: {
-                    id,
+                    id: commentId,
                     newId: uuidv4(),
                     replyingTo,
                     content,
