@@ -79,11 +79,15 @@ const CommentContent = ({
 
   const user = users.byId[comment.userId as keyof typeof users.byId]
 
-  const handleAddReplyDispatch = (content: string) =>
+  const handleAddReplyDispatch = (content: string) => {
     actions.replyCreated(comment.id, user.username, users.currentUser['id'], content)
+    setFormStatus('')
+  }
 
-  const handleEditCommentDispatch = (content: string) =>
+  const handleEditCommentDispatch = (content: string) => {
     actions.commentEdited(comment.id, content)
+    setFormStatus('')
+  }
 
   return (
     <div className="container">
