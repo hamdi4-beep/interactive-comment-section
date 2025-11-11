@@ -6,7 +6,7 @@ const CurrentUserAvatar = () => {
 
     return (
         <div className="current-user">
-            <div className="user-img">
+            <div className="user-avatar">
                 <img src={currentUser.image.png} alt="" />
             </div>
         </div>
