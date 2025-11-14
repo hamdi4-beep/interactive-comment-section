@@ -13,7 +13,7 @@ export const UserProfile = ({
 }: {
   userId: string
 }) => {
-  const user = (users.byId as Record<string, User>)[userId] || users.currentUser
+  const user = users.byId[userId as keyof typeof users.byId] || users.currentUser
 
   return (
     <div className="user-profile">
