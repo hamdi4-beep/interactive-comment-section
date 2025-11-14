@@ -93,19 +93,19 @@ const CommentContent = ({
   comment: Comment
 }) => {
   const {actions} = useContext(StateContext)
-  const [formStatus, setFormStatus] = useState('')
+  const [formStatus, setFormStatus] = useState<'HIDDEN' | 'REPLYING' | 'EDITING'>('HIDDEN')
   const [isModalHidden, setIsModalHidden] = useState(true)
 
   const user = users.byId[comment.userId as keyof typeof users.byId]
 
   const handleAddReplyDispatch = (content: string) => {
     actions.replyCreated(comment.id, user.username, users.currentUser['id'], content)
-    setFormStatus('')
+    setFormStatus('HIDDEN')
   }
 
   const handleEditCommentDispatch = (content: string) => {
     actions.commentEdited(comment.id, content)
-    setFormStatus('')
+    setFormStatus('HIDDEN')
   }
 
   return (
@@ -142,7 +142,7 @@ const CommentContent = ({
         </div>
       </div>
 
-      {formStatus === 'replying' && (
+      {formStatus === 'REPLYING' && (
         <FormComponent
           placeholderValue='Add reply'
           value=""
@@ -150,7 +150,7 @@ const CommentContent = ({
         />
       )}
 
-      {formStatus === 'editing' && (
+      {formStatus === 'EDITING' && (
         <FormComponent
           placeholderValue=""
           value={comment.content}
