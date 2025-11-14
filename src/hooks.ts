@@ -38,7 +38,8 @@ export function useComments() {
                 payload: {
                     content,
                     newId: uuidv4(),
-                    userId
+                    userId,
+                    createdAt: (new Date()).toUTCString()
                 }
             }),
         replyCreated: (commentId, replyingTo, userId, content) => {
@@ -49,7 +50,8 @@ export function useComments() {
                     newId: uuidv4(),
                     replyingTo,
                     content,
-                    userId
+                    userId,
+                    createdAt: (new Date()).toUTCString()
                 }
             })
         },

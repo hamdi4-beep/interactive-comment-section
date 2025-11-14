@@ -121,7 +121,7 @@ const CommentContent = ({
             <UserProfile userId={comment.userId} />
             
             <span className="comment-date">
-              <TimeAgo date={comment.createdAt} live={false} />
+              <TimeAgo date={comment.createdAt} live={false} formatter={(value: number, unit: string, sufix: string) => value <= 1 && unit == 'second' ? 'just now' : `${value} ${unit} ${sufix}`} />
             </span>
 
             <UserActions

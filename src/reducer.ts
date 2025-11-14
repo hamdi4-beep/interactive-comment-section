@@ -5,6 +5,7 @@ import { Draft } from 'immer'
 interface CreateCommentPayload extends Pick<Comment, 'content'> {
     newId: string
     userId: string
+    createdAt: string
 }
 
 interface CreateReplyPayload extends CreateCommentPayload {
@@ -34,7 +35,7 @@ export function reducer(draft: Draft<State>, action: {
                 id: newId,
                 parentId: null,
                 content: payload.content,
-                createdAt: 'just now',
+                createdAt: payload.createdAt,
                 score: 0,
                 replyingTo: null,
                 userId: payload.userId,
@@ -56,7 +57,7 @@ export function reducer(draft: Draft<State>, action: {
                 id: payload.newId,
                 parentId: targetId,
                 content: payload.content,
-                createdAt: 'just now',
+                createdAt: payload.createdAt,
                 score: 0,
                 replyingTo: payload.replyingTo,
                 userId: payload.userId,
