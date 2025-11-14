@@ -1,10 +1,28 @@
 import { useContext, useState, useRef } from "react"
 import { CommentId, StateContext } from "../context"
-import UserActions, { UserProfile } from "./UserActions"
+import UserActions from "./UserActions"
 import FormComponent from "./FormComponent"
 import { type Comment } from "../context"
 import users from '../data/users.json'
 import TimeAgo from "react-timeago"
+
+const UserProfile = ({
+  userId
+}: {
+  userId: string
+}) => {
+  const user = users.byId[userId as keyof typeof users.byId] || users.currentUser
+
+  return (
+    <div className="user-profile">
+      <div className="user-avatar">
+        <img src={user.image.png} alt="" />
+      </div>
+
+      <h3>{user.username}</h3>
+    </div>
+  )
+}
 
 const ScoreComponent = ({
   score,
