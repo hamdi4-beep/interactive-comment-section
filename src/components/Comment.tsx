@@ -4,6 +4,7 @@ import UserActions, { UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
 import { type Comment } from "../context"
 import users from '../data/users.json'
+import TimeAgo from "react-timeago"
 
 const ScoreComponent = ({
   score,
@@ -100,7 +101,10 @@ const CommentContent = ({
         <div className="content">
           <div className="profile-header">
             <UserProfile userId={comment.userId} />
-            <span className="comment-date">{comment.createdAt}</span>
+            
+            <span className="comment-date">
+              <TimeAgo date={comment.createdAt} live={false} />
+            </span>
 
             <UserActions
               userId={comment.userId}
