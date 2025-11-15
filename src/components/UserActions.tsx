@@ -20,7 +20,7 @@ function UserActions({
       {!isCurrentUser && (
         <button onClick={() => updateFormStatus(prev => prev === 'REPLYING' ? 'HIDDEN' : 'REPLYING')}>
           <div className="icon-img">
-            <img src="/images/icon-reply.svg" alt="" />
+            <img src="/interactive-comment-section/images/icon-reply.svg" alt="" />
           </div>
 
           Reply
@@ -30,7 +30,7 @@ function UserActions({
       {isCurrentUser && (
         <button onClick={() => updateFormStatus(prev => prev === 'EDITING' ? 'HIDDEN' : 'EDITING')}>
             <div className="icon-img">
-              <img src="/images/icon-edit.svg" alt="" />
+              <img src="/interactive-comment-section/images/icon-edit.svg" alt="" />
             </div>
 
             Edit
@@ -40,7 +40,7 @@ function UserActions({
       {isCurrentUser && (
         <button onClick={handleDeleteClick}>
             <div className="icon-img">
-              <img src="/images/icon-delete.svg" alt="" />
+              <img src="/interactive-comment-section/images/icon-delete.svg" alt="" />
             </div>
 
             Delete

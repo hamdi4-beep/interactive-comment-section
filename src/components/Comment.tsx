@@ -44,7 +44,7 @@ const ScoreComponent = ({
     <div className="score-component">
       <button type='button' aria-label="upvote" title="Upvote a comment" onClick={handleIncrementScoreClick}>
         <div className="icon-img">
-          <img src="/images/icon-plus.svg" alt="" />
+          <img src="/interactive-comment-section/images/icon-plus.svg" alt="" />
         </div>
       </button>
 
@@ -52,7 +52,7 @@ const ScoreComponent = ({
 
       <button type='button' aria-label="downvote" title="Downvote a comment" onClick={handleDecrementScoreClick}>
         <div className="icon-img">
-          <img src="/images/icon-minus.svg" alt="" />
+          <img src="/interactive-comment-section/images/icon-minus.svg" alt="" />
         </div>
       </button>
     </div>
