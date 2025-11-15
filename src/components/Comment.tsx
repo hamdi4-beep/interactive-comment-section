@@ -108,6 +108,10 @@ const CommentContent = ({
     setFormStatus('HIDDEN')
   }
 
+  const customFormatter =
+    (value: number, unit: string, sufix: string) => value <= 1 && unit == 'second' ?
+      'just now' : `${value} ${unit} ${sufix}`
+
   return (
     <div className="container">
       <div className="comment">
@@ -121,7 +125,7 @@ const CommentContent = ({
             <UserProfile userId={comment.userId} />
             
             <span className="comment-date">
-              <TimeAgo date={comment.createdAt} live={false} formatter={(value: number, unit: string, sufix: string) => value <= 1 && unit == 'second' ? 'just now' : `${value} ${unit} ${sufix}`} />
+              <TimeAgo date={comment.createdAt} live={false} formatter={customFormatter} />
             </span>
 
             <UserActions
